@@ -61,7 +61,7 @@ def create_market_data():
             low=98,
             close=100,
 
-            volume=None,
+            volume=1000,
         ),
 
         MarketData(
@@ -78,7 +78,7 @@ def create_market_data():
             low=103,
             close=110,
 
-            volume=None,
+            volume=1000,
         ),
 
         MarketData(
@@ -95,7 +95,7 @@ def create_market_data():
             low=113,
             close=120,
 
-            volume=None,
+            volume=1000,
         ),
     ]
 

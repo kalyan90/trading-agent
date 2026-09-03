@@ -9,6 +9,7 @@ from trading_agent.config import (
     StrategyType,
     TradingConfig,
     V1Config,
+    V2Config,
 )
 
 
@@ -75,6 +76,7 @@ class WalkForwardResult(BaseModel):
     # -------------------------------------------------
 
     test_exposure_percent: float
+    test_atr_stop_signals: int = 0
 
     # -------------------------------------------------
     # Benchmark
@@ -152,6 +154,20 @@ class SystemSummary(BaseModel):
     benchmark_beaten_windows: int
 
     benchmark_beaten_rate: float
+
+
+class V2WindowDiagnostic(BaseModel):
+    window: int
+    train_pnl: float
+    completed_trades: int
+    buy_signals: int
+    sell_signals: int
+    hold_signals: int
+    entries: int
+    exits: int
+    atr_stop_signals: int
+    accepted: bool
+    rejection_reasons: tuple[str, ...]
 
 
 # =====================================================
@@ -349,43 +365,111 @@ def create_trading_config(
     )
 
     return TradingConfig(
-        symbol=(
-            v1_config.symbol
-        ),
-
-        minimum_confidence=(
-            v1_config.minimum_confidence
-        ),
-
-        max_position_size=(
-            execution.position_size
-        ),
-
-        initial_capital=(
-            execution.initial_capital
-        ),
-
-        transaction_cost=(
-            execution.transaction_cost
-        ),
-
-        slippage=(
-            execution.slippage
-        ),
-
-        force_liquidation=(
-            execution.force_liquidation
-        ),
-
-        sma_period=(
-            sma_period
-        ),
-
-        strategy=(
-            strategy
-        ),
+        symbol=v1_config.symbol,
+        minimum_confidence=v1_config.minimum_confidence,
+        max_position_size=execution.position_size,
+        initial_capital=execution.initial_capital,
+        transaction_cost=execution.transaction_cost,
+        slippage=execution.slippage,
+        force_liquidation=execution.force_liquidation,
+        sma_period=sma_period,
+        strategy=strategy,
     )
 
+
+def create_v2_trading_config(v2_config: V2Config) -> TradingConfig:
+    execution = v2_config.execution
+    return TradingConfig(
+        symbol=v2_config.symbol,
+        minimum_confidence=v2_config.minimum_confidence,
+        max_position_size=execution.position_size,
+        initial_capital=execution.initial_capital,
+        transaction_cost=execution.transaction_cost,
+        slippage=execution.slippage,
+        force_liquidation=execution.force_liquidation,
+        sma_period=v2_config.slow_sma_period,
+        fast_sma_period=v2_config.fast_sma_period,
+        slow_sma_period=v2_config.slow_sma_period,
+        rsi_period=v2_config.rsi_period,
+        macd_fast_period=v2_config.macd_fast_period,
+        macd_slow_period=v2_config.macd_slow_period,
+        macd_signal_period=v2_config.macd_signal_period,
+        atr_period=v2_config.atr_period,
+        atr_stop_multiple=v2_config.atr_stop_multiple,
+        strategy=StrategyType.TREND_MOMENTUM,
+    )
+
+
+def evaluate_v2_system(windows, v2_config: V2Config):
+    """Evaluate the one fixed V2 strategy with a train-only gate."""
+    window_results = []
+    config = create_v2_trading_config(v2_config)
+
+    for index, (train_data, test_data) in enumerate(windows, start=1):
+        train_result = run_backtest(train_data, config, verbose=False)
+        selected = ExperimentResult(
+            strategy=StrategyType.TREND_MOMENTUM,
+            sma_period=v2_config.slow_sma_period,
+            total_trades=len(train_result.trades),
+            win_rate=train_result.win_rate,
+            total_profit=train_result.total_profit,
+            total_pnl=train_result.total_pnl,
+            max_drawdown=train_result.max_drawdown,
+            profit_drawdown_ratio=train_result.profit_drawdown_ratio,
+        )
+        if not (
+            selected.total_pnl > v2_config.minimum_train_pnl
+            and selected.total_trades >= v2_config.minimum_train_trades
+        ):
+            continue
+
+        warmup_size = v2_config.slow_sma_period
+        test_result = run_backtest(
+            train_data[-warmup_size:] + test_data,
+            config,
+            trade_start_index=warmup_size,
+            verbose=False,
+        )
+        window_results.append(
+            create_window_result(
+                index, SelectorType.PNL, selected, test_result
+            )
+        )
+
+    return (
+        window_results,
+        summarize_system(window_results, len(windows), SelectorType.PNL),
+    )
+
+
+def diagnose_v2_windows(windows, v2_config: V2Config):
+    """Return train-only diagnostics; never evaluates rejected OOS data."""
+    config = create_v2_trading_config(v2_config)
+    diagnostics = []
+
+    for index, (train_data, _) in enumerate(windows, start=1):
+        result = run_backtest(train_data, config, verbose=False)
+        reasons = []
+        if result.total_pnl <= v2_config.minimum_train_pnl:
+            reasons.append("train_pnl_not_positive")
+        if len(result.trades) < v2_config.minimum_train_trades:
+            reasons.append("fewer_than_five_completed_trades")
+
+        diagnostics.append(V2WindowDiagnostic(
+            window=index,
+            train_pnl=result.total_pnl,
+            completed_trades=len(result.trades),
+            buy_signals=result.buy_signals,
+            sell_signals=result.sell_signals,
+            hold_signals=result.hold_signals,
+            entries=result.entries,
+            exits=result.exits,
+            atr_stop_signals=result.atr_stop_signals,
+            accepted=not reasons,
+            rejection_reasons=tuple(reasons),
+        ))
+
+    return diagnostics
 
 # =====================================================
 # Candidate training
@@ -662,6 +746,10 @@ def create_window_result(
 
         test_exposure_percent=(
             test_result.exposure_percent
+        ),
+
+        test_atr_stop_signals=(
+            test_result.atr_stop_signals
         ),
 
         # ---------------------------------------------

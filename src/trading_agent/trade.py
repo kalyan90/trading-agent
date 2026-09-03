@@ -16,6 +16,13 @@ class Trade(BaseModel):
 class BacktestResult(BaseModel):
     trades: list[Trade]
 
+    buy_signals: int = 0
+    sell_signals: int = 0
+    hold_signals: int = 0
+    entries: int = 0
+    exits: int = 0
+    atr_stop_signals: int = 0
+
     # =================================================
     # Strategy
     # =================================================

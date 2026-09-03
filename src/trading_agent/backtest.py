@@ -6,6 +6,8 @@ from trading_agent.indicators import (
     calculate_sma,
 )
 
+from trading_agent.features import build_market_features
+
 from trading_agent.performance import (
     calculate_average_profit,
     calculate_max_drawdown,
@@ -19,6 +21,7 @@ from trading_agent.strategy import (
     Action,
     generate_crossover_signal,
     generate_sma_signal,
+    generate_trend_momentum_signal,
 )
 
 from trading_agent.trade import (
@@ -278,10 +281,19 @@ def run_backtest(
 
     # A close signal executes at the next OPEN.
     pending_action = None
+    pending_atr = None
+    entry_atr = None
 
     total_profit = 0
 
     trades = []
+
+    buy_signals = 0
+    sell_signals = 0
+    hold_signals = 0
+    entries = 0
+    exits = 0
+    atr_stop_signals = 0
 
     equity_history = []
 
@@ -293,9 +305,15 @@ def run_backtest(
     total_exposure_bars = 0
     invested_bars = 0
 
+    warmup_period = (
+        config.slow_sma_period
+        if config.strategy == StrategyType.TREND_MOMENTUM
+        else config.sma_period
+    )
+
     benchmark_start_index = max(
         trade_start_index,
-        config.sma_period,
+        warmup_period,
         1,
     )
 
@@ -320,15 +338,14 @@ def run_backtest(
         # Indicator warm-up
         # ---------------------------------------------
 
-        if i < config.sma_period:
+        if i < warmup_period:
             continue
 
-        previous_sma = (
-            calculate_sma(
-                prices[:i],
-                config.sma_period,
+        previous_sma = None
+        if config.strategy != StrategyType.TREND_MOMENTUM:
+            previous_sma = calculate_sma(
+                prices[:i], config.sma_period
             )
-        )
 
         # ---------------------------------------------
         # Do not trade inside training warm-up candles.
@@ -371,6 +388,7 @@ def run_backtest(
                 config.transaction_cost
                 / 2,
             )
+            entries += 1
 
             entry_price = (
                 execution_price
@@ -379,6 +397,7 @@ def run_backtest(
             entry_date = (
                 market.date
             )
+            entry_atr = pending_atr
 
             if verbose:
                 print(
@@ -450,6 +469,7 @@ def run_backtest(
                 config.transaction_cost
                 / 2,
             )
+            exits += 1
 
             if verbose:
                 print(
@@ -467,8 +487,10 @@ def run_backtest(
 
             entry_price = 0
             entry_date = None
+            entry_atr = None
 
         pending_action = None
+        pending_atr = None
 
         # =============================================
         # Exposure
@@ -483,12 +505,11 @@ def run_backtest(
         # information available through today's CLOSE.
         # =============================================
 
-        sma = calculate_sma(
-            prices[
-                : i + 1
-            ],
-            config.sma_period,
-        )
+        sma = None
+        if config.strategy != StrategyType.TREND_MOMENTUM:
+            sma = calculate_sma(
+                prices[: i + 1], config.sma_period
+            )
 
         # =============================================
         # STEP 3:
@@ -522,6 +543,37 @@ def run_backtest(
                 )
             )
 
+        elif config.strategy == StrategyType.TREND_MOMENTUM:
+            features = build_market_features(
+                market_data[: i + 1],
+                fast_sma_period=config.fast_sma_period,
+                slow_sma_period=config.slow_sma_period,
+                rsi_period=config.rsi_period,
+                macd_fast_period=config.macd_fast_period,
+                macd_slow_period=config.macd_slow_period,
+                macd_signal_period=config.macd_signal_period,
+                atr_period=config.atr_period,
+            )
+            signal = generate_trend_momentum_signal(features)
+
+            stop_price = (
+                entry_price
+                - config.atr_stop_multiple * entry_atr
+                if entry_atr is not None
+                else None
+            )
+            if (
+                portfolio.position > 0
+                and stop_price is not None
+                and market.close <= stop_price
+            ):
+                signal = signal.model_copy(update={
+                    "action": Action.SELL,
+                    "confidence": 1,
+                    "reason": "ATR risk stop",
+                })
+                atr_stop_signals += 1
+
         else:
 
             raise ValueError(
@@ -545,6 +597,15 @@ def run_backtest(
         pending_action = (
             signal.action
         )
+        if config.strategy == StrategyType.TREND_MOMENTUM:
+            pending_atr = features.atr
+
+        if signal.action == Action.BUY:
+            buy_signals += 1
+        elif signal.action == Action.SELL:
+            sell_signals += 1
+        else:
+            hold_signals += 1
 
         # =============================================
         # STEP 4:
@@ -625,6 +686,7 @@ def run_backtest(
             config.transaction_cost
             / 2,
         )
+        exits += 1
 
         equity_history.append(
             portfolio.equity(
@@ -747,6 +809,13 @@ def run_backtest(
 
     return BacktestResult(
         trades=trades,
+
+        buy_signals=buy_signals,
+        sell_signals=sell_signals,
+        hold_signals=hold_signals,
+        entries=entries,
+        exits=exits,
+        atr_stop_signals=atr_stop_signals,
 
         total_profit=total_profit,
         total_pnl=total_pnl,

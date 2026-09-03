@@ -3,6 +3,7 @@ import argparse
 from trading_agent.config import (
     SelectorType,
     V1_CONFIG,
+    V2_CONFIG,
 )
 
 from trading_agent.data_provider import (
@@ -12,7 +13,9 @@ from trading_agent.data_provider import (
 from trading_agent.experiment import (
     create_final_holdout_windows,
     create_walk_forward_windows,
+    diagnose_v2_windows,
     evaluate_selector_system,
+    evaluate_v2_system,
     split_development_and_holdout,
 )
 
@@ -37,10 +40,8 @@ def parse_arguments():
         action="store_true",
 
         help=(
-            "Run the frozen V1 configuration "
-            "against the reserved final holdout. "
-            "Do this only once after accepting "
-            "the development results."
+            "Legacy option retained for compatibility. "
+            "The V1 final holdout is consumed and reruns are disabled."
         ),
     )
 
@@ -503,6 +504,48 @@ def run_development_comparison(
         ),
     )
 
+    v2_windows = create_walk_forward_windows(
+        development_data,
+        train_size=V2_CONFIG.train_size,
+        test_size=V2_CONFIG.test_size,
+    )
+    v2_results, v2_summary = evaluate_v2_system(
+        v2_windows,
+        V2_CONFIG,
+    )
+    diagnostics = diagnose_v2_windows(v2_windows, V2_CONFIG)
+
+    print_summary(
+        "DEVELOPMENT - FROZEN V2 TREND-MOMENTUM",
+        v2_summary,
+    )
+
+    print("\n========================================")
+    print("V1 VS V2 DEVELOPMENT COMPARISON")
+    print("========================================")
+    print("Metric                    V1          V2")
+    print("Accepted             ", risk_summary.accepted_windows,
+          "          ", v2_summary.accepted_windows)
+    print("OOS P&L              ", round(risk_summary.total_oos_pnl, 2),
+          "     ", round(v2_summary.total_oos_pnl, 2))
+    print("Total OOS trades     ", risk_summary.total_oos_trades,
+          "          ", v2_summary.total_oos_trades)
+    print("Exposure %           ", round(risk_summary.average_exposure_percent, 2),
+          "       ", round(v2_summary.average_exposure_percent, 2))
+    print("Benchmark beat %     ", round(risk_summary.benchmark_beaten_rate, 2),
+          "       ", round(v2_summary.benchmark_beaten_rate, 2))
+
+    print("\nV2 TRAINING DIAGNOSTICS")
+    print("Windows:", len(diagnostics))
+    print("Positive P&L:", sum(item.train_pnl > 0 for item in diagnostics))
+    print("At least 5 completed trades:",
+          sum(item.completed_trades >= 5 for item in diagnostics))
+    print("Accepted:", sum(item.accepted for item in diagnostics))
+    print("Training ATR stop signals:",
+          sum(item.atr_stop_signals for item in diagnostics))
+    print("Accepted OOS ATR stop signals:",
+          sum(item.test_atr_stop_signals for item in v2_results))
+
 
 # =====================================================
 # FINAL HOLDOUT
@@ -639,40 +682,13 @@ def main():
     # Holdout guard
     # =================================================
 
-    if not args.final_holdout:
+    print("\n========================================")
+    print("V1 FINAL HOLDOUT: CONSUMED")
+    print("========================================")
+    print("Rerunning it as an unbiased evaluation is disabled.")
 
-        print(
-            "\n========================================"
-        )
-
-        print(
-            "FINAL HOLDOUT REMAINS UNUSED"
-        )
-
-        print(
-            "========================================"
-        )
-
-        print(
-            "When you are ready for the "
-            "one-time V1 evaluation run:"
-        )
-
-        print(
-            "\nuv run trading-agent "
-            "--final-holdout"
-        )
-
-        return
-
-    # =================================================
-    # Explicit final evaluation
-    # =================================================
-
-    run_final_holdout(
-        development_data,
-        holdout_data,
-    )
+    if args.final_holdout:
+        print("The --final-holdout request was refused.")
 
 
 if __name__ == "__main__":
