@@ -1,3 +1,5 @@
+"""Deterministic signal policies."""
+
 from enum import Enum
 
 from pydantic import (
@@ -5,7 +7,7 @@ from pydantic import (
     Field,
 )
 
-from trading_agent.features import (
+from trading_agent.signals.features import (
     MarketFeatures,
 )
 

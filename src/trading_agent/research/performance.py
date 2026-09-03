@@ -1,3 +1,6 @@
+"""Research performance metrics."""
+
+
 def calculate_win_loss(trades):
     winning_trades = 0
     losing_trades = 0

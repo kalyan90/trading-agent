@@ -1,10 +1,12 @@
+"""Walk-forward experiment orchestration."""
+
 from pydantic import BaseModel
 
-from trading_agent.backtest import (
+from trading_agent.research.backtest import (
     run_backtest,
 )
 
-from trading_agent.config import (
+from trading_agent.core.config import (
     SelectorType,
     StrategyType,
     TradingConfig,

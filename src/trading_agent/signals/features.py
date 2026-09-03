@@ -1,6 +1,8 @@
+"""Market-feature construction."""
+
 from pydantic import BaseModel
 
-from trading_agent.indicators import (
+from trading_agent.signals.indicators import (
     calculate_atr,
     calculate_macd,
     calculate_rsi,

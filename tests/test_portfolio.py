@@ -1,4 +1,4 @@
-from trading_agent.portfolio import Portfolio
+from trading_agent.core.portfolio import Portfolio
 
 
 def test_buy_with_quantity():

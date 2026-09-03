@@ -1,3 +1,5 @@
+"""Spot-market domain models."""
+
 from pydantic import BaseModel
 from datetime import datetime
 

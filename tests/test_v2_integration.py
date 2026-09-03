@@ -1,16 +1,16 @@
 from datetime import datetime, timedelta
 
-import trading_agent.backtest as backtest_module
-from trading_agent.backtest import run_backtest
-from trading_agent.config import StrategyType, V1_CONFIG, V2_CONFIG
-from trading_agent.experiment import (
+import trading_agent.research.backtest as backtest_module
+from trading_agent.research.backtest import run_backtest
+from trading_agent.core.config import StrategyType, V1_CONFIG, V2_CONFIG
+from trading_agent.research.experiment import (
     create_trading_config,
     create_v2_trading_config,
     diagnose_v2_windows,
     evaluate_v2_system,
 )
-from trading_agent.market import MarketData
-from trading_agent.strategy import Action, Signal
+from trading_agent.core.market import MarketData
+from trading_agent.signals.strategy import Action, Signal
 
 
 def market_data(closes):

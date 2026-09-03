@@ -1,30 +1,32 @@
-from trading_agent.config import (
+"""Single-window backtesting engine."""
+
+from trading_agent.core.config import (
     StrategyType,
 )
 
-from trading_agent.indicators import (
+from trading_agent.signals.indicators import (
     calculate_sma,
 )
 
-from trading_agent.features import build_market_features
+from trading_agent.signals.features import build_market_features
 
-from trading_agent.performance import (
+from trading_agent.research.performance import (
     calculate_average_profit,
     calculate_max_drawdown,
     calculate_win_loss,
     calculate_win_rate,
 )
 
-from trading_agent.portfolio import Portfolio
+from trading_agent.core.portfolio import Portfolio
 
-from trading_agent.strategy import (
+from trading_agent.signals.strategy import (
     Action,
     generate_crossover_signal,
     generate_sma_signal,
     generate_trend_momentum_signal,
 )
 
-from trading_agent.trade import (
+from trading_agent.core.trade import (
     BacktestResult,
     Trade,
 )

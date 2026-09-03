@@ -1,4 +1,4 @@
-from trading_agent.backtest import (
+from trading_agent.research.backtest import (
     calculate_buy_price,
     calculate_sell_price,
 )

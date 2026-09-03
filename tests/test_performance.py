@@ -1,4 +1,4 @@
-from trading_agent.performance import (
+from trading_agent.research.performance import (
     calculate_win_loss,
     calculate_win_rate,
     calculate_average_profit,

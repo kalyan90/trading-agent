@@ -1,5 +1,7 @@
+"""Local spot-market data loading."""
+
 from datetime import datetime
-from trading_agent.market import MarketData
+from trading_agent.core.market import MarketData
 import csv
 from pathlib import Path
 

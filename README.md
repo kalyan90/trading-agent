@@ -8,7 +8,8 @@ A deterministic research backtester for daily NIFTY 50 market data. It contains 
 - V2 is evaluated only on development walk-forward windows.
 - No parameter optimization is performed for V2.
 - The legacy `--final-holdout` option is retained for compatibility but refuses to rerun the consumed V1 holdout.
-- V3 Step 1 is an experimental continuous-portfolio evaluation of the frozen V2 signal policy. It does not change frozen V2.
+- V3 Step 1 is a frozen continuous-portfolio checkpoint of the V2 signal policy.
+- V3 Step 2 now executes that unchanged spot-derived policy against actual dated NIFTY futures contracts. It remains development research, not a deployment model.
 
 ## V1: deterministic baseline
 
@@ -188,6 +189,8 @@ The profitable-window count and zero closed-trade win rate are compatible: with 
 | P&L | Profit and Loss |
 | RSI | Relative Strength Index |
 | SMA | Simple Moving Average |
+| FO | Futures and Options |
+| SPAN | Standard Portfolio Analysis of Risk |
 
 ## Usage
 
@@ -197,6 +200,22 @@ uv run trading-agent
 ```
 
 The second command runs the development comparison and prints V2 training diagnostics. It does not consume a new holdout.
+
+## Source layout
+
+The Python package is grouped by responsibility so later V3 work does not turn the package root into a flat collection of unrelated modules:
+
+```text
+src/trading_agent/
+├── core/       # frozen configuration and domain models
+├── signals/    # indicators, feature construction, and signal policies
+├── data/       # local CSV loading and the NSE historical-data client
+├── execution/  # futures cash, settlement, and margin accounting
+├── research/   # backtests, walk-forward experiments, and V3 evaluations
+└── main.py     # command-line reporting only
+```
+
+Future broker and paper-trading adapters belong in `execution/` beside the broker-independent account model. They should not be mixed into deterministic signal or research code.
 
 ## Research logs
 
@@ -213,7 +232,8 @@ logs/
 ├── v2/
 │   └── experiment-v2-development.txt
 └── v3/
-    └── experiment-v3-step1-continuous.txt
+    ├── experiment-v3-step1-continuous.txt
+    └── experiment-v3-step2-futures.txt
 ```
 
 - `logs/v1/` is the preserved V1 research trail, including the one-time consumed holdout output. These files are historical records and must not be regenerated to claim new evidence.
@@ -267,3 +287,96 @@ Do not use that command after changing frozen V2. A material strategy or evaluat
 | Excess P&L | −₹10,830.55 |
 
 **V3 Step 1 conclusion:** carrying one portfolio removes the misleading implication that each test window starts with fresh capital and no prior state. The strategy remained profitable in development with very low exposure, but its drawdown exceeded the reset-window V2 average and it captured only a small fraction of the continuous benchmark's gain. This checkpoint does not justify deployment or parameter tuning.
+
+## V3 Step 2: instrument specification
+
+V3 Step 2 begins the transition from an abstract one-unit index model to an explicit tradable-instrument model. The contract metadata is intentionally separate from signals and portfolio evaluation.
+
+| Field | Current snapshot |
+|---|---:|
+| Instrument | NIFTY 50 index futures |
+| Exchange symbol | NIFTY |
+| Market lot | 65 units |
+| Monetary value per point per lot | ₹65 |
+| Effective monthly expiry | 27 January 2026 |
+| Official reference | NSE/FAOP/70616 |
+
+The model now applies actual futures OHLC and settlement prices, historical expiry dates, and dated market lots to strategy execution. V1, V2, and V3 Step 1 remain unchanged one-unit index research; only the separate V3 Step 2 result uses futures monetary accounting.
+
+### Historical futures data
+
+Official NSE NIFTY futures contract history for 2020 through 2026 is stored in `data/futures/`, one CSV per calendar year. It retains individual expiries, settlement prices, volume, open interest, underlying value, and the market lot reported for each contract-day row. See `data/futures/README.md` for provenance, coverage, schema, and reproduction instructions.
+
+The source files remain raw. The execution layer builds a front-month series by selecting the nearest unexpired contract on each session, holds it through its expiry session, settles that leg using the expiry settlement price with adverse slippage, and enters the successor at its next available open. Missing source values are not fabricated; rows without the required price fields are excluded by the typed loader, while blank market lots are resolved only from other rows for the same expiry.
+
+### NSE historical-data API
+
+`NseHistoricalClient` provides reusable project APIs for both official datasets:
+
+```python
+from datetime import date
+from trading_agent.data.nse import NseHistoricalClient
+
+client = NseHistoricalClient()
+index_rows = client.fetch_index_history(date(2026, 1, 1), date(2026, 1, 31))
+future_rows = client.fetch_futures_history(date(2026, 1, 1), date(2026, 1, 31))
+```
+
+Both methods handle NSE session cookies, 27-day chunks, retries, normalization, and duplicate removal. Network calls are never made during module import or normal backtests.
+
+```bash
+uv run python scripts/download_nse_index.py --start-year 2020 --end-year 2026
+uv run python scripts/download_nse_futures.py --start-year 2020 --end-year 2026
+```
+
+Index files default to `data/index/`; futures files default to `data/futures/`. Downloaded data must pass repository integrity checks before research use.
+
+## V3 Step 2: real futures execution
+
+**Status:** implemented development experiment; not yet a frozen release checkpoint.
+
+- The V2 gate and Trend-Momentum signals still use spot NIFTY data. This preserves the frozen signal policy while testing a tradable execution instrument.
+- A signal formed at a spot close executes only at the next session for which a futures open is available.
+- Buys pay futures open +5 points and sells receive futures open −5 points. Each point is multiplied by that contract's historical NSE market lot.
+- ₹20 is charged per completed futures round trip, split equally between entry and exit. A rollover closes one contract leg and opens the next, so both orders incur their respective half-cost.
+- Futures notional is not deducted from cash. Equity is cash plus variation P&L marked to the active contract's settlement price.
+- The unconstrained result does not impose margin. A separate capital-constrained scenario applies a transparent 15% initial-margin and 12% maintenance-margin proxy, settles variation P&L to cash daily, rejects unaffordable entries, and schedules maintenance breaches for liquidation at the following available open. These fixed rates are research assumptions, not historical NSE SPAN evidence.
+
+The development evaluation covers 2020-12-30 through 2025-07-04 and uses historical lots of 75, 50, and 25. Five spot sessions had no matching executable futures row and were skipped; pending actions execute at the next available futures open.
+
+| V3 Step 2 development result | Value |
+|---|---:|
+| Accepted / rejected windows | 6 / 22 |
+| Starting capital | ₹100,000 |
+| Final equity | ₹149,260.00 |
+| Futures P&L | ₹49,260.00 |
+| Capital-normalized return | 49.26% |
+| Strategy exits | 8 |
+| Gate-forced liquidations | 1 |
+| Mechanical contract rolls while invested | 3 |
+| Maximum drawdown | ₹57,857.50 |
+| Exposure | 7.00% |
+| Missing futures sessions | 5 |
+| Continuous futures benchmark P&L, unconstrained | ₹353,475.00 |
+
+The ₹49,260 result is primarily the monetary effect of historical lot sizing on the same sparse signal exposure; it is not evidence that V3 found a stronger signal. The ₹57,857.50 drawdown—larger than the profit—also shows why margin and capital adequacy must be modeled before paper trading.
+
+### Capital-constrained result
+
+V3 futures capital is now ₹10,00,000. This does not alter the frozen ₹1,00,000 V1/V2 configurations. With the 15%/12% margin proxy, all eight strategy positions can be funded and no margin call occurs.
+
+| ₹10,00,000 funded scenario | Value |
+|---|---:|
+| Final equity | ₹10,46,860.87 |
+| Net P&L | ₹46,860.87 |
+| Net return | 4.69% |
+| Strategy exits / rolls | 8 / 3 |
+| Rejected entries / margin calls | 0 / 0 |
+| Peak required margin | ₹1,78,638.75 |
+| Minimum free cash | ₹8,42,404.61 |
+| Total modeled charges | ₹2,619.13 |
+| Equally funded futures benchmark P&L | ₹3,41,304.78 |
+
+Charges include ₹20 assumed retail brokerage per order, GST on brokerage plus exchange and SEBI charges, buyer-side futures stamp duty, SEBI turnover fees, and dated seller-side STT: 0.01% before 1 April 2023, 0.0125% through 30 September 2024, and 0.02% afterward. The exchange transaction rate is a configurable research assumption and must be checked against the chosen broker's contract notes.
+
+NSE Clearing states that actual equity-derivatives initial margin is SPAN-based, collected upfront, and calculated from changing daily risk parameters. Its public data catalogue identifies historical margin and daily SPAN data, but the exact contract-level archive was not exposed as a stable bulk endpoint during this implementation. Therefore the 15%/12% schedule remains an explicit proxy rather than fabricated historical SPAN data. See the [NSE Clearing margin methodology](https://www.nseclearing.in/risk-management/equity-derivatives/margins), [SPAN methodology](https://www.nseclearing.in/risk-management/equity-derivatives/nsccl-span), [public clearing-data catalogue](https://www.nseclearing.in/data-list-nse-clearing), and [official statutory levy table](https://www.nseindia.com/static/invest/first-time-investor-sebi-turnover-fees-stt-other-levies).

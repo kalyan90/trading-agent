@@ -1,0 +1,58 @@
+V3 STEP 2 - REAL NIFTY FUTURES EXECUTION
+Generated from the development dataset; frozen V1 and V2 were not changed.
+
+Evaluation range: 2020-12-30 to 2025-07-04
+Signal and gate source: NIFTY 50 spot daily candles
+Execution source: official NSE NIFTY futures contract history
+Contract selection: nearest unexpired contract, held through expiry settlement
+Historical market lots encountered: 75, 50, 25
+Slippage: 5 points adverse per order
+Transaction cost: INR 20 per round trip
+Unconstrained scenario margin model: not applied
+
+Accepted windows: 6
+Rejected windows: 22
+Starting capital: 100000.00
+Final equity: 149260.00
+Futures P&L: 49260.00
+Capital-normalized return: 49.26%
+Strategy exits: 8
+Gate liquidations: 1
+Contract rolls: 3
+Maximum drawdown: 57857.50
+Exposure: 7.00%
+Missing futures sessions: 5
+Continuous futures benchmark P&L: 353475.00
+
+CAPITAL-CONSTRAINED MARGIN + DATED LEVIES
+Starting capital: 1000000.00
+Initial margin proxy: 15%
+Maintenance margin proxy: 12%
+Daily variation settlement: enabled
+Brokerage assumption: INR 20 per order
+STT: dated 0.01% / 0.0125% / 0.02%, sell side
+Stamp duty: 0.002%, buy side
+SEBI turnover fee: 0.0001%, both sides
+GST: 18% of brokerage, exchange, and SEBI charges
+Rejected strategy entry attempts: 0
+Executed strategy exits: 8
+Margin calls: 0
+Final equity: 1046860.87
+P&L: 46860.87
+Return: 4.69%
+Total modeled charges: 2619.13
+Peak required margin: 178638.75
+Minimum free cash: 842404.61
+Funded futures benchmark P&L: 341304.78
+Benchmark entry rejected: no
+
+Interpretation: monetary P&L reflects historical contract lot multipliers and is
+not directly comparable with the one-index-unit V1/V2/V3-Step-1 P&L. The result
+is a development experiment, not pristine holdout evidence or live-performance
+evidence. Daily settlement and proxy margin enforcement are modeled; dated SPAN,
+taxes, detailed brokerage, and liquidity remain out of scope.
+
+The fixed margin rates are transparent research assumptions, not dated
+historical NSE SPAN values. The project did not fabricate unavailable daily
+contract-level SPAN history. The statutory charges are dated; brokerage and the
+exchange transaction rate remain configurable research assumptions.

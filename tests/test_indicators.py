@@ -1,6 +1,6 @@
 import pytest
 
-from trading_agent.indicators import calculate_sma
+from trading_agent.signals.indicators import calculate_sma
 
 
 def test_calculate_sma():

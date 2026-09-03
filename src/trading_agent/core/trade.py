@@ -1,3 +1,5 @@
+"""Executed-trade domain models."""
+
 from datetime import datetime
 
 from pydantic import BaseModel

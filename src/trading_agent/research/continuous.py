@@ -1,17 +1,19 @@
+"""V3 continuous-portfolio evaluation."""
+
 from pydantic import BaseModel
 
-from trading_agent.backtest import (
+from trading_agent.research.backtest import (
     calculate_buy_price,
     calculate_profit_drawdown_ratio,
     calculate_sell_price,
     run_backtest,
 )
-from trading_agent.config import V2Config
-from trading_agent.experiment import create_v2_trading_config
-from trading_agent.features import build_market_features
-from trading_agent.performance import calculate_max_drawdown
-from trading_agent.strategy import Action, generate_trend_momentum_signal
-from trading_agent.trade import Trade
+from trading_agent.core.config import V2Config
+from trading_agent.research.experiment import create_v2_trading_config
+from trading_agent.signals.features import build_market_features
+from trading_agent.research.performance import calculate_max_drawdown
+from trading_agent.signals.strategy import Action, generate_trend_momentum_signal
+from trading_agent.core.trade import Trade
 
 
 class ContinuousResult(BaseModel):

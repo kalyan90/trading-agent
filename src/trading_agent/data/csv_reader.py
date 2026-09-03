@@ -1,6 +1,8 @@
+"""Legacy CSV streaming helper."""
+
 import csv
-from trading_agent.market import MarketData
-from trading_agent.strategy import generate_signal
+from trading_agent.core.market import MarketData
+from trading_agent.signals.strategy import generate_signal
 
 with open("data/nifty.csv", "r") as file:
     reader = csv.DictReader(file)

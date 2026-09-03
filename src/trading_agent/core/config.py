@@ -1,3 +1,5 @@
+"""Versioned strategy and execution configuration."""
+
 from enum import Enum
 
 from pydantic import (

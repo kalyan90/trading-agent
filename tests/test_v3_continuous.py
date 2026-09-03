@@ -1,10 +1,10 @@
 from datetime import datetime, timedelta
 from types import SimpleNamespace
 
-import trading_agent.continuous as continuous
-from trading_agent.config import V2_CONFIG
-from trading_agent.market import MarketData
-from trading_agent.strategy import Action, Signal
+import trading_agent.research.continuous as continuous
+from trading_agent.core.config import V2_CONFIG
+from trading_agent.core.market import MarketData
+from trading_agent.signals.strategy import Action, Signal
 
 
 def data(size):

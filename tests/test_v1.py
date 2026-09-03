@@ -1,17 +1,17 @@
 from datetime import datetime
 
-from trading_agent.backtest import (
+from trading_agent.research.backtest import (
     calculate_buy_and_hold_benchmark,
     calculate_buy_price,
     calculate_sell_price,
 )
 
-from trading_agent.config import (
+from trading_agent.core.config import (
     StrategyType,
     TradingConfig,
 )
 
-from trading_agent.market import (
+from trading_agent.core.market import (
     MarketData,
 )
 

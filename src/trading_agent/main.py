@@ -1,18 +1,27 @@
 import argparse
+from pathlib import Path
 
-from trading_agent.continuous import evaluate_continuous_v3
+from trading_agent.research.continuous import evaluate_continuous_v3
+from trading_agent.research.futures import (
+    build_front_month_series,
+    evaluate_futures_execution,
+    load_futures_contracts,
+)
+from trading_agent.execution.futures_account import (
+    FuturesChargeConfig, FuturesMarginConfig,
+)
 
-from trading_agent.config import (
+from trading_agent.core.config import (
     SelectorType,
     V1_CONFIG,
     V2_CONFIG,
 )
 
-from trading_agent.data_provider import (
+from trading_agent.data.provider import (
     get_historical_market_data,
 )
 
-from trading_agent.experiment import (
+from trading_agent.research.experiment import (
     create_final_holdout_windows,
     create_walk_forward_windows,
     diagnose_v2_windows,
@@ -562,6 +571,50 @@ def run_development_comparison(
     print("Exposure:", round(v3_result.exposure_percent, 2), "%")
     print("Continuous benchmark P&L:", round(v3_result.benchmark_pnl, 2))
     print("Excess P&L:", round(v3_result.excess_pnl, 2))
+
+    futures = build_front_month_series(
+        load_futures_contracts(Path("data/futures"))
+    )
+    futures_result = evaluate_futures_execution(
+        development_data, futures, V2_CONFIG
+    )
+    print("\n========================================")
+    print("V3 STEP 2 - REAL NIFTY FUTURES EXECUTION")
+    print("========================================")
+    print("Accepted windows:", futures_result.accepted_windows)
+    print("Rejected windows:", futures_result.rejected_windows)
+    print("Starting capital:", round(V2_CONFIG.execution.initial_capital, 2))
+    print("Final equity:", round(futures_result.final_equity, 2))
+    print("Futures P&L:", round(futures_result.total_pnl, 2))
+    print("Futures return:", round(futures_result.total_return, 2), "%")
+    print("Strategy exits:", futures_result.strategy_trades)
+    print("Gate liquidations:", futures_result.gate_liquidations)
+    print("Contract rolls:", futures_result.rolls)
+    print("Maximum drawdown:", round(futures_result.max_drawdown, 2))
+    print("Exposure:", round(futures_result.exposure_percent, 2), "%")
+    print("Missing futures sessions:", futures_result.missing_futures_dates)
+    print("Continuous futures benchmark P&L:",
+          round(futures_result.benchmark_pnl, 2))
+
+    funded_result = evaluate_futures_execution(
+        development_data, futures, V2_CONFIG, FuturesMarginConfig(),
+        initial_capital=1_000_000,
+        charge_config=FuturesChargeConfig(),
+    )
+    print("\n--- ₹10,00,000 CAPITAL + MARGIN + DATED LEVIES ---")
+    print("Initial / maintenance margin:", "15% / 12%")
+    print("Executed strategy exits:", funded_result.strategy_trades)
+    print("Rejected entry attempts:", funded_result.rejected_entries)
+    print("Margin calls:", funded_result.margin_calls)
+    print("Final equity:", round(funded_result.final_equity, 2))
+    print("Futures P&L:", round(funded_result.total_pnl, 2))
+    print("Return:", round(funded_result.total_return, 2), "%")
+    print("Total charges:", round(funded_result.total_charges, 2))
+    print("Peak margin:", round(funded_result.peak_margin, 2))
+    print("Minimum free cash:", round(funded_result.minimum_free_cash, 2))
+    print("Benchmark entry rejected:", funded_result.benchmark_entry_rejected)
+    print("Funded futures benchmark P&L:",
+          round(funded_result.benchmark_pnl, 2))
 
 
 # =====================================================

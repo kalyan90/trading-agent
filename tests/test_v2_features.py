@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
 
-from trading_agent.features import (
+from trading_agent.signals.features import (
     MarketFeatures,
     build_market_features,
 )
 
-from trading_agent.indicators import (
+from trading_agent.signals.indicators import (
     calculate_atr,
     calculate_ema,
     calculate_macd,
@@ -13,11 +13,11 @@ from trading_agent.indicators import (
     calculate_sma,
 )
 
-from trading_agent.market import (
+from trading_agent.core.market import (
     MarketData,
 )
 
-from trading_agent.strategy import (
+from trading_agent.signals.strategy import (
     Action,
     generate_trend_momentum_signal,
 )

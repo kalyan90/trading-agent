@@ -1,3 +1,6 @@
+"""Deterministic technical indicators."""
+
+
 def calculate_sma(
     prices: list[float],
     period: int,
