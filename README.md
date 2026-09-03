@@ -8,6 +8,7 @@ A deterministic research backtester for daily NIFTY 50 market data. It contains 
 - V2 is evaluated only on development walk-forward windows.
 - No parameter optimization is performed for V2.
 - The legacy `--final-holdout` option is retained for compatibility but refuses to rerun the consumed V1 holdout.
+- V3 Step 1 is an experimental continuous-portfolio evaluation of the frozen V2 signal policy. It does not change frozen V2.
 
 ## V1: deterministic baseline
 
@@ -124,6 +125,36 @@ The profitable-window count and zero closed-trade win rate are compatible: with 
 | Forced liquidation | False | Final open positions are marked to market |
 | Optimization | None | The fixed strategy is run once per window |
 
+## V2 frozen-state snapshot
+
+**Status:** complete and frozen as the deterministic Trend-Momentum baseline. V2 may be reproduced, but changing its strategy, parameters, gate, execution model, or window definitions creates a new version.
+
+**Evaluation scope:** development-only walk-forward research over data through 2025-08-29. V2 has no pristine final holdout. The period used for V1's final holdout was already known when V2 was designed and therefore cannot provide unbiased V2 evidence.
+
+| Frozen V2 result | Value |
+|---|---:|
+| Total development windows | 28 |
+| Accepted / rejected windows | 6 / 22 |
+| Positive-P&L training windows | 18 |
+| Training windows with ≥5 trades | 12 |
+| Total OOS P&L | ₹584.60 |
+| Average OOS P&L | ₹97.43 |
+| Average OOS return | 0.10% |
+| Profitable accepted windows | 4/6 |
+| Profitable-window rate | 66.67% |
+| Completed OOS trades | 7 |
+| Average closed-trade win rate | 50.00% |
+| Average drawdown | ₹294.89 |
+| Average P&L/DD | 1.18 |
+| Average exposure | 32.50% |
+| Matching benchmark P&L | ₹4,027.30 |
+| Excess P&L | −₹3,442.70 |
+| Benchmark beat rate | 16.67% |
+| Training ATR-stop signals | 5 |
+| Accepted OOS ATR-stop signals | 0 |
+
+**V2 conclusion:** V2 improved win rate, drawdown, risk-adjusted P&L, and exposure relative to V1's development result, but produced lower absolute P&L and weaker benchmark-relative performance. Its ATR rule did not activate in accepted OOS windows. V2 is a useful low-exposure research baseline, not evidence of a deployable profitable strategy.
+
 ## Signal definitions
 
 - **Buy:** fast SMA is above slow SMA, MACD is above its signal line, and RSI is greater than 50 but less than 70.
@@ -179,13 +210,16 @@ logs/
 │   ├── selector, acceptance, slippage, and benchmark experiments
 │   ├── experiment-v1-logs.txt
 │   └── experiment-v1-final-holdout-logs.txt
-└── v2/
-    └── experiment-v2-development.txt
+├── v2/
+│   └── experiment-v2-development.txt
+└── v3/
+    └── experiment-v3-step1-continuous.txt
 ```
 
 - `logs/v1/` is the preserved V1 research trail, including the one-time consumed holdout output. These files are historical records and must not be regenerated to claim new evidence.
 - `logs/v2/experiment-v2-development.txt` is the reproducible development comparison generated from the completed V2 implementation. It contains V1 development metrics for comparison, V2 metrics, train-gate diagnostics, and ATR-stop activation counts.
 - V2 currently has no pristine final-holdout log. Creating one would require genuinely untouched future data or a separately reserved dataset.
+- `logs/v3/experiment-v3-step1-continuous.txt` records the first continuous-portfolio development evaluation without changing the frozen V2 log.
 
 To refresh the V2 development record after a reproducibility-only run:
 
@@ -199,4 +233,37 @@ Do not use that command after changing frozen V2. A material strategy or evaluat
 
 - **V1:** completed and frozen after failing its consumed final holdout. It remains the historical baseline.
 - **V2:** completed and frozen as a deterministic Trend-Momentum strategy with an ATR risk exit. Its reported results are development evidence, not pristine holdout evidence.
-- A future V3 may introduce regime classification, realistic tradable contract sizing, continuous portfolio evaluation, paper trading, or an AI decision layer. Those changes must remain separate from frozen V1 and V2.
+- **V3 Step 1:** carries one portfolio across chronological test windows. Accepted adjacent windows preserve positions and pending signals; entry is disabled in rejected windows, and an existing position is liquidated at the first rejected-window open using normal costs and slippage.
+- Later V3 steps may introduce realistic tradable contract sizing, paper trading, regime classification, or an AI decision layer. Those changes must remain separate from frozen V1 and V2.
+
+## V3 continuous-evaluation policy
+
+- Every 40-candle decision window is gated using only its preceding 250 candles.
+- Cash, positions, entry ATR, pending actions, and equity persist across adjacent accepted windows.
+- When a rejected window begins, any open position is sold at that first open with five-point adverse slippage and the normal exit cost.
+- No signals or entries are produced inside rejected windows.
+- The benchmark buys one unit at the first evaluation open and remains invested through the same complete continuous period.
+- This is development research. It is not a new holdout and does not revise the frozen V2 result.
+
+## V3 Step 1 frozen-state snapshot
+
+**Status:** frozen research checkpoint. This freezes the continuous-evaluation policy and its result, not the whole V3 program. Later V3 work must be labeled Step 2 or a new version and must write a separate log.
+
+**Signal policy:** the frozen V2 Trend-Momentum strategy and parameters are reused unchanged. V3 Step 1 changes only portfolio continuity and rejected-window handling.
+
+| Frozen V3 Step 1 result | Value |
+|---|---:|
+| Total decision windows | 28 |
+| Accepted / rejected windows | 6 / 22 |
+| Continuous starting capital | ₹100,000 |
+| Continuous final equity | ₹100,634.55 |
+| Continuous P&L | ₹634.55 |
+| Continuous return | 0.63% |
+| Completed trades | 8 |
+| Gate-forced liquidations | 1 |
+| Maximum drawdown | ₹1,094.45 |
+| Exposure | 6.96% |
+| Continuous benchmark P&L | ₹11,465.10 |
+| Excess P&L | −₹10,830.55 |
+
+**V3 Step 1 conclusion:** carrying one portfolio removes the misleading implication that each test window starts with fresh capital and no prior state. The strategy remained profitable in development with very low exposure, but its drawdown exceeded the reset-window V2 average and it captured only a small fraction of the continuous benchmark's gain. This checkpoint does not justify deployment or parameter tuning.

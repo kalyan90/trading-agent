@@ -1,5 +1,7 @@
 import argparse
 
+from trading_agent.continuous import evaluate_continuous_v3
+
 from trading_agent.config import (
     SelectorType,
     V1_CONFIG,
@@ -545,6 +547,21 @@ def run_development_comparison(
           sum(item.atr_stop_signals for item in diagnostics))
     print("Accepted OOS ATR stop signals:",
           sum(item.test_atr_stop_signals for item in v2_results))
+
+    v3_result = evaluate_continuous_v3(development_data, V2_CONFIG)
+    print("\n========================================")
+    print("V3 STEP 1 - CONTINUOUS PORTFOLIO")
+    print("========================================")
+    print("Accepted windows:", v3_result.accepted_windows)
+    print("Rejected windows:", v3_result.rejected_windows)
+    print("Continuous P&L:", round(v3_result.total_pnl, 2))
+    print("Continuous return:", round(v3_result.total_return, 2), "%")
+    print("Completed trades:", len(v3_result.trades))
+    print("Gate liquidations:", v3_result.gate_liquidations)
+    print("Maximum drawdown:", round(v3_result.max_drawdown, 2))
+    print("Exposure:", round(v3_result.exposure_percent, 2), "%")
+    print("Continuous benchmark P&L:", round(v3_result.benchmark_pnl, 2))
+    print("Excess P&L:", round(v3_result.excess_pnl, 2))
 
 
 # =====================================================

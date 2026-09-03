@@ -1,0 +1,176 @@
+Development: 2020-01-01 → 2025-08-29
+Final holdout: 2025-09-01 → 2026-09-02
+
+========================================
+FROZEN DETERMINISTIC V1 CONFIG
+========================================
+Selector: risk_adjusted
+Acceptance:
+  Train P&L > 0.0
+  Train trades >= 5
+Train window: 120
+Test window: 40
+Final holdout: 250 candles
+Initial capital: 100000.0
+Position size: 1
+Transaction cost: 20.0
+Slippage: 5.0 points
+Force liquidation: False
+
+========================================
+DEVELOPMENT - P&L SELECTOR
+========================================
+Selector: pnl
+Total windows: 32
+Accepted windows: 9
+Rejected windows: 23
+
+--- STRATEGY ---
+Total OOS P&L: 2252.1
+Average OOS P&L: 250.23
+Average OOS return: 0.25 %
+Profitable windows: 5 / 9
+Profitable window rate: 55.56 %
+Total OOS trades: 29
+Average win rate: 28.7 %
+
+--- RISK ---
+Average strategy drawdown: 736.62
+Average strategy P&L/DD: 0.66
+
+--- EXPOSURE ---
+Average exposure: 59.44 %
+
+--- BENCHMARK ---
+Benchmark total P&L: 5402.1
+Benchmark average return: 0.6 %
+Benchmark average drawdown: 954.53
+Benchmark average P&L/DD: 1.47
+
+--- RELATIVE PERFORMANCE ---
+Total excess P&L: -3150.0
+Average excess return: -0.35 %
+Benchmark beaten: 3 / 9
+Benchmark beat rate: 33.33 %
+
+========================================
+DEVELOPMENT - RISK SELECTOR
+========================================
+Selector: risk_adjusted
+Total windows: 32
+Accepted windows: 6
+Rejected windows: 26
+
+--- STRATEGY ---
+Total OOS P&L: 1363.35
+Average OOS P&L: 227.22
+Average OOS return: 0.23 %
+Profitable windows: 4 / 6
+Profitable window rate: 66.67 %
+Total OOS trades: 18
+Average win rate: 41.67 %
+
+--- RISK ---
+Average strategy drawdown: 708.93
+Average strategy P&L/DD: 0.51
+
+--- EXPOSURE ---
+Average exposure: 59.17 %
+
+--- BENCHMARK ---
+Benchmark total P&L: 2873.65
+Benchmark average return: 0.48 %
+Benchmark average drawdown: 965.27
+Benchmark average P&L/DD: 1.08
+
+--- RELATIVE PERFORMANCE ---
+Total excess P&L: -1510.3
+Average excess return: -0.25 %
+Benchmark beaten: 2 / 6
+Benchmark beat rate: 33.33 %
+
+========================================
+DEVELOPMENT SELECTOR COMPARISON
+========================================
+Metric                 P&L          Risk
+Accepted              9             6
+OOS P&L               2252.1       1363.35
+Benchmark P&L         5402.1       2873.65
+Excess P&L            -3150.0       -1510.3
+Benchmark beat %      33.33          33.33
+Exposure %            59.44          59.17
+Avg strategy DD       736.62       708.93
+Avg benchmark DD      954.53       965.27
+
+========================================
+DEVELOPMENT - FROZEN V2 TREND-MOMENTUM
+========================================
+Selector: pnl
+Total windows: 28
+Accepted windows: 6
+Rejected windows: 22
+
+--- STRATEGY ---
+Total OOS P&L: 584.6
+Average OOS P&L: 97.43
+Average OOS return: 0.1 %
+Profitable windows: 4 / 6
+Profitable window rate: 66.67 %
+Total OOS trades: 7
+Average win rate: 50.0 %
+
+--- RISK ---
+Average strategy drawdown: 294.89
+Average strategy P&L/DD: 1.18
+
+--- EXPOSURE ---
+Average exposure: 32.5 %
+
+--- BENCHMARK ---
+Benchmark total P&L: 4027.3
+Benchmark average return: 0.67 %
+Benchmark average drawdown: 660.18
+Benchmark average P&L/DD: 1.3
+
+--- RELATIVE PERFORMANCE ---
+Total excess P&L: -3442.7
+Average excess return: -0.57 %
+Benchmark beaten: 1 / 6
+Benchmark beat rate: 16.67 %
+
+========================================
+V1 VS V2 DEVELOPMENT COMPARISON
+========================================
+Metric                    V1          V2
+Accepted              6            6
+OOS P&L               1363.35       584.6
+Total OOS trades      18            7
+Exposure %            59.17         32.5
+Benchmark beat %      33.33         16.67
+
+V2 TRAINING DIAGNOSTICS
+Windows: 28
+Positive P&L: 18
+At least 5 completed trades: 12
+Accepted: 6
+Training ATR stop signals: 5
+Accepted OOS ATR stop signals: 0
+
+========================================
+V3 STEP 1 - CONTINUOUS PORTFOLIO
+========================================
+Accepted windows: 6
+Rejected windows: 22
+Continuous P&L: 634.55
+Continuous return: 0.63 %
+Completed trades: 8
+Gate liquidations: 1
+Maximum drawdown: 1094.45
+Exposure: 6.96 %
+Continuous benchmark P&L: 11465.1
+Excess P&L: -10830.55
+
+========================================
+V1 FINAL HOLDOUT: CONSUMED
+========================================
+Rerunning it as an unbiased evaluation is disabled.
