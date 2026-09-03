@@ -1,0 +1,184 @@
+
+--- WALK FORWARD WINDOWS ---
+
+Window: 1 Train: 2020-01-01 → 2020-06-25 Test: 2020-06-26 → 2020-08-20
+Selected: sma_basic SMA: 20 Profit: -64.35 Trades: 5 Win Rate: 20.0 Drawdown: 663.35 Profit/DD: -0.1
+Status: REJECTED
+
+Window: 2 Train: 2020-02-26 → 2020-08-20 Test: 2020-08-21 → 2020-10-16
+Selected: sma_basic SMA: 20 Profit: 1970.4 Trades: 3 Win Rate: 66.67 Drawdown: 663.35 Profit/DD: 2.97
+Status: REJECTED
+
+Window: 3 Train: 2020-04-29 → 2020-10-16 Test: 2020-10-19 → 2020-12-14
+Selected: sma_basic SMA: 3 Profit: 2019.3 Trades: 19 Win Rate: 73.68 Drawdown: 679.55 Profit/DD: 2.97
+Status: ACCEPTED
+OOS Trades: 6 OOS Profit: 473.25 OOS Win Rate: 33.33 OOS Drawdown: 459.6
+
+Window: 4 Train: 2020-06-26 → 2020-12-14 Test: 2020-12-15 → 2021-02-10
+Selected: sma_basic SMA: 3 Profit: 1696.85 Trades: 17 Win Rate: 58.82 Drawdown: 636.35 Profit/DD: 2.67
+Status: ACCEPTED
+OOS Trades: 4 OOS Profit: 130.9 OOS Win Rate: 25.0 OOS Drawdown: 432.15
+
+Window: 5 Train: 2020-08-21 → 2021-02-10 Test: 2021-02-11 → 2021-04-12
+Selected: sma_crossover SMA: 20 Profit: 2281.05 Trades: 2 Win Rate: 100.0 Drawdown: 432.15 Profit/DD: 5.28
+Status: REJECTED
+
+Window: 6 Train: 2020-10-19 → 2021-04-12 Test: 2021-04-13 → 2021-06-10
+Selected: sma_basic SMA: 10 Profit: 2353.75 Trades: 7 Win Rate: 42.86 Drawdown: 1054.8 Profit/DD: 2.23
+Status: ACCEPTED
+OOS Trades: 2 OOS Profit: 151.4 OOS Win Rate: 100.0 OOS Drawdown: 410.85
+
+Window: 7 Train: 2020-12-15 → 2021-06-10 Test: 2021-06-11 → 2021-08-06
+Selected: sma_crossover SMA: 3 Profit: 416.6 Trades: 18 Win Rate: 38.89 Drawdown: 1361.6 Profit/DD: 0.31
+Status: ACCEPTED
+OOS Trades: 5 OOS Profit: -441.25 OOS Win Rate: 0.0 OOS Drawdown: 488.8
+
+Window: 8 Train: 2021-02-11 → 2021-08-06 Test: 2021-08-09 → 2021-10-05
+Selected: sma_crossover SMA: 20 Profit: -130.05 Trades: 8 Win Rate: 12.5 Drawdown: 908.9 Profit/DD: -0.14
+Status: REJECTED
+
+Window: 9 Train: 2021-04-13 → 2021-10-05 Test: 2021-10-06 → 2021-12-03
+Selected: sma_basic SMA: 20 Profit: 2237.3 Trades: 5 Win Rate: 40.0 Drawdown: 514.8 Profit/DD: 4.35
+Status: ACCEPTED
+OOS Trades: 2 OOS Profit: -219.1 OOS Win Rate: 50.0 OOS Drawdown: 875.6
+
+Window: 10 Train: 2021-06-11 → 2021-12-03 Test: 2021-12-06 → 2022-01-31
+Selected: sma_crossover SMA: 30 Profit: 1524.5 Trades: 5 Win Rate: 40.0 Drawdown: 1045.3 Profit/DD: 1.46
+Status: ACCEPTED
+OOS Trades: 1 OOS Profit: -405.6 OOS Win Rate: 0.0 OOS Drawdown: 1316.55
+
+Window: 11 Train: 2021-08-09 → 2022-01-31 Test: 2022-02-01 → 2022-03-30
+Selected: sma_basic SMA: 10 Profit: 750.0 Trades: 10 Win Rate: 30.0 Drawdown: 1331.75 Profit/DD: 0.56
+Status: ACCEPTED
+OOS Trades: 2 OOS Profit: -944.3 OOS Win Rate: 0.0 OOS Drawdown: 1008.1
+
+Window: 12 Train: 2021-10-06 → 2022-03-30 Test: 2022-03-31 → 2022-05-30
+Selected: sma_basic SMA: 20 Profit: -340.95 Trades: 5 Win Rate: 20.0 Drawdown: 1188.15 Profit/DD: -0.29
+Status: REJECTED
+
+Window: 13 Train: 2021-12-06 → 2022-05-30 Test: 2022-05-31 → 2022-07-25
+Selected: sma_basic SMA: 10 Profit: -109.95 Trades: 7 Win Rate: 28.57 Drawdown: 1472.85 Profit/DD: -0.07
+Status: REJECTED
+
+Window: 14 Train: 2022-02-01 → 2022-07-25 Test: 2022-07-26 → 2022-09-22
+Selected: sma_basic SMA: 10 Profit: 341.95 Trades: 6 Win Rate: 50.0 Drawdown: 1472.85 Profit/DD: 0.23
+Status: ACCEPTED
+OOS Trades: 4 OOS Profit: 602.95 OOS Win Rate: 50.0 OOS Drawdown: 868.2
+
+Window: 15 Train: 2022-03-31 → 2022-09-22 Test: 2022-09-23 → 2022-11-22
+Selected: sma_basic SMA: 30 Profit: 857.0 Trades: 3 Win Rate: 33.33 Drawdown: 774.55 Profit/DD: 1.11
+Status: REJECTED
+
+Window: 16 Train: 2022-05-31 → 2022-11-22 Test: 2022-11-23 → 2023-01-17
+Selected: sma_basic SMA: 10 Profit: 1731.1 Trades: 9 Win Rate: 55.56 Drawdown: 1324.9 Profit/DD: 1.31
+Status: ACCEPTED
+OOS Trades: 5 OOS Profit: -738.6 OOS Win Rate: 20.0 OOS Drawdown: 1012.75
+
+Window: 17 Train: 2022-07-26 → 2023-01-17 Test: 2023-01-18 → 2023-03-16
+Selected: sma_crossover SMA: 30 Profit: 538.45 Trades: 2 Win Rate: 50.0 Drawdown: 503.4 Profit/DD: 1.07
+Status: REJECTED
+
+Window: 18 Train: 2022-09-23 → 2023-03-16 Test: 2023-03-17 → 2023-05-18
+Selected: sma_crossover SMA: 50 Profit: 0.0 Trades: 0 Win Rate: 0.0 Drawdown: 0.0 Profit/DD: 0
+Status: REJECTED
+
+Window: 19 Train: 2022-11-23 → 2023-05-18 Test: 2023-05-19 → 2023-07-14
+Selected: sma_basic SMA: 50 Profit: 0.0 Trades: 0 Win Rate: 0.0 Drawdown: 268.9 Profit/DD: 0.0
+Status: REJECTED
+
+Window: 20 Train: 2023-01-18 → 2023-07-14 Test: 2023-07-17 → 2023-09-11
+Selected: sma_crossover SMA: 20 Profit: 992.45 Trades: 2 Win Rate: 50.0 Drawdown: 360.5 Profit/DD: 2.75
+Status: REJECTED
+
+Window: 21 Train: 2023-03-17 → 2023-09-11 Test: 2023-09-12 → 2023-11-09
+Selected: sma_basic SMA: 20 Profit: 1717.8 Trades: 2 Win Rate: 100.0 Drawdown: 531.65 Profit/DD: 3.23
+Status: REJECTED
+
+Window: 22 Train: 2023-05-19 → 2023-11-09 Test: 2023-11-10 → 2024-01-08
+Selected: sma_crossover SMA: 20 Profit: 530.85 Trades: 3 Win Rate: 66.67 Drawdown: 840.4 Profit/DD: 0.63
+Status: REJECTED
+
+Window: 23 Train: 2023-07-17 → 2024-01-08 Test: 2024-01-09 → 2024-03-04
+Selected: sma_basic SMA: 10 Profit: 1822.15 Trades: 7 Win Rate: 42.86 Drawdown: 597.45 Profit/DD: 3.05
+Status: ACCEPTED
+OOS Trades: 5 OOS Profit: -909.35 OOS Win Rate: 20.0 OOS Drawdown: 1270.15
+
+Window: 24 Train: 2023-09-12 → 2024-03-04 Test: 2024-03-05 → 2024-05-07
+Selected: sma_crossover SMA: 20 Profit: 1545.3 Trades: 3 Win Rate: 33.33 Drawdown: 1176.35 Profit/DD: 1.31
+Status: REJECTED
+
+Window: 25 Train: 2023-11-10 → 2024-05-07 Test: 2024-05-08 → 2024-07-03
+Selected: sma_basic SMA: 50 Profit: 898.8 Trades: 2 Win Rate: 100.0 Drawdown: 706.0 Profit/DD: 1.27
+Status: REJECTED
+
+Window: 26 Train: 2024-01-09 → 2024-07-03 Test: 2024-07-04 → 2024-08-30
+Selected: sma_crossover SMA: 20 Profit: -249.5 Trades: 4 Win Rate: 50.0 Drawdown: 1388.75 Profit/DD: -0.18
+Status: REJECTED
+
+Window: 27 Train: 2024-03-05 → 2024-08-30 Test: 2024-09-02 → 2024-10-28
+Selected: sma_crossover SMA: 20 Profit: 1087.05 Trades: 3 Win Rate: 66.67 Drawdown: 1379.4 Profit/DD: 0.79
+Status: REJECTED
+
+Window: 28 Train: 2024-05-08 → 2024-10-28 Test: 2024-10-29 → 2024-12-26
+Selected: sma_basic SMA: 20 Profit: 1506.0 Trades: 3 Win Rate: 66.67 Drawdown: 1044.15 Profit/DD: 1.44
+Status: REJECTED
+
+Window: 29 Train: 2024-07-04 → 2024-12-26 Test: 2024-12-27 → 2025-02-19
+Selected: sma_basic SMA: 30 Profit: -364.35 Trades: 3 Win Rate: 33.33 Drawdown: 1921.5 Profit/DD: -0.19
+Status: REJECTED
+
+Window: 30 Train: 2024-09-02 → 2025-02-19 Test: 2025-02-20 → 2025-04-24
+Selected: sma_basic SMA: 10 Profit: -604.0 Trades: 5 Win Rate: 60.0 Drawdown: 1641.05 Profit/DD: -0.37
+Status: REJECTED
+
+Window: 31 Train: 2024-10-29 → 2025-04-24 Test: 2025-04-25 → 2025-06-20
+Selected: sma_basic SMA: 10 Profit: 345.9 Trades: 4 Win Rate: 75.0 Drawdown: 1070.7 Profit/DD: 0.32
+Status: REJECTED
+
+Window: 32 Train: 2024-12-27 → 2025-06-20 Test: 2025-06-23 → 2025-08-18
+Selected: sma_crossover SMA: 30 Profit: 534.85 Trades: 4 Win Rate: 50.0 Drawdown: 1507.05 Profit/DD: 0.35
+Status: REJECTED
+
+Window: 33 Train: 2025-02-20 → 2025-08-18 Test: 2025-08-19 → 2025-10-15
+Selected: sma_crossover SMA: 20 Profit: 1155.15 Trades: 4 Win Rate: 50.0 Drawdown: 742.6 Profit/DD: 1.56
+Status: REJECTED
+
+Window: 34 Train: 2025-04-25 → 2025-10-15 Test: 2025-10-16 → 2025-12-12
+Selected: sma_crossover SMA: 3 Profit: 174.35 Trades: 16 Win Rate: 37.5 Drawdown: 1227.15 Profit/DD: 0.14
+Status: ACCEPTED
+OOS Trades: 5 OOS Profit: 47.5 OOS Win Rate: 40.0 OOS Drawdown: 329.35
+
+Window: 35 Train: 2025-06-23 → 2025-12-12 Test: 2025-12-15 → 2026-02-10
+Selected: sma_crossover SMA: 3 Profit: 1096.65 Trades: 15 Win Rate: 53.33 Drawdown: 842.7 Profit/DD: 1.3
+Status: ACCEPTED
+OOS Trades: 6 OOS Profit: -1242.2 OOS Win Rate: 33.33 OOS Drawdown: 1432.85
+
+Window: 36 Train: 2025-08-19 → 2026-02-10 Test: 2026-02-11 → 2026-04-13
+Selected: sma_basic SMA: 3 Profit: 94.55 Trades: 16 Win Rate: 50.0 Drawdown: 1660.35 Profit/DD: 0.06
+Status: ACCEPTED
+OOS Trades: 8 OOS Profit: -3899.9 OOS Win Rate: 0.0 OOS Drawdown: 3899.9
+
+Window: 37 Train: 2025-10-16 → 2026-04-13 Test: 2026-04-15 → 2026-06-11
+Selected: sma_crossover SMA: 50 Profit: -1005.85 Trades: 2 Win Rate: 0.0 Drawdown: 1027.05 Profit/DD: -0.98
+Status: REJECTED
+
+Window: 38 Train: 2025-12-15 → 2026-06-11 Test: 2026-06-12 → 2026-08-07
+Selected: sma_basic SMA: 20 Profit: -1050.35 Trades: 4 Win Rate: 0.0 Drawdown: 1415.9 Profit/DD: -0.74
+Status: REJECTED
+
+Walk-forward results: 13
+
+--- WALK FORWARD SUMMARY ---
+Accepted windows: 13
+Profitable OOS windows: 5
+Losing OOS windows: 8
+Total OOS profit: -7394.3
+Average OOS profit: -568.79
+Sum of OOS window returns: -2.45
+Average OOS return: -0.21
+Best OOS window: 14 Profit: 602.95
+Worst OOS window: 36 Profit: -3899.9
+Profitable OOS window rate: 38.46 %
+Total OOS trades: 55
+Average OOS window win rate: 28.59 %
+Average accepted Train Profit/DD: 1.59

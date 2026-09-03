@@ -1,0 +1,149 @@
+Development: 2020-01-01 → 2025-08-29
+Final holdout: 2025-09-01 → 2026-09-02
+
+========================================
+FROZEN DETERMINISTIC V1 CONFIG
+========================================
+Selector: risk_adjusted
+Acceptance:
+  Train P&L > 0.0
+  Train trades >= 5
+Train window: 120
+Test window: 40
+Final holdout: 250 candles
+Initial capital: 100000.0
+Position size: 1
+Transaction cost: 20.0
+Slippage: 5.0 points
+Force liquidation: False
+
+========================================
+DEVELOPMENT - P&L SELECTOR
+========================================
+Selector: pnl
+Total windows: 32
+Accepted windows: 9
+Rejected windows: 23
+
+--- STRATEGY ---
+Total OOS P&L: 2252.1
+Average OOS P&L: 250.23
+Average OOS return: 0.25 %
+Profitable windows: 5 / 9
+Profitable window rate: 55.56 %
+Total OOS trades: 29
+Average win rate: 28.7 %
+
+--- RISK ---
+Average strategy drawdown: 736.62
+Average strategy P&L/DD: 0.66
+
+--- EXPOSURE ---
+Average exposure: 59.44 %
+
+--- BENCHMARK ---
+Benchmark total P&L: 5402.1
+Benchmark average return: 0.6 %
+Benchmark average drawdown: 954.53
+Benchmark average P&L/DD: 1.47
+
+--- RELATIVE PERFORMANCE ---
+Total excess P&L: -3150.0
+Average excess return: -0.35 %
+Benchmark beaten: 3 / 9
+Benchmark beat rate: 33.33 %
+
+========================================
+DEVELOPMENT - RISK SELECTOR
+========================================
+Selector: risk_adjusted
+Total windows: 32
+Accepted windows: 6
+Rejected windows: 26
+
+--- STRATEGY ---
+Total OOS P&L: 1363.35
+Average OOS P&L: 227.22
+Average OOS return: 0.23 %
+Profitable windows: 4 / 6
+Profitable window rate: 66.67 %
+Total OOS trades: 18
+Average win rate: 41.67 %
+
+--- RISK ---
+Average strategy drawdown: 708.93
+Average strategy P&L/DD: 0.51
+
+--- EXPOSURE ---
+Average exposure: 59.17 %
+
+--- BENCHMARK ---
+Benchmark total P&L: 2873.65
+Benchmark average return: 0.48 %
+Benchmark average drawdown: 965.27
+Benchmark average P&L/DD: 1.08
+
+--- RELATIVE PERFORMANCE ---
+Total excess P&L: -1510.3
+Average excess return: -0.25 %
+Benchmark beaten: 2 / 6
+Benchmark beat rate: 33.33 %
+
+========================================
+DEVELOPMENT SELECTOR COMPARISON
+========================================
+Metric                 P&L          Risk
+Accepted              9             6
+OOS P&L               2252.1       1363.35
+Benchmark P&L         5402.1       2873.65
+Excess P&L            -3150.0       -1510.3
+Benchmark beat %      33.33          33.33
+Exposure %            59.44          59.17
+Avg strategy DD       736.62       708.93
+Avg benchmark DD      954.53       965.27
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+FINAL HOLDOUT EVALUATION
+Frozen selector: risk_adjusted
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+========================================
+V1 FINAL HOLDOUT RESULT
+========================================
+Selector: risk_adjusted
+Total windows: 7
+Accepted windows: 2
+Rejected windows: 5
+
+--- STRATEGY ---
+Total OOS P&L: -362.45
+Average OOS P&L: -181.22
+Average OOS return: -0.18 %
+Profitable windows: 1 / 2
+Profitable window rate: 50.0 %
+Total OOS trades: 6
+Average win rate: 0.0 %
+
+--- RISK ---
+Average strategy drawdown: 889.45
+Average strategy P&L/DD: 0.02
+
+--- EXPOSURE ---
+Average exposure: 65.0 %
+
+--- BENCHMARK ---
+Benchmark total P&L: 1633.6
+Benchmark average return: 0.82 %
+Benchmark average drawdown: 687.05
+Benchmark average P&L/DD: 1.05
+
+--- RELATIVE PERFORMANCE ---
+Total excess P&L: -1996.05
+Average excess return: -1.0 %
+Benchmark beaten: 0 / 2
+Benchmark beat rate: 0.0 %
+
+========================================
+V1 HOLDOUT HAS NOW BEEN CONSUMED
+========================================
+Do not tune V1 and rerun this holdout as a new unbiased test.

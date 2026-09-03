@@ -1,0 +1,124 @@
+Development: 2020-01-01 → 2025-08-29
+Final holdout: 2025-09-01 → 2026-09-02
+
+Final holdout remains UNUSED.
+
+========================================
+SLIPPAGE SCENARIO: 0.0 points
+========================================
+
+--- SELECTOR EVALUATION ---
+Different selections: 7
+P&L selector OOS total: 4067.3
+Risk selector OOS total: 5054.65
+Risk selector better: 5
+P&L selector better: 2
+Same result: 0
+
+--- WALK FORWARD SUMMARY ---
+Accepted windows: 9
+Profitable OOS windows: 6
+Losing OOS windows: 3
+Total OOS P&L: 2572.1
+Average OOS P&L: 285.79
+Average OOS return: 0.29 %
+Profitable window rate: 66.67 %
+Total OOS trades: 29
+
+--- ACCEPTANCE EVALUATION ---
+baseline | Accepted: 9 | OOS P&L: 2572.1 | Profitable: 6 | Losing: 3
+strong_profit | Accepted: 8 | OOS P&L: 2169.3 | Profitable: 5 | Losing: 3
+risk_filtered | Accepted: 5 | OOS P&L: 1942.9 | Profitable: 3 | Losing: 2
+
+========================================
+SLIPPAGE SCENARIO: 5.0 points
+========================================
+
+--- SELECTOR EVALUATION ---
+Different selections: 11
+P&L selector OOS total: 1878.7
+Risk selector OOS total: 5126.35
+Risk selector better: 8
+P&L selector better: 3
+Same result: 0
+
+--- WALK FORWARD SUMMARY ---
+Accepted windows: 9
+Profitable OOS windows: 5
+Losing OOS windows: 4
+Total OOS P&L: 2252.1
+Average OOS P&L: 250.23
+Average OOS return: 0.25 %
+Profitable window rate: 55.56 %
+Total OOS trades: 29
+
+--- ACCEPTANCE EVALUATION ---
+baseline | Accepted: 9 | OOS P&L: 2252.1 | Profitable: 5 | Losing: 4
+strong_profit | Accepted: 8 | OOS P&L: 1874.3 | Profitable: 4 | Losing: 4
+risk_filtered | Accepted: 5 | OOS P&L: 1777.9 | Profitable: 3 | Losing: 2
+
+========================================
+SLIPPAGE SCENARIO: 10.0 points
+========================================
+
+--- SELECTOR EVALUATION ---
+Different selections: 10
+P&L selector OOS total: 1137.8
+Risk selector OOS total: 3744.3
+Risk selector better: 7
+P&L selector better: 3
+Same result: 0
+
+--- WALK FORWARD SUMMARY ---
+Accepted windows: 8
+Profitable OOS windows: 4
+Losing OOS windows: 4
+Total OOS P&L: 1275.8
+Average OOS P&L: 159.47
+Average OOS return: 0.16 %
+Profitable window rate: 50.0 %
+Total OOS trades: 25
+
+--- ACCEPTANCE EVALUATION ---
+baseline | Accepted: 8 | OOS P&L: 1275.8 | Profitable: 4 | Losing: 4
+strong_profit | Accepted: 7 | OOS P&L: 923.0 | Profitable: 3 | Losing: 4
+risk_filtered | Accepted: 4 | OOS P&L: 956.6 | Profitable: 2 | Losing: 2
+
+========================================
+SLIPPAGE SENSITIVITY COMPARISON
+========================================
+
+Slippage: 0.0 points
+Accepted windows: 9
+Total OOS P&L: 2572.1
+Average OOS P&L: 285.79
+Profitable windows: 6 / 9
+Profitable window rate: 66.67 %
+Total OOS trades: 29
+P&L selector all-window OOS: 4067.3
+Risk selector all-window OOS: 5054.65
+
+Slippage: 5.0 points
+Accepted windows: 9
+Total OOS P&L: 2252.1
+Average OOS P&L: 250.23
+Profitable windows: 5 / 9
+Profitable window rate: 55.56 %
+Total OOS trades: 29
+P&L selector all-window OOS: 1878.7
+Risk selector all-window OOS: 5126.35
+
+Slippage: 10.0 points
+Accepted windows: 8
+Total OOS P&L: 1275.8
+Average OOS P&L: 159.47
+Profitable windows: 4 / 8
+Profitable window rate: 50.0 %
+Total OOS trades: 25
+P&L selector all-window OOS: 1137.8
+Risk selector all-window OOS: 3744.3
+
+--- P&L DEGRADATION VS 0 SLIPPAGE ---
+Slippage: 0.0 | OOS P&L: 2572.1 | Change vs baseline: 0.0
+Slippage: 5.0 | OOS P&L: 2252.1 | Change vs baseline: -320.0
+Slippage: 10.0 | OOS P&L: 1275.8 | Change vs baseline: -1296.3

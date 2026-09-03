@@ -1,0 +1,224 @@
+Development: 2020-01-01 → 2025-08-29
+Final holdout: 2025-09-01 → 2026-09-02
+
+--- WALK FORWARD WINDOWS ---
+
+Window: 1 Train: 2020-01-01 → 2020-06-25 Test: 2020-06-26 → 2020-08-20
+P&L selection: sma_basic SMA: 50 | Risk selection: sma_basic SMA: 50
+Selected: sma_basic SMA: 50 Realized: -124.1 P&L: 1072.6 Trades: 1 Win Rate: 0.0 Drawdown: 353.75 P&L/DD: 3.03
+Status: REJECTED
+
+Window: 2 Train: 2020-02-26 → 2020-08-20 Test: 2020-08-21 → 2020-10-16
+P&L selection: sma_basic SMA: 50 | Risk selection: sma_basic SMA: 50
+Selected: sma_basic SMA: 50 Realized: 0.0 P&L: 2220.0 Trades: 0 Win Rate: 0.0 Drawdown: 408.95 P&L/DD: 5.43
+Status: REJECTED
+
+Window: 3 Train: 2020-04-29 → 2020-10-16 Test: 2020-10-19 → 2020-12-14
+P&L selection: sma_basic SMA: 3 | Risk selection: sma_basic SMA: 3
+Selected: sma_basic SMA: 3 Realized: 2019.3 P&L: 2019.3 Trades: 19 Win Rate: 73.68 Drawdown: 679.55 P&L/DD: 2.97
+Status: ACCEPTED
+OOS Trades: 6 OOS Realized: 473.25 OOS P&L: 1009.35 OOS Return: 1.01 OOS Win Rate: 33.33 OOS Drawdown: 459.6
+
+Window: 4 Train: 2020-06-26 → 2020-12-14 Test: 2020-12-15 → 2021-02-10
+P&L selection: sma_basic SMA: 3 | Risk selection: sma_crossover SMA: 50
+Selector comparison: P&L selector OOS: 746.3 | Risk selector OOS: 615.4
+Selected: sma_basic SMA: 3 Realized: 1696.85 P&L: 2232.95 Trades: 17 Win Rate: 58.82 Drawdown: 636.35 P&L/DD: 3.51
+Status: ACCEPTED
+OOS Trades: 4 OOS Realized: 130.9 OOS P&L: 746.3 OOS Return: 0.75 OOS Win Rate: 25.0 OOS Drawdown: 432.15
+
+Window: 5 Train: 2020-08-21 → 2021-02-10 Test: 2021-02-11 → 2021-04-12
+P&L selection: sma_basic SMA: 30 | Risk selection: sma_crossover SMA: 30
+Selector comparison: P&L selector OOS: -1055.35 | Risk selector OOS: -631.4
+Selected: sma_basic SMA: 30 Realized: 2186.95 P&L: 2802.35 Trades: 1 Win Rate: 100.0 Drawdown: 844.3 P&L/DD: 3.32
+Status: REJECTED
+
+Window: 6 Train: 2020-10-19 → 2021-04-12 Test: 2021-04-13 → 2021-06-10
+P&L selection: sma_basic SMA: 10 | Risk selection: sma_basic SMA: 10
+Selected: sma_basic SMA: 10 Realized: 2353.75 P&L: 1938.1 Trades: 7 Win Rate: 42.86 Drawdown: 1054.8 P&L/DD: 1.84
+Status: ACCEPTED
+OOS Trades: 2 OOS Realized: 151.4 OOS P&L: 811.95 OOS Return: 0.81 OOS Win Rate: 100.0 OOS Drawdown: 410.85
+
+Window: 7 Train: 2020-12-15 → 2021-06-10 Test: 2021-06-11 → 2021-08-06
+P&L selection: sma_basic SMA: 10 | Risk selection: sma_basic SMA: 10
+Selected: sma_basic SMA: 10 Realized: 265.45 P&L: 926.0 Trades: 9 Win Rate: 44.44 Drawdown: 1054.8 P&L/DD: 0.88
+Status: ACCEPTED
+OOS Trades: 6 OOS Realized: -668.35 OOS P&L: -391.7 OOS Return: -0.39 OOS Win Rate: 0.0 OOS Drawdown: 741.3
+
+Window: 8 Train: 2021-02-11 → 2021-08-06 Test: 2021-08-09 → 2021-10-05
+P&L selection: sma_crossover SMA: 50 | Risk selection: sma_crossover SMA: 50
+Selected: sma_crossover SMA: 50 Realized: -198.85 P&L: 962.15 Trades: 1 Win Rate: 0.0 Drawdown: 374.1 P&L/DD: 2.57
+Status: REJECTED
+
+Window: 9 Train: 2021-04-13 → 2021-10-05 Test: 2021-10-06 → 2021-12-03
+P&L selection: sma_basic SMA: 20 | Risk selection: sma_basic SMA: 50
+Selector comparison: P&L selector OOS: -219.1 | Risk selector OOS: -34.3
+Selected: sma_basic SMA: 20 Realized: 2237.3 P&L: 2388.25 Trades: 5 Win Rate: 40.0 Drawdown: 514.8 P&L/DD: 4.64
+Status: ACCEPTED
+OOS Trades: 2 OOS Realized: -219.1 OOS P&L: -219.1 OOS Return: -0.22 OOS Win Rate: 50.0 OOS Drawdown: 875.6
+
+Window: 10 Train: 2021-06-11 → 2021-12-03 Test: 2021-12-06 → 2022-01-31
+P&L selection: sma_crossover SMA: 30 | Risk selection: sma_basic SMA: 20
+Selector comparison: P&L selector OOS: -405.6 | Risk selector OOS: 122.2
+Selected: sma_crossover SMA: 30 Realized: 1524.5 P&L: 1524.5 Trades: 5 Win Rate: 40.0 Drawdown: 1045.3 P&L/DD: 1.46
+Status: ACCEPTED
+OOS Trades: 1 OOS Realized: -405.6 OOS P&L: -405.6 OOS Return: -0.41 OOS Win Rate: 0.0 OOS Drawdown: 1316.55
+
+Window: 11 Train: 2021-08-09 → 2022-01-31 Test: 2022-02-01 → 2022-03-30
+P&L selection: sma_basic SMA: 10 | Risk selection: sma_basic SMA: 10
+Selected: sma_basic SMA: 10 Realized: 750.0 P&L: 750.0 Trades: 10 Win Rate: 30.0 Drawdown: 1331.75 P&L/DD: 0.56
+Status: ACCEPTED
+OOS Trades: 2 OOS Realized: -944.3 OOS P&L: 15.15 OOS Return: 0.02 OOS Win Rate: 0.0 OOS Drawdown: 1008.1
+
+Window: 12 Train: 2021-10-06 → 2022-03-30 Test: 2022-03-31 → 2022-05-30
+P&L selection: sma_basic SMA: 20 | Risk selection: sma_basic SMA: 20
+Selected: sma_basic SMA: 20 Realized: -340.95 P&L: -55.6 Trades: 5 Win Rate: 20.0 Drawdown: 1188.15 P&L/DD: -0.05
+Status: REJECTED
+
+Window: 13 Train: 2021-12-06 → 2022-05-30 Test: 2022-05-31 → 2022-07-25
+P&L selection: sma_basic SMA: 10 | Risk selection: sma_basic SMA: 10
+Selected: sma_basic SMA: 10 Realized: -109.95 P&L: 244.85 Trades: 7 Win Rate: 28.57 Drawdown: 1472.85 P&L/DD: 0.17
+Status: ACCEPTED
+OOS Trades: 2 OOS Realized: -66.8 OOS P&L: 402.8 OOS Return: 0.4 OOS Win Rate: 50.0 OOS Drawdown: 347.2
+
+Window: 14 Train: 2022-02-01 → 2022-07-25 Test: 2022-07-26 → 2022-09-22
+P&L selection: sma_basic SMA: 10 | Risk selection: sma_basic SMA: 10
+Selected: sma_basic SMA: 10 Realized: 341.95 P&L: 811.55 Trades: 6 Win Rate: 50.0 Drawdown: 1472.85 P&L/DD: 0.55
+Status: ACCEPTED
+OOS Trades: 4 OOS Realized: 602.95 OOS P&L: 602.95 OOS Return: 0.6 OOS Win Rate: 50.0 OOS Drawdown: 868.2
+
+Window: 15 Train: 2022-03-31 → 2022-09-22 Test: 2022-09-23 → 2022-11-22
+P&L selection: sma_basic SMA: 50 | Risk selection: sma_basic SMA: 50
+Selected: sma_basic SMA: 50 Realized: -165.45 P&L: 1302.95 Trades: 1 Win Rate: 0.0 Drawdown: 643.6 P&L/DD: 2.02
+Status: REJECTED
+
+Window: 16 Train: 2022-05-31 → 2022-11-22 Test: 2022-11-23 → 2023-01-17
+P&L selection: sma_basic SMA: 30 | Risk selection: sma_crossover SMA: 50
+Selector comparison: P&L selector OOS: -27.0 | Risk selector OOS: 0.0
+Selected: sma_basic SMA: 30 Realized: 1199.95 P&L: 1866.0 Trades: 2 Win Rate: 50.0 Drawdown: 797.8 P&L/DD: 2.34
+Status: REJECTED
+
+Window: 17 Train: 2022-07-26 → 2023-01-17 Test: 2023-01-18 → 2023-03-16
+P&L selection: sma_crossover SMA: 30 | Risk selection: sma_crossover SMA: 30
+Selected: sma_crossover SMA: 30 Realized: 538.45 P&L: 538.45 Trades: 2 Win Rate: 50.0 Drawdown: 503.4 P&L/DD: 1.07
+Status: REJECTED
+
+Window: 18 Train: 2022-09-23 → 2023-03-16 Test: 2023-03-17 → 2023-05-18
+P&L selection: sma_crossover SMA: 50 | Risk selection: sma_crossover SMA: 50
+Selected: sma_crossover SMA: 50 Realized: 0.0 P&L: 0.0 Trades: 0 Win Rate: 0.0 Drawdown: 0.0 P&L/DD: 0
+Status: REJECTED
+
+Window: 19 Train: 2022-11-23 → 2023-05-18 Test: 2023-05-19 → 2023-07-14
+P&L selection: sma_basic SMA: 50 | Risk selection: sma_basic SMA: 50
+Selected: sma_basic SMA: 50 Realized: 0.0 P&L: 586.1 Trades: 0 Win Rate: 0.0 Drawdown: 268.9 P&L/DD: 2.18
+Status: REJECTED
+
+Window: 20 Train: 2023-01-18 → 2023-07-14 Test: 2023-07-17 → 2023-09-11
+P&L selection: sma_basic SMA: 50 | Risk selection: sma_basic SMA: 50
+Selected: sma_basic SMA: 50 Realized: 0.0 P&L: 2020.65 Trades: 0 Win Rate: 0.0 Drawdown: 268.9 P&L/DD: 7.51
+Status: REJECTED
+
+Window: 21 Train: 2023-03-17 → 2023-09-11 Test: 2023-09-12 → 2023-11-09
+P&L selection: sma_basic SMA: 20 | Risk selection: sma_crossover SMA: 50
+Selector comparison: P&L selector OOS: -647.55 | Risk selector OOS: -455.35
+Selected: sma_basic SMA: 20 Realized: 1717.8 P&L: 2179.1 Trades: 2 Win Rate: 100.0 Drawdown: 531.65 P&L/DD: 4.1
+Status: REJECTED
+
+Window: 22 Train: 2023-05-19 → 2023-11-09 Test: 2023-11-10 → 2024-01-08
+P&L selection: sma_crossover SMA: 20 | Risk selection: sma_crossover SMA: 20
+Selected: sma_crossover SMA: 20 Realized: 530.85 P&L: 512.1 Trades: 3 Win Rate: 66.67 Drawdown: 840.4 P&L/DD: 0.61
+Status: REJECTED
+
+Window: 23 Train: 2023-07-17 → 2024-01-08 Test: 2024-01-09 → 2024-03-04
+P&L selection: sma_basic SMA: 20 | Risk selection: sma_crossover SMA: 50
+Selector comparison: P&L selector OOS: 237.5 | Risk selector OOS: 0.0
+Selected: sma_basic SMA: 20 Realized: -164.35 P&L: 1934.6 Trades: 2 Win Rate: 50.0 Drawdown: 840.4 P&L/DD: 2.3
+Status: REJECTED
+
+Window: 24 Train: 2023-09-12 → 2024-03-04 Test: 2024-03-05 → 2024-05-07
+P&L selection: sma_basic SMA: 50 | Risk selection: sma_basic SMA: 50
+Selected: sma_basic SMA: 50 Realized: 0.0 P&L: 2550.95 Trades: 0 Win Rate: 0.0 Drawdown: 858.65 P&L/DD: 2.97
+Status: REJECTED
+
+Window: 25 Train: 2023-11-10 → 2024-05-07 Test: 2024-05-08 → 2024-07-03
+P&L selection: sma_basic SMA: 50 | Risk selection: sma_basic SMA: 50
+Selected: sma_basic SMA: 50 Realized: 898.8 P&L: 744.25 Trades: 2 Win Rate: 100.0 Drawdown: 706.0 P&L/DD: 1.05
+Status: REJECTED
+
+Window: 26 Train: 2024-01-09 → 2024-07-03 Test: 2024-07-04 → 2024-08-30
+P&L selection: sma_crossover SMA: 20 | Risk selection: sma_crossover SMA: 20
+Selected: sma_crossover SMA: 20 Realized: -249.5 P&L: 1228.4 Trades: 4 Win Rate: 50.0 Drawdown: 1388.75 P&L/DD: 0.88
+Status: REJECTED
+
+Window: 27 Train: 2024-03-05 → 2024-08-30 Test: 2024-09-02 → 2024-10-28
+P&L selection: sma_crossover SMA: 50 | Risk selection: sma_crossover SMA: 50
+Selected: sma_crossover SMA: 50 Realized: 0.0 P&L: 2427.3 Trades: 0 Win Rate: 0.0 Drawdown: 1018.35 P&L/DD: 2.38
+Status: REJECTED
+
+Window: 28 Train: 2024-05-08 → 2024-10-28 Test: 2024-10-29 → 2024-12-26
+P&L selection: sma_basic SMA: 20 | Risk selection: sma_basic SMA: 20
+Selected: sma_basic SMA: 20 Realized: 1506.0 P&L: 1506.0 Trades: 3 Win Rate: 66.67 Drawdown: 1044.15 P&L/DD: 1.44
+Status: REJECTED
+
+Window: 29 Train: 2024-07-04 → 2024-12-26 Test: 2024-12-27 → 2025-02-19
+P&L selection: sma_basic SMA: 30 | Risk selection: sma_basic SMA: 30
+Selected: sma_basic SMA: 30 Realized: -364.35 P&L: -364.35 Trades: 3 Win Rate: 33.33 Drawdown: 1921.5 P&L/DD: -0.19
+Status: REJECTED
+
+Window: 30 Train: 2024-09-02 → 2025-02-19 Test: 2025-02-20 → 2025-04-24
+P&L selection: sma_basic SMA: 10 | Risk selection: sma_basic SMA: 10
+Selected: sma_basic SMA: 10 Realized: -604.0 P&L: -604.0 Trades: 5 Win Rate: 60.0 Drawdown: 1641.05 P&L/DD: -0.37
+Status: REJECTED
+
+Window: 31 Train: 2024-10-29 → 2025-04-24 Test: 2025-04-25 → 2025-06-20
+P&L selection: sma_basic SMA: 10 | Risk selection: sma_basic SMA: 10
+Selected: sma_basic SMA: 10 Realized: 345.9 P&L: 1238.5 Trades: 4 Win Rate: 75.0 Drawdown: 1070.7 P&L/DD: 1.16
+Status: REJECTED
+
+Window: 32 Train: 2024-12-27 → 2025-06-20 Test: 2025-06-23 → 2025-08-18
+P&L selection: sma_crossover SMA: 30 | Risk selection: sma_crossover SMA: 30
+Selected: sma_crossover SMA: 30 Realized: 534.85 P&L: 534.85 Trades: 4 Win Rate: 50.0 Drawdown: 1507.05 P&L/DD: 0.35
+Status: REJECTED
+
+--- SELECTOR EVALUATION ---
+Total development windows: 32
+Different selections: 7
+P&L selector OOS total: 4067.3
+Risk selector OOS total: 5054.65
+Risk selector better on disagreements: 5
+P&L selector better on disagreements: 2
+Same OOS result on disagreements: 0
+
+--- WALK FORWARD SUMMARY ---
+Accepted windows: 9
+Profitable OOS windows: 6
+Losing OOS windows: 3
+Total OOS P&L: 2572.1
+Average OOS P&L: 285.79
+Diagnostic sum of OOS returns: 2.57
+Average OOS return: 0.29
+Best OOS window: 3 P&L: 1009.35
+Worst OOS window: 10 P&L: -405.6
+Profitable OOS window rate: 66.67 %
+Total OOS trades: 29
+Average OOS window win rate: 34.26 %
+Average accepted Train P&L/DD: 1.84
+
+--- ACCEPTANCE EVALUATION ---
+
+Policy: baseline
+Accepted: 9
+OOS P&L: 2572.1
+Profitable: 6
+Losing: 3
+
+Policy: strong_profit
+Accepted: 8
+OOS P&L: 2169.3
+Profitable: 5
+Losing: 3
+
+Policy: risk_filtered
+Accepted: 5
+OOS P&L: 1942.9
+Profitable: 3
+Losing: 2
