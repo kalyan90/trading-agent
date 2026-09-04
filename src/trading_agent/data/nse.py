@@ -74,13 +74,16 @@ class NseHistoricalClient:
             time.sleep(self.pause_seconds)
         return list(records.values())
 
-    def fetch_futures_history(self, start: date, end: date, symbol="NIFTY"):
+    def fetch_futures_history(
+        self, start: date, end: date, symbol="NIFTY",
+        instrument_type="FUTIDX",
+    ):
         records = {}
         for chunk_start, chunk_end in self._chunks(start, end):
             raw_rows = self._get(self.futures_api_url, {
                 "from": chunk_start.strftime("%d-%m-%Y"),
                 "to": chunk_end.strftime("%d-%m-%Y"),
-                "instrumentType": "FUTIDX",
+                "instrumentType": instrument_type,
                 "symbol": symbol,
             }, self.futures_report_url)
             for raw in raw_rows:

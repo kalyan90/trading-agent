@@ -318,8 +318,13 @@ from datetime import date
 from trading_agent.data.nse import NseHistoricalClient
 
 client = NseHistoricalClient()
-index_rows = client.fetch_index_history(date(2026, 1, 1), date(2026, 1, 31))
-future_rows = client.fetch_futures_history(date(2026, 1, 1), date(2026, 1, 31))
+index_rows = client.fetch_index_history(
+    date(2026, 1, 1), date(2026, 1, 31), index="NIFTY 50"
+)
+future_rows = client.fetch_futures_history(
+    date(2026, 1, 1), date(2026, 1, 31),
+    symbol="NIFTY", instrument_type="FUTIDX",
+)
 ```
 
 Both methods handle NSE session cookies, 27-day chunks, retries, normalization, and duplicate removal. Network calls are never made during module import or normal backtests.
@@ -327,15 +332,19 @@ Both methods handle NSE session cookies, 27-day chunks, retries, normalization, 
 ```bash
 uv run python scripts/download_nse_index.py --start-year 2020 --end-year 2026
 uv run python scripts/download_nse_futures.py --start-year 2020 --end-year 2026
+uv run python scripts/download_nse_futures.py --symbol RELIANCE --instrument-type FUTSTK --start-year 2020 --end-year 2026
 ```
 
 Index files default to `data/index/`; futures files default to `data/futures/`. Downloaded data must pass repository integrity checks before research use.
 
+The futures client, downloader, typed loader, front-month selector, roll engine, lot sizing, margin account, and charge model are symbol-independent. The current frozen experiment remains NIFTY-specific because its stored spot dataset and V2 signal evidence are NIFTY-specific. Applying the engine to another index or stock requires that instrument's spot history and a separately evaluated configuration; it must not reuse NIFTY results as validation.
+
 ## V3 Step 2: real futures execution
 
-**Status:** implemented development experiment; not yet a frozen release checkpoint.
+**Status:** frozen development checkpoint at `v3.2.1-configurable-futures-fix`. Strategy parameters, data scope, roll policy, capital, margin proxy, and charge assumptions must not be changed under this version.
 
 - The V2 gate and Trend-Momentum signals still use spot NIFTY data. This preserves the frozen signal policy while testing a tradable execution instrument.
+- The ATR exit reads `atr_stop_multiple` from configuration; V3 Step 2 contains no separate hardcoded stop multiple.
 - A signal formed at a spot close executes only at the next session for which a futures open is available.
 - Buys pay futures open +5 points and sells receive futures open −5 points. Each point is multiplied by that contract's historical NSE market lot.
 - ₹20 is charged per completed futures round trip, split equally between entry and exit. A rollover closes one contract leg and opens the next, so both orders incur their respective half-cost.

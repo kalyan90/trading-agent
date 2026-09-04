@@ -4,6 +4,7 @@ import pytest
 
 from trading_agent.research.futures import (
     FuturesMarketData,
+    atr_stop_triggered,
     build_front_month_series,
     evaluate_futures_execution,
     load_futures_contracts,
@@ -37,6 +38,11 @@ def test_front_month_selection_rolls_after_expiry_session():
     assert [item.expiry.day for item in series] == [27, 27, 24]
 
 
+def test_futures_atr_stop_uses_supplied_config_multiple():
+    assert atr_stop_triggered(80, entry_price=100, entry_atr=10, stop_multiple=2)
+    assert not atr_stop_triggered(80, entry_price=100, entry_atr=10, stop_multiple=3)
+
+
 def test_real_futures_loader_resolves_blank_lots():
     root = Path(__file__).parents[1]
     records = load_futures_contracts(root / "data" / "futures")
@@ -51,6 +57,18 @@ def test_front_month_series_has_one_contract_per_session():
     dates = [record.date.date() for record in series]
     assert dates == sorted(set(dates))
     assert all(record.date.date() <= record.expiry.date() for record in series)
+
+
+def test_loader_requires_symbol_when_directory_contains_multiple_instruments(tmp_path):
+    header = "symbol,expiry\n"
+    (tmp_path / "nifty_futures_contracts_2026.csv").write_text(
+        header + "NIFTY,27-Jan-2026\n", encoding="utf-8"
+    )
+    (tmp_path / "reliance_futures_contracts_2026.csv").write_text(
+        header + "RELIANCE,27-Jan-2026\n", encoding="utf-8"
+    )
+    with pytest.raises(ValueError, match="pass symbol explicitly"):
+        load_futures_contracts(tmp_path)
 
 
 def test_real_futures_development_result_is_reproducible():

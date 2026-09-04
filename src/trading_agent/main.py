@@ -573,7 +573,7 @@ def run_development_comparison(
     print("Excess P&L:", round(v3_result.excess_pnl, 2))
 
     futures = build_front_month_series(
-        load_futures_contracts(Path("data/futures"))
+        load_futures_contracts(Path("data/futures"), symbol=V2_CONFIG.symbol)
     )
     futures_result = evaluate_futures_execution(
         development_data, futures, V2_CONFIG

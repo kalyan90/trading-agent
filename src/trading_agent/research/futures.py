@@ -33,11 +33,21 @@ class FuturesMarketData(BaseModel):
     underlying_value: float | None = None
 
 
-def load_futures_contracts(data_dir: Path) -> list[FuturesMarketData]:
+def load_futures_contracts(
+    data_dir: Path, symbol: str | None = None,
+) -> list[FuturesMarketData]:
+    """Load one instrument's yearly futures files from a shared data directory."""
     raw_rows = []
-    for path in sorted(data_dir.glob("nifty_futures_contracts_*.csv")):
+    for path in sorted(data_dir.glob("*_futures_contracts_*.csv")):
         with path.open(encoding="utf-8") as source:
-            raw_rows.extend(csv.DictReader(source))
+            raw_rows.extend(
+                row for row in csv.DictReader(source)
+                if symbol is None or row["symbol"] == symbol
+            )
+
+    symbols = {row["symbol"] for row in raw_rows}
+    if len(symbols) > 1:
+        raise ValueError("Multiple futures symbols found; pass symbol explicitly")
 
     lots_by_expiry = {}
     for expiry in {row["expiry"] for row in raw_rows}:
@@ -65,6 +75,13 @@ def load_futures_contracts(data_dir: Path) -> list[FuturesMarketData]:
             underlying_value=float(row["underlying_value"]) if row["underlying_value"] else None,
         ))
     return sorted(records, key=lambda item: (item.date, item.expiry))
+
+
+def atr_stop_triggered(
+    settlement_price: float, entry_price: float, entry_atr: float,
+    stop_multiple: float,
+) -> bool:
+    return settlement_price <= entry_price - stop_multiple * entry_atr
 
 
 def build_front_month_series(contracts: list[FuturesMarketData]):
@@ -246,7 +263,10 @@ def evaluate_futures_execution(
         if allowed:
             features = build_market_features(spot_data[:index + 1])
             signal = generate_trend_momentum_signal(features)
-            if position and entry_atr is not None and future.settlement_price <= entry_price - 2 * entry_atr:
+            if position and entry_atr is not None and atr_stop_triggered(
+                future.settlement_price, entry_price, entry_atr,
+                trading.atr_stop_multiple,
+            ):
                 signal = signal.model_copy(update={"action": Action.SELL})
             pending, pending_atr = signal.action, features.atr
         else:

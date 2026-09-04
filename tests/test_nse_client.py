@@ -34,6 +34,24 @@ def test_futures_api_preserves_contract_identity(monkeypatch):
     assert rows[0]["market_lot"] == 65
 
 
+def test_futures_api_accepts_stock_instrument_type(monkeypatch):
+    client = client_without_network()
+    client.pause_seconds = 0
+    captured = {}
+
+    def fake_get(url, params, referer):
+        captured.update(params)
+        return []
+
+    monkeypatch.setattr(client, "_get", fake_get)
+    client.fetch_futures_history(
+        date(2026, 1, 1), date(2026, 1, 1),
+        symbol="RELIANCE", instrument_type="FUTSTK",
+    )
+    assert captured["symbol"] == "RELIANCE"
+    assert captured["instrumentType"] == "FUTSTK"
+
+
 def test_api_rejects_reversed_date_range():
     client = client_without_network()
     client.pause_seconds = 0

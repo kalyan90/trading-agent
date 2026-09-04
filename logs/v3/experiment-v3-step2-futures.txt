@@ -1,5 +1,7 @@
 V3 STEP 2 - REAL NIFTY FUTURES EXECUTION
 Generated from the development dataset; frozen V1 and V2 were not changed.
+Frozen checkpoint: v3.2.1-configurable-futures-fix
+ATR stop multiple source: strategy configuration
 
 Evaluation range: 2020-12-30 to 2025-07-04
 Signal and gate source: NIFTY 50 spot daily candles
