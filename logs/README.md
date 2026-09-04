@@ -125,3 +125,7 @@ holdout run or deployment.
 `v4/experiment-v4-step3-paper-readiness.txt` records infrastructure validation
 only. It contains no prospective return claim; observation requires at least 12
 complete months from the locked inception without parameter changes.
+
+`v4/experiment-v4-step4-operational-hardening.txt` records audit-layer validation;
+it is not prospective performance evidence. Monthly reports belong under ignored
+local `var/` storage and must be backed up separately.

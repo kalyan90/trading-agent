@@ -1,0 +1,25 @@
+V4 Step 4 operational-hardening evidence (NOT performance evidence)
+Implementation date: 2026-09-04
+Base: frozen V4 Step 3 paper workflow and deterministic input generator
+Strategy changes: none
+Reserved holdout evaluated: no
+
+Added controls:
+- immutable monthly operational reports
+- SHA-256 digests for state, append-only journal, and every decision input
+- checksum-named evidence archive including the generated report
+- previous-report hash chain and locked-configuration fingerprint
+- duplicate decision and order-result event detection
+- journal parsing and expected-versus-actual position reconciliation checks
+- explicit prospective NIFTY 50 price-return benchmark and excess return
+- fees, marked paper equity, return, equity high, and carried maximum drawdown
+- machine-readable twelve-month assessment gates
+- rejection of future input evidence, missing files, unpriced open positions,
+  malformed journals, missing benchmark observations, and report overwrite
+
+Operational boundary:
+- no network or broker adapter
+- no scheduler side effects
+- no rank, regime, capital, allocation, cost, or execution-policy changes
+- no claim of profit, readiness, or live-trading suitability
+- first genuine observation remains the September 2026 month-end decision

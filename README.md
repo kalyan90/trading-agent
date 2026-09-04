@@ -17,6 +17,7 @@ A deterministic, chronology-safe research system for NSE index, futures, and cas
 | V4 Step 1 | Frozen limited inconclusive checkpoint | Monthly 12−1 relative strength passes 4/5 pillars; not promotable or retired |
 | V4 Step 2 | Frozen promoted development baseline | Fixed NIFTY 200-SMA overlay passes all 5 promotion pillars |
 | V4 Step 3 | Active paper-readiness infrastructure | ₹1 lakh broker-neutral workflow with deterministic evidence generation; prospective observation not yet started |
+| V4 Step 4 | Active operational hardening | Immutable audits, evidence archives, reconciliation gates, and prospective NIFTY benchmark reporting |
 
 Frozen V1/V2 parameters and evidence must not be revised in response to later results. Reserved holdouts remain untouched until a version is explicitly ready for one-time evaluation.
 

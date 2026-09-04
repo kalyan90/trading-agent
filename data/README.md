@@ -110,3 +110,8 @@ regime use rows no later than `signal_date`, while execution prices use the firs
 available stock open strictly after that date and no later than `as_of`. `SMA`
 means simple moving average; `RS` means relative strength; `12−1` means 252-session
 momentum with the latest 21 sessions skipped; `PIT` means point in time.
+
+V4 Step 4 reports use only NIFTY 50 observations from the prospective inception
+through the explicit report date for their declared price-return benchmark. They
+do not read the reserved historical strategy holdout. Every source file is hashed,
+and checksum-named snapshots preserve otherwise mutable paper state and journals.

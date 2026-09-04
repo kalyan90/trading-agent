@@ -180,3 +180,39 @@ after the explicit inception. Acceptance additionally requires zero duplicate or
 reconciliation failures, positive net return after all costs, maximum drawdown no
 greater than 20%, a declared benchmark comparison, and no parameter changes during
 observation.
+
+## V4 Step 4 operational audit
+
+Step 4 does not change or retest the strategy. After each monthly plan and paper
+execution, create a chained integrity and benchmark report:
+
+```bash
+uv run python scripts/run_v4_step4_audit.py \
+  --as-of 2026-10-01 \
+  --state var/v4-step3/state.json \
+  --journal var/v4-step3/journal.jsonl \
+  --input var/v4-step3/inputs/2026-09.json \
+  --index-dir data \
+  --output var/v4-step4/reports/2026-10-01.json \
+  --archive-dir var/v4-step4/archive/2026-10-01
+```
+
+For later reports, repeat `--input` for every monthly evidence file and provide
+the immediately preceding report with `--previous-report`. This creates a hash
+chain, enforces an unchanged configuration fingerprint, carries the equity high
+and maximum drawdown forward, and prevents reports from being overwritten.
+
+The archive contains checksum-named copies of the mutable state and journal plus
+every input and the report. Back up `var/v4-step4` outside the repository after
+each run. The audit rejects malformed journals, future-dated inputs, unpriced open
+positions, missing benchmark observations, and missing evidence. It reports
+duplicate decisions/results, reconciliation failures, fees, paper return, NIFTY
+50 price return, excess return, drawdown, and every 12-month assessment gate.
+
+Monthly operating order:
+
+1. Refresh and validate official equity, NIFTY 50, and PIT membership data.
+2. Generate the immutable Step 3 input after the next session opens.
+3. Run the Step 3 plan, paper execution, reconciliation, and status commands.
+4. Run this Step 4 audit and copy the archive to independent storage.
+5. Keep the frozen policy unchanged; record research ideas for a later version.
