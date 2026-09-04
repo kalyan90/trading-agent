@@ -211,3 +211,19 @@ def test_status_requires_twelve_complete_months(tmp_path):
     assert subject.status(date(2026, 10, 1))["months_observed"] == 0
     assert subject.status(date(2027, 8, 31))["eligible_for_assessment"] is False
     assert subject.status(date(2027, 9, 30))["eligible_for_assessment"] is True
+
+
+def test_default_dp_charge_type_does_not_break_sell_fee_path(tmp_path):
+    subject = coordinator(tmp_path, mode=PaperMode.PAPER)
+    first = make_plan(subject, [candidate("A", 1)], [price("A", 100)])
+    assert subject.execute(first.plan_id, OPEN, [price("A", 100)])[0].status == OrderStatus.FILLED
+    second = subject.create_plan(
+        signal_date=date(2026, 10, 30), as_of=date(2026, 11, 2),
+        candidates=[], prices=[price("A", 110, date(2026, 11, 2))],
+        regime_close=100, regime_sma200=100,
+    )
+    result = subject.execute(
+        second.plan_id, date(2026, 11, 2),
+        [price("A", 110, date(2026, 11, 2))],
+    )[0]
+    assert result.status == OrderStatus.FILLED

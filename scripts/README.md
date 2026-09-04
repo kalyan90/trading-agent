@@ -230,3 +230,43 @@ It exits unsuccessfully when the exact signal close, 200-session regime history,
 PIT snapshots, usable equity histories, later opening evidence, manifests, or
 checksums are missing. Suspensions and individual history/liquidity gaps remain
 visible warnings because the frozen strategy already handles those per symbol.
+
+## V5 Step 1 daily control plane
+
+Step 1 accepts target quantities and named satisfiers from a separately versioned
+strategy. It does not calculate V5 entry/exit signals yet. Dry-run remains default.
+
+Plan after a daily close:
+
+```bash
+uv run python scripts/run_v5_step1_daily.py plan \
+  --signal-date 2026-09-07 --inception 2026-09-04 --mode paper \
+  --input var/v5/inputs/2026-09-07-targets.json \
+  --state var/v5/state.json --journal var/v5/journal.jsonl
+```
+
+The target input contains an `intents` list. Each item has `symbol`,
+`target_quantity`, a non-empty `satisfiers` Boolean object, `evidence_complete`,
+and an optional `detail`. Every satisfier must pass before a trade is queued.
+
+Execute only with a later session's opening evidence:
+
+```bash
+uv run python scripts/run_v5_step1_daily.py execute \
+  --signal-date 2026-09-07 --as-of 2026-09-08 \
+  --inception 2026-09-04 --mode paper \
+  --input var/v5/inputs/2026-09-08-opens.json \
+  --state var/v5/state.json --journal var/v5/journal.jsonl
+```
+
+Record end-of-day portfolio and benchmark performance:
+
+```bash
+uv run python scripts/run_v5_step1_daily.py mark \
+  --as-of 2026-09-08 --inception 2026-09-04 --mode paper \
+  --input var/v5/inputs/2026-09-08-closes.json \
+  --state var/v5/state.json --journal var/v5/journal.jsonl
+```
+
+The mark input contains exact-date `marks` (`symbol`, `session_date`, `close`) and
+`benchmark_close`. State configuration must remain identical across commands.

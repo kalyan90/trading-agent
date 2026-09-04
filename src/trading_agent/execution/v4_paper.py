@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 from datetime import date, datetime
+from decimal import Decimal
 from enum import Enum
 from pathlib import Path
 from typing import Iterable
@@ -164,14 +165,14 @@ class V4PaperCoordinator:
         self.max_drawdown = 0.0
         self.broker = PaperBroker(
             initial_cash=config.initial_capital,
-            max_order_value=config.max_order_value or config.target_allocation,
+            max_order_value=config.initial_capital,
         )
         if self.state_path.exists():
             self._restore()
 
     def _fee(self, price: float, quantity: int, side: OrderSide) -> float:
         schedule = V3_STEP5_FEE_SCHEDULE.model_copy(update={
-            "dp_charge_per_sell": self.config.dp_charge_per_sell,
+            "dp_charge_per_sell": Decimal(str(self.config.dp_charge_per_sell)),
         })
         fee_side = FeeSide.BUY if side == OrderSide.BUY else FeeSide.SELL
         return float(calculate_cash_equity_fees(price, quantity, fee_side, schedule).total)
@@ -330,13 +331,18 @@ class V4PaperCoordinator:
                 self.journal.append("order_deferred", {"client_order_id": order.client_order_id, "as_of": as_of.isoformat()})
                 continue
             adverse = mark.open + SLIPPAGE if order.side == OrderSide.BUY else mark.open - SLIPPAGE
-            if adverse * order.quantity > self.broker.max_order_value:
+            buy_limit = self.config.max_order_value or self.config.target_allocation
+            if order.side == OrderSide.BUY and adverse * order.quantity > buy_limit:
                 result = OrderResult(
                     broker_order_id="coordinator-rejected", client_order_id=order.client_order_id,
                     status=OrderStatus.REJECTED, reason="order value exceeds risk limit",
                 )
             else:
                 fee = self._fee(adverse, order.quantity, order.side)
+                if order.side == OrderSide.SELL:
+                    self.broker.max_order_value = max(
+                        self.broker.max_order_value, adverse * order.quantity,
+                    )
                 self.broker.mark(order.symbol, adverse)
                 result = self.broker.submit(OrderRequest(
                     symbol=order.symbol, side=order.side, quantity=order.quantity,

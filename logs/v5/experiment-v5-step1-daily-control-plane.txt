@@ -1,0 +1,26 @@
+V5 Step 1 daily control-plane evidence (NOT STRATEGY PERFORMANCE)
+Implementation date: 2026-09-04
+V4 changes: none; V4 remains the separate monthly baseline
+V5 entry/exit policy: not yet defined
+Reserved holdout evaluated: no
+
+Implemented:
+- daily BUY, SELL, HOLD, DEFER, and BLOCK decisions
+- non-empty named satisfiers required for every target intent
+- no order unless all satisfiers pass and target differs from current position
+- open positions without a daily target defer rather than liquidate silently
+- chronological, duplicate-resistant daily plans and metrics
+- later-open-only, sell-before-buy, idempotent paper execution
+- per-order deferral for missing opening evidence
+- realistic cash-equity fees and adverse INR 0.05 slippage
+- buy value, cash, maximum-position, kill-switch, and reconciliation controls
+- sales are never blocked merely because an appreciated position exceeds buy limits
+- exact-date closing marks, paper equity, fees, return, drawdown, NIFTY benchmark,
+  and excess return
+- atomic restart state and append-only daily journal
+- live adapter remains disabled
+
+Interpretation:
+Step 1 proves only that the daily machinery can run and preserve decisions. It does
+not prove a daily trading edge. V5 Step 2 must predeclare one fixed strategy policy
+before development comparison or prospective shadow observation.

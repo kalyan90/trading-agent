@@ -129,3 +129,7 @@ complete months from the locked inception without parameter changes.
 `v4/experiment-v4-step4-operational-hardening.txt` records audit-layer validation;
 it is not prospective performance evidence. Monthly reports belong under ignored
 local `var/` storage and must be backed up separately.
+
+`v5/experiment-v5-step1-daily-control-plane.txt` records strategy-neutral daily
+infrastructure validation. BUY/SELL/HOLD mechanics are not evidence that a daily
+signal is profitable; V5 Step 2 must define that signal separately.

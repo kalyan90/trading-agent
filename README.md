@@ -18,19 +18,26 @@ A deterministic, chronology-safe research system for NSE index, futures, and cas
 | V4 Step 2 | Frozen promoted development baseline | Fixed NIFTY 200-SMA overlay passes all 5 promotion pillars |
 | V4 Step 3 | Active paper-readiness infrastructure | ₹1 lakh broker-neutral workflow with deterministic evidence generation; prospective observation not yet started |
 | V4 Step 4 | Active operational hardening | Immutable audits, evidence archives, reconciliation gates, and prospective NIFTY benchmark reporting |
+| V5 Step 1 | Active daily infrastructure | Strategy-neutral daily decisions, next-open paper fills, and daily performance evaluation |
 
 Frozen V1/V2 parameters and evidence must not be revised in response to later results. Reserved holdouts remain untouched until a version is explicitly ready for one-time evaluation.
 
 ## Current strategy
 
-The frozen V2 signal policy is long-only Trend-Momentum:
+The current V4 hypothesis is a monthly, long-only cash-equity portfolio:
 
-- SMA 20/50, RSI 14, MACD 12/26/9, and ATR 14
-- configurable 2× entry-ATR stop
-- signal after the daily close; execution at the next available open
-- no indicator optimization in V3 generalization experiments
+- current NIFTY 50, NIFTY Next 50, and NIFTY Bank constituents
+- positive 12−1 relative-strength ranking, with at most ten positions
+- risk-on only when NIFTY 50 closes above its 200-session SMA at month-end
+- ₹1,00,000 default paper capital and ₹10,000 fixed target per position
+- month-end signal followed by each stock's next available open
 
-V3 changes data, instruments, capital continuity, portfolio construction, and execution realism without rewriting this signal policy.
+The older V2/V3 Trend-Momentum family used SMA 20/50, RSI 14, MACD 12/26/9,
+ATR 14, and a configurable 2× entry-ATR stop. Its later V3 evaluation triggered
+the declared retirement rule; those historical results remain frozen.
+
+A plain-language walkthrough is in
+[`docs/STRATEGY_GUIDE.md`](docs/STRATEGY_GUIDE.md).
 
 ## Latest development evidence
 
@@ -86,6 +93,9 @@ evidence or deployment approval.
 
 | Location | Contents |
 |---|---|
+| [`docs/STRATEGY_GUIDE.md`](docs/STRATEGY_GUIDE.md) | Beginner-friendly explanation of the current strategy and its risks |
+| [`docs/LLM_DECISION_SUPPORT.md`](docs/LLM_DECISION_SUPPORT.md) | Safe LLM roles, boundaries, and future shadow-mode design |
+| [`docs/DAILY_SYSTEM.md`](docs/DAILY_SYSTEM.md) | Daily BUY/SELL/HOLD/DEFER/BLOCK lifecycle and V5 boundaries |
 | [`src/trading_agent/`](src/trading_agent/) | Domain models, signals, data, execution, and research engines |
 | [`scripts/README.md`](scripts/README.md) | Download, validation, comparison, and reproduction commands |
 | [`data/README.md`](data/README.md) | Dataset layout, provenance, schemas, and adjustment policy |
@@ -132,6 +142,7 @@ Dataset preparation and V3 commands are in [`scripts/README.md`](scripts/README.
 | EMA | Exponential Moving Average |
 | F&O | Futures and Options |
 | MACD | Moving Average Convergence Divergence |
+| LLM | Large Language Model |
 | MTM | Mark-to-Market |
 | NSE | National Stock Exchange of India |
 | OHLCV | Open, High, Low, Close, and Volume |
