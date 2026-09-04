@@ -1,0 +1,37 @@
+V3 Step 4 adjusted 10-stock development pilot
+Data: official NSE EQ bhavcopy, 1653 common rows per symbol, 2020-01-01..2026-09-03
+Development ends: 2025-08-29
+Reserved holdout: 2025-09-01 onward (250 common sessions; not evaluated)
+Membership warning: 2026-09-04 snapshot used retrospectively; survivorship bias remains
+Corporate actions: HDFCBANK 0.5, RELIANCE 0.5; raw files preserved
+
+scenario,pnl,return_pct,max_dd,sharpe,trades,win_rate,exposure,benchmark,excess
+base,-70833.50,-7.08,99412.50,-0.722,34,23.53,4.23,1036786.25,-1107619.75
+double_slippage,-71239.20,-7.12,99744.95,-0.726,34,23.53,4.23,1036701.80,-1107941.00
+double_cost,-13458.05,-1.35,42491.75,-0.185,15,40.00,1.95,1036686.25,-1050144.30
+combined_stress,-13594.25,-1.36,42576.00,-0.187,15,40.00,1.95,1036601.80,-1050196.05
+
+Accepted symbol windows: 30/280
+Turnover: 13467223.10
+Modeled costs: 680.00
+Rejected orders: 0
+Yearly P&L: 2020 0.00; 2021 -27516.30; 2022 0.00; 2023 0.00; 2024 -43261.90; 2025 -55.30
+
+Per-symbol independent sleeve diagnostics
+BHARTIARTL,-56443.75,7 trades,benchmark 2715371.75,accepted 3/28
+HDFCBANK,-39239.30,3 trades,benchmark 382089.90,accepted 1/28
+HINDUNILVR,-1103.10,2 trades,benchmark 51510.35,accepted 4/28
+ICICIBANK,0.00,0 trades,benchmark 1681830.50,accepted 0/28
+INFY,-154440.60,9 trades,benchmark 282877.40,accepted 7/28
+ITC,0.00,0 trades,benchmark 979027.60,accepted 0/28
+LT,-161116.45,8 trades,benchmark 1737346.15,accepted 7/28
+RELIANCE,0.00,0 trades,benchmark 499885.20,accepted 1/28
+SBIN,0.00,0 trades,benchmark 1939626.00,accepted 0/28
+TCS,80530.40,5 trades,benchmark 125876.80,accepted 7/28
+
+Group diagnostics
+NIFTY 50 pilot (10): pnl -70833.50, max_dd 99412.50, benchmark 1036786.25
+NIFTY NEXT 50: not run; no member in the fixed pilot
+NIFTY BANK pilot (3): pnl -7974.80, max_dd 10351.38, benchmark 1333453.80
+
+Conclusion: negative development evidence; do not freeze as a profitable strategy and do not consume holdout.

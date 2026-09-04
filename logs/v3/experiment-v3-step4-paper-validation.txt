@@ -1,0 +1,7 @@
+V3 Step 4 deterministic paper validation
+initial_order=FILLED broker_id=paper-1
+restart_duplicate_same_result=True
+risk_rejection=REJECTED reason=order value exceeds risk limit
+position_mismatch={'RELIANCE': (99, 100)}
+cash=850000.00 positions={'RELIANCE': 100}
+live_adapter_enabled=False

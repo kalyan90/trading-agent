@@ -1,0 +1,12 @@
+{
+  "symbol": "INFY",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T06:34:37.326407+00:00",
+  "series": "EQ",
+  "adjustment_status": "back_adjusted_corporate_action_factors",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1653,
+  "sha256": "7a3f2e2d00e695bdc230e1ff0bf3284252147d42a9a21fc075e9a1075e22f045"
+}

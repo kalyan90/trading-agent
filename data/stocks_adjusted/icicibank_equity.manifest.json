@@ -1,0 +1,12 @@
+{
+  "symbol": "ICICIBANK",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T06:34:37.315222+00:00",
+  "series": "EQ",
+  "adjustment_status": "back_adjusted_corporate_action_factors",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1653,
+  "sha256": "9a67ee05b7dbe44311057634a97cd7dbaa3c175c4328e9b55c8c11c2f5b57262"
+}

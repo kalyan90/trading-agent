@@ -1,0 +1,12 @@
+{
+  "symbol": "RELIANCE",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T06:24:29.803040+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1653,
+  "sha256": "7130e88e7cfb9b0230456d775c389a7d94e47d65cf296a30425461651c2cfce6"
+}

@@ -1,11 +1,15 @@
 """NSE historical index and derivatives client."""
 
 import json
+import csv
+import io
+import zipfile
 import time
 from datetime import date, timedelta
 from http.cookiejar import CookieJar
 from urllib.parse import urlencode
-from urllib.request import HTTPCookieProcessor, Request, build_opener
+from urllib.error import HTTPError
+from urllib.request import HTTPCookieProcessor, Request, build_opener, urlopen
 
 
 class NseHistoricalClient:
@@ -75,7 +79,6 @@ class NseHistoricalClient:
                 records[(row["date"], row["index"])] = row
             time.sleep(self.pause_seconds)
         return list(records.values())
-
     def fetch_futures_history(
         self, start: date, end: date, symbol="NIFTY",
         instrument_type="FUTIDX",
@@ -141,3 +144,43 @@ class NseHistoricalClient:
                 records[(row["date"], row["symbol"], row["series"])] = row
             time.sleep(self.pause_seconds)
         return list(records.values())
+
+
+class NseBhavcopyClient:
+    """Official daily cash-market archive, used when the interactive API throttles."""
+
+    url_template = (
+        "https://archives.nseindia.com/products/content/"
+        "sec_bhavdata_full_{day}.csv"
+    )
+
+    def __init__(self, timeout: int = 45):
+        self.timeout = timeout
+        self.user_agent = "Mozilla/5.0 (compatible; trading-agent research client)"
+
+    def fetch_day(self, session: date) -> list[dict]:
+        url = self.url_template.format(day=session.strftime("%d%m%Y"))
+        request = Request(url, headers={"User-Agent": self.user_agent})
+        for attempt in range(3):
+            try:
+                with urlopen(request, timeout=self.timeout) as response:
+                    payload = response.read()
+                if payload.startswith(b"PK"):
+                    with zipfile.ZipFile(io.BytesIO(payload)) as archive:
+                        payload = archive.read(archive.namelist()[0])
+                text = payload.decode("utf-8-sig")
+                return [
+                    {key.strip(): (value.strip() if value else "")
+                     for key, value in row.items()}
+                    for row in csv.DictReader(io.StringIO(text))
+                ]
+            except HTTPError as error:
+                if error.code in (403, 404):
+                    return []  # weekend, exchange holiday, or unpublished session
+                if attempt == 2:
+                    raise
+            except Exception:
+                if attempt == 2:
+                    raise
+            time.sleep(2 ** attempt)
+        return []
