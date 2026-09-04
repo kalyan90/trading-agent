@@ -216,3 +216,17 @@ Monthly operating order:
 3. Run the Step 3 plan, paper execution, reconciliation, and status commands.
 4. Run this Step 4 audit and copy the archive to independent storage.
 5. Keep the frozen policy unchanged; record research ideas for a later version.
+
+Before generating an input, run the read-only readiness check:
+
+```bash
+uv run python scripts/check_v4_month_readiness.py \
+  --signal-date 2026-09-30 --as-of 2026-10-01 \
+  --data-dir data/stocks_step5_adjusted --index-dir data \
+  --universe data/universe/nifty_100_bank_constituents_2026-09-30.csv
+```
+
+It exits unsuccessfully when the exact signal close, 200-session regime history,
+PIT snapshots, usable equity histories, later opening evidence, manifests, or
+checksums are missing. Suspensions and individual history/liquidity gaps remain
+visible warnings because the frozen strategy already handles those per symbol.
