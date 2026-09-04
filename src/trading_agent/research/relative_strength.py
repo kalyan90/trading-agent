@@ -19,6 +19,7 @@ from trading_agent.research.performance import calculate_max_drawdown
 MOMENTUM_LOOKBACK = 252
 MOMENTUM_SKIP = 21
 TOP_N = 10
+REGIME_SMA_PERIOD = 200
 
 
 class RelativeStrengthResult(BaseModel):
@@ -49,6 +50,10 @@ class RelativeStrengthResult(BaseModel):
     membership_status: str
     price_return_benchmark_only: bool
     execution_log: tuple[str, ...]
+    monthly_rankings: dict[date, tuple[str, ...]]
+    regime_risk_on_months: int = 0
+    regime_risk_off_months: int = 0
+    regime_missing_months: int = 0
 
 
 def momentum_score(rows, index: int) -> float | None:
@@ -69,6 +74,17 @@ def rank_relative_strength(scores: dict[str, float]) -> tuple[str, ...]:
     return tuple(symbol for _, symbol in ranked[:TOP_N])
 
 
+def regime_risk_on(regime_rows, signal_date: date) -> tuple[bool, str]:
+    """Use exactly the 200 closes ending on signal_date; missing means risk-off."""
+    by_date = {row.date.date(): index for index, row in enumerate(regime_rows)}
+    index = by_date.get(signal_date)
+    if index is None or index + 1 < REGIME_SMA_PERIOD:
+        return False, "missing_date_or_history"
+    closes = [row.close for row in regime_rows[index - REGIME_SMA_PERIOD + 1:index + 1]]
+    average = sum(closes) / REGIME_SMA_PERIOD
+    return regime_rows[index].close > average, "available"
+
+
 def _sharpe(values):
     returns = [right / left - 1 for left, right in zip(values, values[1:]) if left]
     volatility = pstdev(returns) if len(returns) > 1 else 0
@@ -87,6 +103,7 @@ def evaluate_relative_strength(
     indexes: set[str] | None = None,
     retrospective_static_membership: bool = False,
     dividends: list[DividendEvent] | None = None,
+    regime_history=None,
 ) -> RelativeStrengthResult:
     if development_end >= reserved_holdout_start:
         raise ValueError("development_end must precede the reserved holdout")
@@ -145,7 +162,9 @@ def evaluate_relative_strength(
     rejected = deferred = completed_sales = 0
     contributions = defaultdict(float)
     selections = {}
+    rankings = {}
     execution_log = []
+    risk_on_months = risk_off_months = missing_regime_months = 0
 
     def reduce(symbol, quantity, row):
         nonlocal cash, turnover, costs, completed_sales
@@ -243,7 +262,19 @@ def evaluate_relative_strength(
                 score = momentum_score(histories[symbol], index)
                 if score is not None:
                     scores[symbol] = score
-            selected = rank_relative_strength(scores)
+            ranked = rank_relative_strength(scores)
+            rankings[day] = ranked
+            if regime_history is None:
+                risk_on, regime_status = True, "disabled"
+            else:
+                risk_on, regime_status = regime_risk_on(regime_history, day)
+                if regime_status != "available":
+                    missing_regime_months += 1
+                if risk_on:
+                    risk_on_months += 1
+                else:
+                    risk_off_months += 1
+            selected = ranked if risk_on else ()
             selections[day] = selected
             selected_set = set(selected)
             for symbol in set(histories) | set(positions):
@@ -268,7 +299,9 @@ def evaluate_relative_strength(
         )
 
     # Matching equal-weight price benchmark using symbols eligible on cohort start.
-    first_signal = next((day for day in sorted(selections) if selections[day]), None)
+    # Benchmark eligibility follows the underlying Step 1 ranking, not an overlay
+    # that may temporarily keep the strategy in cash.
+    first_signal = next((day for day in sorted(rankings) if rankings[day]), None)
     benchmark_start = None
     if first_signal is not None:
         benchmark_start = next((day for day in calendar if day > first_signal), None)
@@ -331,4 +364,8 @@ def evaluate_relative_strength(
         monthly_selections=selections, membership_status=status,
         price_return_benchmark_only=not bool(dividends),
         execution_log=tuple(execution_log),
+        monthly_rankings=rankings,
+        regime_risk_on_months=risk_on_months,
+        regime_risk_off_months=risk_off_months,
+        regime_missing_months=missing_regime_months,
     )

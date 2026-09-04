@@ -100,3 +100,16 @@ It does not search lookbacks, skip periods, portfolio sizes, weights, rebalance
 frequencies, or filters. Month-end close creates the rank; each order waits for its
 own next available open. Fixed cohorts and group tables enforce identical calendars,
 and the evaluation end must precede 2025-09-01.
+
+## V4 Step 2 regime overlay
+
+```bash
+uv run python scripts/run_v4_step2.py
+uv run pytest -q
+```
+
+This adds exactly one overlay to immutable Step 1: risk-on when the official NIFTY
+50 month-end close is strictly above its 200-session SMA through that close. Missing
+dates/history are risk-off. The runner verifies identical Step 1/Step 2 calendars,
+benchmark entry dates, and benchmark P&L. No alternate period, buffer, partial
+exposure, stop, or volatility target is tested.

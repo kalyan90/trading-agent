@@ -15,6 +15,7 @@ A deterministic, chronology-safe research system for NSE index, futures, and cas
 | V3 Step 5 | Frozen limited negative current-snapshot checkpoint | 105 symbols acquired; 94 pass history/liquidity gates |
 | V3 Step 6 | Active, unfrozen dynamic-calendar review | Dynamic cohorts confirm benchmark failure; retirement rule triggered |
 | V4 Step 1 | Frozen limited inconclusive checkpoint | Monthly 12−1 relative strength passes 4/5 pillars; not promotable or retired |
+| V4 Step 2 | Active, unfrozen promoted development baseline | Fixed NIFTY 200-SMA overlay passes all 5 promotion pillars |
 
 Frozen V1/V2 parameters and evidence must not be revised in response to later results. Reserved holdouts remain untouched until a version is explicitly ready for one-time evaluation.
 
@@ -65,6 +66,12 @@ up to ten equal-target-weight stocks. It is profitable across all three developm
 cohorts and beats passive in two, but its 36.21% long-history drawdown exceeds the
 predeclared 20% promotion ceiling. With one failed pillar, it is neither promoted
 nor retired at this checkpoint.
+
+V4 Step 2 adds only the predeclared NIFTY 50 200-session SMA month-end regime
+overlay. It reduces long-history drawdown to 19.76% while retaining positive fixed-
+cohort and doubled-cost results, so it passes all five development promotion
+pillars. Promotion means eligible for later staged evaluation—not deployment or
+permission to consume any reserve now.
 
 ## Repository guide
 

@@ -82,3 +82,11 @@ a row on the global month-end session, and the no-lookahead liquidity gate befor
 can be ranked. Late listings and missing rows affect only that stock. Dividends are
 not included because an authoritative event series is unavailable, so both strategy
 and benchmark are labeled price-return results.
+
+## V4 Step 2 regime input
+
+The overlay uses the stored official NIFTY 50 price-return files named
+`NIFTY 50_Historical_PR_*.csv`. They are normalized and deduplicated by date; only
+rows before 2025-09-01 enter development evaluation. Exactly 200 observations ending
+on the signal date are required. A missing month-end row or insufficient history is
+risk-off; nothing is forward-filled or read from a later date.
