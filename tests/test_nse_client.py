@@ -61,3 +61,23 @@ def test_api_rejects_reversed_date_range():
         assert str(error) == "start must not be after end"
     else:
         raise AssertionError("Expected ValueError")
+
+
+def test_equity_api_normalizes_and_deduplicates(monkeypatch):
+    client = client_without_network()
+    client.pause_seconds = 0
+    raw = {
+        "CH_TIMESTAMP": "2026-01-02", "CH_SYMBOL": "RELIANCE",
+        "CH_SERIES": "EQ", "CH_OPENING_PRICE": 100,
+        "CH_TRADE_HIGH_PRICE": 102, "CH_TRADE_LOW_PRICE": 99,
+        "CH_CLOSING_PRICE": 101, "CH_PREVIOUS_CLS_PRICE": 100,
+        "CH_TOT_TRADED_QTY": 10, "CH_TOT_TRADED_VAL": 1010,
+        "CH_TOTAL_TRADES": 3, "CH_ISIN": "INE002A01018",
+    }
+    monkeypatch.setattr(client, "_get", lambda *args: [raw, raw])
+    rows = client.fetch_equity_history(
+        date(2026, 1, 2), date(2026, 1, 2), "RELIANCE"
+    )
+    assert len(rows) == 1
+    assert rows[0]["close"] == 101
+    assert rows[0]["series"] == "EQ"

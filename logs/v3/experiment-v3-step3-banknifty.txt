@@ -1,0 +1,45 @@
+V3 STEP 3 - BANKNIFTY DEVELOPMENT COMPARISON
+Frozen NIFTY results were not changed. BANKNIFTY holdout was reserved, not run.
+Checkpoint tag: v3.3-banknifty-paper-scaffold
+
+All spot data: 2020-01-01 to 2026-09-03, 1658 sessions
+Development: 2020-01-01 to 2025-09-01
+Reserved holdout: 2025-09-02 to 2026-09-03, 250 sessions
+Signal policy: unchanged frozen V2 Trend-Momentum parameters
+
+RESET-WINDOW SPOT
+Total windows: 28
+Accepted windows: 6
+OOS P&L: 912.75
+Completed trades: 8
+Benchmark P&L: 3234.85
+Excess P&L: -2322.10
+
+CONTINUOUS SPOT
+P&L: 834.10
+Return: 0.83%
+Maximum drawdown: 3912.25
+Exposure: 7.50%
+Benchmark P&L: 25454.40
+Excess P&L: -24620.30
+
+FUNDED REAL FUTURES
+Starting capital: 1000000.00
+P&L: 11550.57
+Return: 1.16%
+Strategy exits: 8
+Contract rolls: 3
+Maximum drawdown: 105477.51
+Exposure: 7.53%
+Modeled charges: 2163.18
+Peak margin: 155101.69
+Minimum free cash: 830098.24
+Futures benchmark P&L: 339217.42
+Rejected entries: 0
+Margin calls: 0
+Missing futures sessions: 5
+
+Conclusion: the unchanged policy generalized to positive BANKNIFTY development
+P&L, but materially underperformed passive exposure. Futures maximum drawdown
+was about nine times net profit. This is development evidence only; the reserved
+250-session holdout remains untouched.

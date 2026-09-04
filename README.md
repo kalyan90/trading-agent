@@ -10,6 +10,11 @@ A deterministic research backtester for daily NIFTY 50 market data. It contains 
 - The legacy `--final-holdout` option is retained for compatibility but refuses to rerun the consumed V1 holdout.
 - V3 Step 1 is a frozen continuous-portfolio checkpoint of the V2 signal policy.
 - V3 Step 2 now executes that unchanged spot-derived policy against actual dated NIFTY futures contracts. It remains development research, not a deployment model.
+- V3 Step 3 is beginning as a broker-neutral paper-execution and multi-stock research track. NIFTY remains preserved as the frozen benchmark.
+
+## Why expand beyond index futures?
+
+SEBI's September 2024 study found that 93% of individual traders in the overall Indian equity F&O segment lost money during FY22–FY24, with aggregate losses above ₹1.8 lakh crore. This statistic covers equity futures and options generally; it is not a NIFTY-only loss rate. It reinforces the project's conservative sequencing: research liquid cash equities before considering their derivatives, retain costs and chronological testing, and require paper evidence before live execution. See the [SEBI press release](https://www.sebi.gov.in/media-and-notifications/press-releases/sep-2024/updated-sebi-study-reveals-93-of-individual-traders-incurred-losses-in-equity-fando-between-fy22-and-fy24-aggregate-losses-exceed-1-8-lakh-crores-over-three-years_86906.html) and the [earlier FY22 study](https://www.sebi.gov.in/sebi_data/attachdocs/jan-2023/1674645296493.pdf).
 
 ## V1: deterministic baseline
 
@@ -216,6 +221,55 @@ src/trading_agent/
 ```
 
 Future broker and paper-trading adapters belong in `execution/` beside the broker-independent account model. They should not be mixed into deterministic signal or research code.
+
+## Multi-stock research policy
+
+- Begin with liquid cash equities belonging to NIFTY 50 and NIFTY Next 50; expand only after data quality and portfolio-capacity checks pass.
+- Store point-in-time index-membership snapshots and select the latest snapshot known on each historical date. Testing today's constituents throughout the past would introduce survivorship and lookahead bias.
+- Run the unchanged V2 signal policy independently on each stock first. Results must be reported per symbol and in aggregate, including rejected windows, costs, drawdown, exposure, benchmark P&L, and excess P&L.
+- Do not optimize indicator parameters per stock during this stage. That would multiply the overfitting surface.
+- Treat equities and their futures as separate instruments. Cash-equity evidence does not automatically validate stock-futures execution.
+
+`core/universe.py`, `data/universe.py`, and `research/universe.py` provide point-in-time membership and batch walk-forward scaffolding. Stock backtests begin only after official historical membership and adjusted OHLC data—including splits, bonuses, and symbol changes—are persisted and tested.
+
+The repository currently contains the official NIFTY 50 plus NIFTY Next 50 snapshot dated 2026-09-04. It is suitable for forward research from that date, not retrospective membership claims. NSE Indices lists historical constituent data as a subscription product.
+
+```bash
+uv run python scripts/download_index_constituents.py
+uv run python scripts/download_nse_equities.py \
+  --universe data/universe/nifty_100_constituents_2026-09-04.csv \
+  --start 2026-09-04
+uv run python scripts/run_stock_universe.py
+```
+
+The public NSE equity archive is unofficially exposed as a web API and may throttle or return temporary 503 responses. Downloads are explicit commands and never run during imports or tests. Raw NSE prices are not automatically corporate-action adjusted; the batch research gate must not be treated as production evidence until adjustment and symbol-history checks pass.
+
+## V3 Step 3 paper-execution boundary
+
+`execution/broker.py` defines a broker-neutral contract and a deterministic `PaperBroker`. The first scaffold supports idempotent client order IDs, immediate replay fills, cash and position accounting, and maximum-order-value rejection. No live broker adapter or credentials are enabled.
+
+The architecture takes inspiration—not copied code—from OpenAlgo's normalized broker boundary, symbol mapping, funds API, order-state normalization, plugin isolation, and local credential model. OpenAlgo is AGPL-3.0, while NSEPython is GPL-3.0, so their source must not be copied into a differently licensed project without a deliberate licensing decision. NSEPython is also an unofficial wrapper; the project retains its small tested first-party NSE client and may use NSEPython only as a compatibility reference. See [OpenAlgo](https://github.com/marketcalls/openalgo), its [broker integration guide](https://github.com/marketcalls/openalgo/blob/main/docs/broker-integration-guide.md), and [NSEPython](https://github.com/aeron7/nsepython).
+
+## V3 Step 3 BANKNIFTY comparison
+
+BANKNIFTY data, development results, multi-stock research scaffolding, and the broker-neutral paper adapter are frozen as a limited checkpoint at `v3.3-banknifty-paper-scaffold`. This tag does not freeze a deployable strategy, consume the BANKNIFTY holdout, or claim completed multi-stock evidence.
+
+BANKNIFTY is a separate generalization experiment; it does not replace or modify frozen NIFTY evidence. Official spot and contract-level futures history covers 2020-01-01 through the latest completed session, 2026-09-03. The latest 250 spot sessions were reserved and not evaluated.
+
+| Development metric | Reset-window spot | Continuous spot | ₹10,00,000 funded futures |
+|---|---:|---:|---:|
+| Accepted windows | 6/28 | 6/28 | 6/28 |
+| P&L | ₹912.75 | ₹834.10 | ₹11,550.57 |
+| Return | window aggregate | 0.83% | 1.16% |
+| Completed strategy exits | 8 | 8 | 8 |
+| Maximum drawdown | reset-window metric | ₹3,912.25 | ₹1,05,477.51 |
+| Exposure | reset-window metric | 7.50% | 7.53% |
+| Benchmark P&L | ₹3,234.85 | ₹25,454.40 | ₹3,39,217.42 |
+| Excess P&L | −₹2,322.10 | −₹24,620.30 | −₹3,27,666.85 |
+| Modeled charges | existing window model | existing model | ₹2,163.18 |
+| Peak margin | n/a | n/a | ₹1,55,101.69 |
+
+The unchanged strategy produced positive BANKNIFTY development P&L, but did not establish an economically compelling edge: funded futures drawdown was about nine times net profit and passive futures exposure earned far more. The reserved BANKNIFTY holdout remains untouched. Reproduce this comparison with `uv run python scripts/compare_banknifty.py`.
 
 ## Research logs
 

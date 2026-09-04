@@ -14,6 +14,8 @@ class NseHistoricalClient:
     futures_report_url = f"{base_url}/report-detail/fo_eq_security"
     index_api_url = f"{base_url}/api/historicalOR/indicesHistory"
     futures_api_url = f"{base_url}/api/historicalOR/foCPV"
+    equity_api_url = f"{base_url}/api/historical/securityArchives"
+    equity_report_url = f"{base_url}/historical/price-and-volume-data-per-security"
 
     def __init__(self, timeout: int = 60, pause_seconds: float = 0.15):
         self.timeout = timeout
@@ -108,5 +110,34 @@ class NseHistoricalClient:
                 }
                 key = (row["date"], row["expiry"], row["instrument"], row["symbol"])
                 records[key] = row
+            time.sleep(self.pause_seconds)
+        return list(records.values())
+
+    def fetch_equity_history(self, start: date, end: date, symbol: str,
+                             series: str = "EQ"):
+        records = {}
+        for chunk_start, chunk_end in self._chunks(start, end):
+            raw_rows = self._get(self.equity_api_url, {
+                "from": chunk_start.strftime("%d-%m-%Y"),
+                "to": chunk_end.strftime("%d-%m-%Y"),
+                "symbol": symbol, "dataType": "priceVolumeDeliverable",
+                "series": series,
+            }, self.equity_report_url)
+            for raw in raw_rows:
+                row = {
+                    "date": raw.get("CH_TIMESTAMP"),
+                    "symbol": raw.get("CH_SYMBOL"),
+                    "series": raw.get("CH_SERIES"),
+                    "open": raw.get("CH_OPENING_PRICE"),
+                    "high": raw.get("CH_TRADE_HIGH_PRICE"),
+                    "low": raw.get("CH_TRADE_LOW_PRICE"),
+                    "close": raw.get("CH_CLOSING_PRICE"),
+                    "previous_close": raw.get("CH_PREVIOUS_CLS_PRICE"),
+                    "volume": raw.get("CH_TOT_TRADED_QTY"),
+                    "value": raw.get("CH_TOT_TRADED_VAL"),
+                    "trades": raw.get("CH_TOTAL_TRADES"),
+                    "isin": raw.get("CH_ISIN"),
+                }
+                records[(row["date"], row["symbol"], row["series"])] = row
             time.sleep(self.pause_seconds)
         return list(records.values())

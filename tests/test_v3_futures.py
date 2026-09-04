@@ -45,14 +45,14 @@ def test_futures_atr_stop_uses_supplied_config_multiple():
 
 def test_real_futures_loader_resolves_blank_lots():
     root = Path(__file__).parents[1]
-    records = load_futures_contracts(root / "data" / "futures")
+    records = load_futures_contracts(root / "data" / "futures", symbol="NIFTY")
     assert 4900 < len(records) <= 4994
     assert all(record.market_lot > 0 for record in records)
 
 
 def test_front_month_series_has_one_contract_per_session():
     root = Path(__file__).parents[1]
-    contracts = load_futures_contracts(root / "data" / "futures")
+    contracts = load_futures_contracts(root / "data" / "futures", symbol="NIFTY")
     series = build_front_month_series(contracts)
     dates = [record.date.date() for record in series]
     assert dates == sorted(set(dates))
@@ -73,7 +73,7 @@ def test_loader_requires_symbol_when_directory_contains_multiple_instruments(tmp
 
 def test_real_futures_development_result_is_reproducible():
     root = Path(__file__).parents[1]
-    contracts = load_futures_contracts(root / "data" / "futures")
+    contracts = load_futures_contracts(root / "data" / "futures", symbol="NIFTY")
     futures = build_front_month_series(contracts)
     spot, _ = split_development_and_holdout(
         get_historical_market_data(), V1_CONFIG.final_holdout_size
@@ -127,7 +127,7 @@ def test_dated_futures_stt_rates_and_one_sided_stamp_duty():
 def test_real_futures_margin_proxy_rejects_unfunded_entries_at_one_lakh():
     root = Path(__file__).parents[1]
     futures = build_front_month_series(
-        load_futures_contracts(root / "data" / "futures")
+        load_futures_contracts(root / "data" / "futures", symbol="NIFTY")
     )
     spot, _ = split_development_and_holdout(
         get_historical_market_data(), V1_CONFIG.final_holdout_size
@@ -144,7 +144,7 @@ def test_real_futures_margin_proxy_rejects_unfunded_entries_at_one_lakh():
 def test_ten_lakh_futures_result_with_margin_and_dated_charges():
     root = Path(__file__).parents[1]
     futures = build_front_month_series(
-        load_futures_contracts(root / "data" / "futures")
+        load_futures_contracts(root / "data" / "futures", symbol="NIFTY")
     )
     spot, _ = split_development_and_holdout(
         get_historical_market_data(), V1_CONFIG.final_holdout_size
