@@ -1,0 +1,55 @@
+V4 Step 1 frozen limited inconclusive cross-sectional checkpoint
+Run date: 2026-09-04
+Hypothesis: monthly top-10 positive 12-minus-1 momentum; equal ₹100000 targets
+Signal: close[t-21] / close[t-252] - 1 on final exchange session of month
+Execution: next symbol-available open, sells before buys, ₹0.05 adverse slippage
+Membership: retrospective 2026-09-04 snapshot; dividends unavailable/price return
+Holdout: 2025-09-01 onward NOT EVALUATED
+Benchmark entry: first open after the cohort's first nonempty month-end ranking;
+both strategy and benchmark remain cash before eligibility.
+
+cohort,group,symbols,pnl,return_pct,max_dd,fees,benchmark,excess
+2020_2021,NIFTY 50,44,526665.71,52.67,91265.16,6697.35,419597.26,107068.45
+2020_2021,NIFTY NEXT 50,36,429674.30,42.97,150878.76,7657.88,383321.57,46352.73
+2020_2021,NIFTY BANK,14,65211.71,6.52,190015.75,2877.51,173193.43,-107981.72
+2020_2021,COMBINED,85,465124.26,46.51,141860.34,9325.50,376652.56,88471.69
+2022_2023,NIFTY 50,46,540687.48,54.07,196906.04,15620.07,435816.77,104870.71
+2022_2023,NIFTY NEXT 50,41,1122901.10,112.29,204919.30,12005.04,1159237.89,-36336.79
+2022_2023,NIFTY BANK,14,400895.61,40.09,225635.14,8386.22,612627.77,-211732.16
+2022_2023,COMBINED,92,1127379.42,112.74,200194.95,15642.23,731105.41,396274.01
+2024_CUTOFF,NIFTY 50,48,256637.19,25.66,231100.93,10288.54,184594.55,72042.65
+2024_CUTOFF,NIFTY NEXT 50,44,38201.30,3.82,428129.51,10182.43,204748.32,-166547.03
+2024_CUTOFF,NIFTY BANK,14,-92807.02,-9.28,220826.02,4731.40,25254.91,-118061.93
+2024_CUTOFF,COMBINED,97,101294.94,10.13,423238.40,12634.04,169943.78,-68648.84
+
+Long-history combined, 85 symbols, 1399 sessions, 2020-01-01..2025-08-29
+scenario,pnl,return_pct,max_dd,fees,cash,deferred,benchmark,excess
+base,1605720.90,160.57,362131.72,36551.90,1640453.25,14,1970967.74,-365246.85
+double_slippage,1598105.23,159.81,362505.00,36549.04,1632837.58,14,1969051.74,-370946.51
+double_statutory_costs,1569169.00,156.92,365556.03,73103.80,1603901.35,14,1969842.23,-400673.24
+dp_15_50,1600109.90,160.01,362612.22,42162.90,1634842.25,14,1970967.74,-370857.85
+dp_25,1596670.90,159.67,362906.72,45601.90,1631403.25,14,1970967.74,-374296.85
+
+Base yearly P&L: 2020 0.00; 2021 465124.26; 2022 461379.71;
+2023 564620.28; 2024 153783.76; 2025 -39187.12.
+Base exposure 70.19%; turnover 32895051.72; 362 sales; positive contribution
+breadth 78.46%; rejected orders 0; deferred symbol orders 14.
+
+Predeclared decision pillars:
+PASS positive combined in at least 2/3 fixed cohorts (3/3)
+PASS beat matching benchmark in at least 2/3 fixed cohorts (2/3)
+FAIL long-history maximum drawdown <= ₹200000 (₹362131.72)
+PASS positive contribution breadth >=50% (78.46%)
+PASS profitable with doubled statutory costs (₹1569169.00)
+
+Decision: NOT PROMOTABLE because every pillar is required. NOT RETIRED because
+only one pillar failed and retirement requires at least two. Preserve this result
+without tuning lookback, skip, top-N, frequency, weights, or filters.
+
+Freeze scope: limited inconclusive research checkpoint only. This is not deployment
+approval, survivorship-free evidence, holdout evidence, or permission to tune the
+failed drawdown pillar against these development results.
+
+Limitations: retrospective membership/survivorship bias; price-return benchmark;
+2026 fee schedule applied retrospectively; DP charges illustrative; whole-share
+targets leave cash; missing next opens defer only their symbol.

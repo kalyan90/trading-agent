@@ -14,6 +14,7 @@ A deterministic, chronology-safe research system for NSE index, futures, and cas
 | V3 Step 4 | Frozen negative checkpoint | Adjusted 10-stock portfolio lost money and underperformed |
 | V3 Step 5 | Frozen limited negative current-snapshot checkpoint | 105 symbols acquired; 94 pass history/liquidity gates |
 | V3 Step 6 | Active, unfrozen dynamic-calendar review | Dynamic cohorts confirm benchmark failure; retirement rule triggered |
+| V4 Step 1 | Frozen limited inconclusive checkpoint | Monthly 12−1 relative strength passes 4/5 pillars; not promotable or retired |
 
 Frozen V1/V2 parameters and evidence must not be revised in response to later results. Reserved holdouts remain untouched until a version is explicitly ready for one-time evaluation.
 
@@ -57,6 +58,13 @@ own data, training, liquidity, and declared membership mode allow it. The unchan
 Trend-Momentum policy remains profitable in some development cohorts but fails the
 predeclared benchmark-capture and drawdown retirement pillars. No reserved equity
 session from 2025-09-01 onward was evaluated.
+
+V4 begins a genuinely new cross-sectional hypothesis rather than tuning retired
+Trend-Momentum. Step 1 ranks positive 12-minus-1-month momentum monthly and holds
+up to ten equal-target-weight stocks. It is profitable across all three development
+cohorts and beats passive in two, but its 36.21% long-history drawdown exceeds the
+predeclared 20% promotion ceiling. With one failed pillar, it is neither promoted
+nor retired at this checkpoint.
 
 ## Repository guide
 
@@ -114,6 +122,7 @@ Dataset preparation and V3 commands are in [`scripts/README.md`](scripts/README.
 | OOS | Out-of-Sample |
 | P&L | Profit and Loss |
 | RSI | Relative Strength Index |
+| RS | Relative Strength |
 | SEBI | Securities and Exchange Board of India |
 | SMA | Simple Moving Average |
 | STT | Securities Transaction Tax |

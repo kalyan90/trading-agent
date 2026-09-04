@@ -87,3 +87,16 @@ and runs a 2020-through-cutoff long-history cohort with base, doubled slippage,
 doubled statutory costs, and illustrative ₹15.50/₹25 sell-side DP scenarios. It
 uses current membership only in the explicitly labeled retrospective/static mode.
 The fixed reserve begins 2025-09-01 and is rejected as an evaluation end date.
+
+## V4 Step 1 relative strength
+
+```bash
+uv run python scripts/run_v4_step1.py
+uv run pytest -q
+```
+
+This command runs only the predeclared 12-minus-1-month, top-10, monthly hypothesis.
+It does not search lookbacks, skip periods, portfolio sizes, weights, rebalance
+frequencies, or filters. Month-end close creates the rank; each order waits for its
+own next available open. Fixed cohorts and group tables enforce identical calendars,
+and the evaluation end must precede 2025-09-01.

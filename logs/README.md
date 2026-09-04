@@ -113,3 +113,7 @@ tail is untouched.
 V3 Step 6 is documented in `v3/experiment-v3-step6-dynamic-calendar.txt`. It is
 unfrozen development evidence and does not replace any frozen log. The cross-version
 interpretation is in `V1_TO_V3_REVIEW.md`.
+
+V4 is a new hypothesis family. `v4/experiment-v4-step1-relative-strength.txt`
+is a frozen limited inconclusive fixed-parameter checkpoint; it must not be
+described as promoted, retired, deployable, or a tuned continuation of V3.

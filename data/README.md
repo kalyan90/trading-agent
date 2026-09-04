@@ -72,3 +72,13 @@ with source URLs when such data becomes available. Existing inferred split/bonus
 sidecars remain warnings/adjustments and are not relabeled as authoritative
 confirmation. DP fees are configurable sell-side broker scenarios, not statutory
 truth; Step 5 statutory rates and effective-date metadata remain unchanged.
+
+## V4 Step 1 reuse
+
+V4 Step 1 reuses the validated adjusted Step 5 histories without regenerating them.
+The 2026-09-04 constituent snapshot is still retrospective for every earlier cohort;
+no historical membership is inferred. A stock needs its own 252 prior observations,
+a row on the global month-end session, and the no-lookahead liquidity gate before it
+can be ranked. Late listings and missing rows affect only that stock. Dividends are
+not included because an authoritative event series is unavailable, so both strategy
+and benchmark are labeled price-return results.
