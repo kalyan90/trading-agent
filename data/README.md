@@ -90,3 +90,17 @@ The overlay uses the stored official NIFTY 50 price-return files named
 rows before 2025-09-01 enter development evaluation. Exactly 200 observations ending
 on the signal date are required. A missing month-end row or insufficient history is
 risk-off; nothing is forward-filled or read from a later date.
+
+## V4 Step 3 prospective provenance
+
+Prospective evidence begins no earlier than the locked 2026-09-04 inception.
+Historical adjusted constituent prices and NIFTY 50 closes may warm the frozen
+252/21 momentum and 200-session regime indicators, but replay/warm-up records are
+never journaled as prospective performance. The 2025-09-01 historical reserve is
+not consumed by Step 3.
+
+Every prospective input must carry an explicit exchange session date. Missing,
+same-close, future, or stale next-open prices are skipped or deferred rather than
+filled. Constituent membership evidence is required as of the decision; the stored
+2026-09-04 snapshot must not be projected backward. NIFTY 50 index data supplies
+only regime and benchmark context—not a tradable V4 instrument.

@@ -118,6 +118,10 @@ V4 is a new hypothesis family. `v4/experiment-v4-step1-relative-strength.txt`
 is a frozen limited inconclusive fixed-parameter checkpoint; it must not be
 described as promoted, retired, deployable, or a tuned continuation of V3.
 
-`v4/experiment-v4-step2-regime-overlay.txt` records the unfrozen Step 2 development
-overlay. Passing its pillars authorizes only continued staged research, not a
+`v4/experiment-v4-step2-regime-overlay.txt` records the frozen Step 2 development
+baseline. Passing its pillars authorizes only continued staged research, not a
 holdout run or deployment.
+
+`v4/experiment-v4-step3-paper-readiness.txt` records infrastructure validation
+only. It contains no prospective return claim; observation requires at least 12
+complete months from the locked inception without parameter changes.

@@ -113,3 +113,40 @@ This adds exactly one overlay to immutable Step 1: risk-on when the official NIF
 dates/history are risk-off. The runner verifies identical Step 1/Step 2 calendars,
 benchmark entry dates, and benchmark P&L. No alternate period, buffer, partial
 exposure, stop, or volatility target is tested.
+
+## V4 Step 3 prospective paper workflow
+
+Step 3 accepts explicit local JSON evidence and never defaults an evidence date to
+today. Dry-run is the default; `paper` uses only the deterministic local broker.
+There is no live adapter.
+
+```bash
+uv run python scripts/run_v4_step3_paper.py plan \
+  --as-of 2026-10-01 --signal-date 2026-09-30 \
+  --inception 2026-09-04 --capital 100000 --mode dry-run \
+  --input /path/to/month-plan.json --data-dir data/stocks_step5_adjusted \
+  --state var/v4-step3/state.json --journal var/v4-step3/journal.jsonl
+
+uv run python scripts/run_v4_step3_paper.py status \
+  --as-of 2026-10-01 --inception 2026-09-04 --capital 100000 \
+  --state var/v4-step3/state.json --journal var/v4-step3/journal.jsonl
+```
+
+Input JSON contains `regime_close`, `regime_sma200`, `candidates` (symbol, rank,
+momentum, membership/history flags), and `prices` (symbol, session date, open).
+The append-only JSONL journal records decision plans, candidates, regime evidence,
+targets, skips, order results, deferrals, kill-switch changes, and reconciliation.
+The atomic JSON state records plans, broker state, idempotent order results,
+expected positions, cash, fees, and drawdown state for restart.
+
+The locked policy is monthly 12-minus-1 positive relative strength, at most ten
+positions, NIFTY 50 close strictly above its 200-session SMA, sell-before-buy, and
+per-symbol next-open execution. At default capital, each target is ₹10,000. Ranking
+continues below an unaffordable candidate until ten affordable names or the list is
+exhausted. Whole shares only; no leverage, fractional shares, or forced allocation.
+
+Operational assessment remains false until at least 12 complete prospective months
+after the explicit inception. Acceptance additionally requires zero duplicate or
+reconciliation failures, positive net return after all costs, maximum drawdown no
+greater than 20%, a declared benchmark comparison, and no parameter changes during
+observation.

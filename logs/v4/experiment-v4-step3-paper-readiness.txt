@@ -1,0 +1,39 @@
+V4 Step 3 prospective paper-readiness evidence (NOT performance evidence)
+Implementation date: 2026-09-04
+Base: frozen v4.2-regime-overlay-development-baseline
+Locked prospective inception: 2026-09-04 (no earlier evidence accepted)
+Instrument: NSE cash-equity constituents only; no index futures/options
+Default initial capital: INR 100000
+Maximum positions: 10; fixed target allocation: INR 10000 per position
+Execution: month-end decision, each symbol's later available open, sell before buy
+Costs: full V3 Step 5 delivery schedule, INR 0.05 adverse slippage, declared DP fee
+Mode: dry-run by default; deterministic local paper fill optional; live disabled
+
+Affordability policy:
+- At least one whole share plus estimated buy fees must fit both the fixed target
+  and available cash.
+- Continue in deterministic rank order below unaffordable higher-ranked stocks.
+- Never use fractional shares, leverage, negative cash, or forced allocation.
+- Preserve unused capital as cash and journal every skip/rejection reason.
+
+Durability and controls validated:
+- append-only serializable journal and atomic restart state
+- deterministic client order IDs and duplicate-month rejection
+- same-close fill prohibited; missing/deferred symbols do not block other symbols
+- missing/stale data, history, membership, regime, target, and cash skip reasons
+- maximum position/order-value/cash checks, sell-before-buy ordering
+- expected-versus-paper reconciliation and emergency kill switch
+- historical warm-up excluded from prospective performance evidence
+- explicit dates required; no network or broker activity on import/test
+
+Assessment gate:
+- at least 12 complete prospective months after inception
+- zero duplicate-decision and reconciliation failures
+- positive net return after all costs
+- maximum drawdown <= 20%
+- declared benchmark comparison
+- no parameter change during observation
+
+Current conclusion: infrastructure ready to begin prospective observation only.
+eligible_for_assessment=False; months observed=0; no prospective profit claimed.
+Reserved historical holdout from 2025-09-01 remains unconsumed.

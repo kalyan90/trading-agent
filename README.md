@@ -13,9 +13,10 @@ A deterministic, chronology-safe research system for NSE index, futures, and cas
 | V3 Step 3 | Frozen limited checkpoint | BANKNIFTY generalized weakly; paper foundations added |
 | V3 Step 4 | Frozen negative checkpoint | Adjusted 10-stock portfolio lost money and underperformed |
 | V3 Step 5 | Frozen limited negative current-snapshot checkpoint | 105 symbols acquired; 94 pass history/liquidity gates |
-| V3 Step 6 | Active, unfrozen dynamic-calendar review | Dynamic cohorts confirm benchmark failure; retirement rule triggered |
+| V3 Step 6 | Frozen retirement checkpoint | Dynamic cohorts confirm benchmark failure; retirement rule triggered |
 | V4 Step 1 | Frozen limited inconclusive checkpoint | Monthly 12−1 relative strength passes 4/5 pillars; not promotable or retired |
-| V4 Step 2 | Active, unfrozen promoted development baseline | Fixed NIFTY 200-SMA overlay passes all 5 promotion pillars |
+| V4 Step 2 | Frozen promoted development baseline | Fixed NIFTY 200-SMA overlay passes all 5 promotion pillars |
+| V4 Step 3 | Active paper-readiness infrastructure | ₹1 lakh broker-neutral workflow; prospective observation not yet started |
 
 Frozen V1/V2 parameters and evidence must not be revised in response to later results. Reserved holdouts remain untouched until a version is explicitly ready for one-time evaluation.
 
@@ -72,6 +73,13 @@ overlay. It reduces long-history drawdown to 19.76% while retaining positive fix
 cohort and doubled-cost results, so it passes all five development promotion
 pillars. Promotion means eligible for later staged evaluation—not deployment or
 permission to consume any reserve now.
+
+V4 trades whole shares of constituent cash stocks drawn from NIFTY 50, NIFTY
+Next 50, and BANKNIFTY membership. It does not trade an index, index future, or
+option; NIFTY 50 index prices are regime and benchmark inputs only. Step 3 adds a
+dry-run-first, restart-safe local paper workflow with default ₹1,00,000 capital and
+₹10,000 fixed targets. This is readiness infrastructure, not prospective profit
+evidence or deployment approval.
 
 ## Repository guide
 

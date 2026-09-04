@@ -20,6 +20,7 @@ class OrderRequest(BaseModel):
     side: OrderSide
     quantity: int = Field(gt=0)
     client_order_id: str
+    estimated_fee: float = Field(default=0.0, ge=0)
 
 
 class OrderResult(BaseModel):
@@ -27,6 +28,7 @@ class OrderResult(BaseModel):
     client_order_id: str
     status: OrderStatus
     fill_price: float | None = None
+    fee: float = 0.0
     reason: str | None = None
 
 
@@ -62,7 +64,8 @@ class PaperBroker:
             reason = "missing market price"
         elif price * order.quantity > self.max_order_value:
             reason = "order value exceeds risk limit"
-        elif order.side == OrderSide.BUY and price * order.quantity > self.cash:
+        elif (order.side == OrderSide.BUY
+              and price * order.quantity + order.estimated_fee > self.cash):
             reason = "insufficient cash"
         elif order.side == OrderSide.SELL and order.quantity > self._positions.get(order.symbol, 0):
             reason = "insufficient position"
@@ -74,12 +77,16 @@ class PaperBroker:
             )
         else:
             signed = order.quantity if order.side == OrderSide.BUY else -order.quantity
-            self.cash -= signed * price
+            if order.side == OrderSide.BUY:
+                self.cash -= price * order.quantity + order.estimated_fee
+            else:
+                self.cash += price * order.quantity - order.estimated_fee
             self._positions[order.symbol] = self._positions.get(order.symbol, 0) + signed
             result = OrderResult(
                 broker_order_id=f"paper-{self._next_order_number}",
                 client_order_id=order.client_order_id,
                 status=OrderStatus.FILLED, fill_price=price,
+                fee=order.estimated_fee,
             )
         self._next_order_number += 1
         self._orders[order.client_order_id] = result
