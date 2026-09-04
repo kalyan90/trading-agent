@@ -1,0 +1,45 @@
+V3 Step 6 unfrozen dynamic-calendar development evidence
+Run date: 2026-09-04
+Holdout: 2025-09-01 onward NOT EVALUATED
+Membership: retrospective 2026-09-04 snapshot/static long-history cohorts
+Dividends: unavailable; price-return benchmarks only
+Signal: unchanged Trend-Momentum 20/50 SMA, RSI 14, MACD 12/26/9, ATR 14
+
+cohort,group,symbols,sessions,pnl,return_pct,max_dd,exposure_pct,fees,benchmark,excess
+2020_2021,NIFTY 50,44,497,431063.99,43.11,117219.99,39.07,57978.34,804430.11,-373366.12
+2020_2021,NIFTY NEXT 50,36,497,248019.90,24.80,176175.41,27.73,40507.10,761089.02,-513069.11
+2020_2021,NIFTY BANK,14,497,130856.47,13.09,72423.80,16.82,24132.53,-21923.52,152779.99
+2020_2021,COMBINED,85,497,417672.84,41.77,110169.25,44.75,75865.58,718516.63,-300843.79
+2022_2023,NIFTY 50,46,492,136244.86,13.62,81293.06,34.07,51818.75,446086.00,-309841.13
+2022_2023,NIFTY NEXT 50,41,492,357780.38,35.78,104622.57,48.90,58845.48,1221232.93,-863452.55
+2022_2023,NIFTY BANK,14,492,83535.87,8.35,89087.60,13.54,20119.56,816800.24,-733264.37
+2022_2023,COMBINED,92,492,273921.27,27.39,208619.21,64.15,88250.53,791062.08,-517140.81
+2024_CUTOFF,NIFTY 50,48,410,-211750.19,-21.18,252985.07,54.49,61497.66,208323.29,-420073.47
+2024_CUTOFF,NIFTY NEXT 50,44,410,126984.79,12.70,143645.27,42.59,48437.99,299609.44,-172624.65
+2024_CUTOFF,NIFTY BANK,14,410,-136208.30,-13.62,155901.04,13.46,17647.18,29597.62,-165805.92
+2024_CUTOFF,COMBINED,97,410,-121724.51,-12.17,280373.99,68.10,84338.26,213679.95,-335404.45
+
+Long-history combined, 85 symbols, 1399 sessions, 2020-01-01..2025-08-29
+scenario,pnl,return_pct,max_dd,trades,exposure_pct,fees,benchmark,excess
+base,725369.01,72.54,279354.53,562,58.57,250393.30,2562956.87,-1837587.86
+double_slippage,610983.18,61.10,275239.03,561,58.33,249840.35,2560802.96,-1949819.78
+double_statutory_costs,427205.60,42.72,324455.90,542,56.88,482885.38,2561829.61,-2134624.02
+dp_15_50,390156.23,39.02,141431.24,314,33.64,144314.82,2562956.87,-2172800.65
+dp_25,101126.69,10.11,122285.61,222,22.69,103735.30,2562956.87,-2461830.18
+
+Base yearly P&L: 2020 0.00; 2021 417672.84; 2022 -78889.62;
+2023 443539.84; 2024 77758.03; 2025 -134712.08.
+Positive contribution breadth: 51.25%. Turnover: 225110517.64.
+
+Retirement rule: continuation requires passing at least four of five pillars:
+long-history profitability, positive returns in at least two of three fixed cohorts,
+benchmark wins in at least two of three cohorts, drawdown below 10% of starting
+capital, and positive contribution breadth of at least 50%. Two failures trigger
+retirement. Benchmark capture failed (0/3 combined cohorts beat passive) and
+drawdown control failed (₹279354.53 > ₹100000). Result: RETIRE Trend-Momentum from
+further promotion. This is a research decision, not an instruction to trade.
+
+Limitations: current membership is projected backward; compared group calendars
+are identical within each cohort but constituent sets differ; no total-return
+dividend series; DP values are illustrative; the 2026 fee schedule is applied
+retrospectively; corporate-action sidecars are not all authoritatively reconciled.

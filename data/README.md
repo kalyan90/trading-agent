@@ -57,3 +57,18 @@ sidecars, and SHA-256 manifests remain separate. `stocks_step5_raw/` and
 or renamed listings have fewer than the minimum 540 rows; no earlier history was
 fabricated. The constituent snapshot supports only retrospective, survivorship-
 biased diagnostics.
+
+## Step 6 availability limits
+
+Historical index constituent files were not acquired. NSE Indices publishes current
+constituents, reconstitution notices, and a paid historical constituent data product;
+the repository does not silently reconstruct missing intervals from press releases.
+Step 6 therefore reports `retrospective_current_snapshot` or
+`long_history_static_cohort` modes only.
+
+No authoritative per-security dividend series was acquired, so reported benchmarks
+remain price-return benchmarks. The engine accepts only verified dividend events
+with source URLs when such data becomes available. Existing inferred split/bonus
+sidecars remain warnings/adjustments and are not relabeled as authoritative
+confirmation. DP fees are configurable sell-side broker scenarios, not statutory
+truth; Step 5 statutory rates and effective-date metadata remain unchanged.

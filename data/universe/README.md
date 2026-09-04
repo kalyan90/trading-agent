@@ -13,6 +13,11 @@ The loader rejects duplicate `(as_of, index_name, symbol)` rows. Lookup selects 
 latest snapshot known on or before each date and deduplicates overlapping indexes.
 A current snapshot projected backward is labeled `retrospective_current_snapshot`.
 
+Optional interval rows use `record_type=interval`, `effective_from`, and
+`effective_to`. `as_of` remains the date the record became knowable: an interval is
+never backfilled before `as_of`, even when its effective date is earlier. Snapshot
+and interval members from overlapping indexes are deduplicated by symbol.
+
 Refresh the forward research snapshot with:
 
 ```bash

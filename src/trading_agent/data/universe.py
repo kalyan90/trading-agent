@@ -15,6 +15,11 @@ def load_universe_snapshots(path: Path) -> list[UniverseMember]:
                 index_name=row["index_name"], symbol=row["symbol"],
                 company_name=row.get("company_name") or None,
                 industry=row.get("industry") or None,
+                record_type=row.get("record_type") or "snapshot",
+                effective_from=(datetime.strptime(row["effective_from"], "%Y-%m-%d").date()
+                                if row.get("effective_from") else None),
+                effective_to=(datetime.strptime(row["effective_to"], "%Y-%m-%d").date()
+                              if row.get("effective_to") else None),
             )
             for row in csv.DictReader(source)
         ]

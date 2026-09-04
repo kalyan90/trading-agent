@@ -109,3 +109,7 @@ Positive development is not proof of a deployable edge. Negative development is 
 checkpoint. It does not
 replace either Step 4 log; its comparisons are survivorship-biased and its reserved
 tail is untouched.
+
+V3 Step 6 is documented in `v3/experiment-v3-step6-dynamic-calendar.txt`. It is
+unfrozen development evidence and does not replace any frozen log. The cross-version
+interpretation is in `V1_TO_V3_REVIEW.md`.

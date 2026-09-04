@@ -2,7 +2,7 @@
 
 from datetime import date
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 
 class MembershipUnavailableError(ValueError):
@@ -17,6 +17,20 @@ class UniverseMember(BaseModel):
     symbol: str
     company_name: str | None = None
     industry: str | None = None
+    record_type: str = "snapshot"
+    effective_from: date | None = None
+    effective_to: date | None = None
+
+    @model_validator(mode="after")
+    def validate_interval(self):
+        if self.record_type not in {"snapshot", "interval"}:
+            raise ValueError("record_type must be snapshot or interval")
+        if self.record_type == "interval" and self.effective_from is None:
+            raise ValueError("interval membership requires effective_from")
+        if (self.effective_from is not None and self.effective_to is not None
+                and self.effective_to < self.effective_from):
+            raise ValueError("effective_to precedes effective_from")
+        return self
 
 
 def active_symbols(
@@ -27,21 +41,28 @@ def active_symbols(
     eligible = [m for m in members if m.as_of <= as_of]
     if indexes:
         eligible = [m for m in eligible if m.index_name in indexes]
-    if not eligible:
+    intervals = [m for m in eligible if m.record_type == "interval"]
+    snapshots = [m for m in eligible if m.record_type == "snapshot"]
+    interval_symbols = {
+        member.symbol for member in intervals
+        if member.effective_from <= as_of
+        and (member.effective_to is None or as_of <= member.effective_to)
+    }
+    if not snapshots and not interval_symbols:
         if require_snapshot:
             raise MembershipUnavailableError(
                 f"no universe snapshot known on or before {as_of.isoformat()}"
             )
         return set()
     latest_by_index = {}
-    for member in eligible:
+    for member in snapshots:
         latest_by_index[member.index_name] = max(
             member.as_of, latest_by_index.get(member.index_name, member.as_of)
         )
     return {
-        member.symbol for member in eligible
+        member.symbol for member in snapshots
         if member.as_of == latest_by_index[member.index_name]
-    }
+    } | interval_symbols
 
 
 def membership_status(members: list[UniverseMember], start: date, end: date) -> str:

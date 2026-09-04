@@ -38,3 +38,23 @@ def test_missing_snapshot_can_fail_explicitly():
 def test_future_snapshot_is_never_visible():
     members = [member(date(2025, 1, 1), "NIFTY 50", "FUTURE")]
     assert active_symbols(members, date(2024, 12, 31)) == set()
+
+
+def test_dated_interval_addition_and_removal_respect_knowledge_date():
+    member = UniverseMember(
+        as_of=date(2024, 1, 15), index_name="NIFTY 50", symbol="CHANGED",
+        record_type="interval", effective_from=date(2024, 2, 1),
+        effective_to=date(2024, 3, 31),
+    )
+    assert active_symbols([member], date(2024, 1, 31)) == set()
+    assert active_symbols([member], date(2024, 2, 1)) == {"CHANGED"}
+    assert active_symbols([member], date(2024, 4, 1)) == set()
+
+
+def test_interval_announced_after_effective_date_is_not_backfilled():
+    member = UniverseMember(
+        as_of=date(2024, 3, 1), index_name="NIFTY BANK", symbol="LATE_NOTICE",
+        record_type="interval", effective_from=date(2024, 2, 1),
+    )
+    assert active_symbols([member], date(2024, 2, 15)) == set()
+    assert active_symbols([member], date(2024, 3, 1)) == {"LATE_NOTICE"}

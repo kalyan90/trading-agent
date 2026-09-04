@@ -13,6 +13,7 @@ A deterministic, chronology-safe research system for NSE index, futures, and cas
 | V3 Step 3 | Frozen limited checkpoint | BANKNIFTY generalized weakly; paper foundations added |
 | V3 Step 4 | Frozen negative checkpoint | Adjusted 10-stock portfolio lost money and underperformed |
 | V3 Step 5 | Frozen limited negative current-snapshot checkpoint | 105 symbols acquired; 94 pass history/liquidity gates |
+| V3 Step 6 | Active, unfrozen dynamic-calendar review | Dynamic cohorts confirm benchmark failure; retirement rule triggered |
 
 Frozen V1/V2 parameters and evidence must not be revised in response to later results. Reserved holdouts remain untouched until a version is explicitly ready for one-time evaluation.
 
@@ -49,6 +50,13 @@ and liquidity gates. Historical membership snapshots remain unavailable, so Step
 is frozen only as a limited negative research/infrastructure checkpoint—not as
 profitable evidence, a survivorship-free comparison, deployment approval, or
 permission to use holdouts.
+
+V3 Step 6 removes the all-symbol intersection-calendar distortion. Fixed-period
+dynamic cohorts retain each exchange session and evaluate symbols only when their
+own data, training, liquidity, and declared membership mode allow it. The unchanged
+Trend-Momentum policy remains profitable in some development cohorts but fails the
+predeclared benchmark-capture and drawdown retirement pillars. No reserved equity
+session from 2025-09-01 onward was evaluated.
 
 ## Repository guide
 

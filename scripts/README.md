@@ -73,3 +73,17 @@ uv run python scripts/run_v3_step5.py --data-dir data/stocks_step5_adjusted
 The downloader checks requested exchange dates, EQ series, group membership, and
 deduplicates overlaps. Adjustment refuses a raw file whose manifest checksum does
 not match. `run_v3_step5.py` never evaluates the 250-session tail.
+
+## V3 Step 6 dynamic calendar
+
+```bash
+uv run python scripts/run_v3_step6.py
+uv run pytest -q
+```
+
+The runner declares three same-date cohorts (2020–2021, 2022–2023, and 2024
+through 2025-08-29), verifies exact group-calendar equality inside each comparison,
+and runs a 2020-through-cutoff long-history cohort with base, doubled slippage,
+doubled statutory costs, and illustrative ₹15.50/₹25 sell-side DP scenarios. It
+uses current membership only in the explicitly labeled retrospective/static mode.
+The fixed reserve begins 2025-09-01 and is rejected as an evaluation end date.

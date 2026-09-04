@@ -32,6 +32,8 @@ class CashEquityFeeSchedule(BaseModel):
     gst_rate: Decimal = Decimal("0.18")
     stamp_buy_rate: Decimal = Decimal("0.00015")
     fee_multiplier: Decimal = Field(default=Decimal("1"), gt=0)
+    dp_charge_per_sell: Decimal = Field(default=Decimal("0"), ge=0)
+    dp_charge_assumption: str = "excluded; configure the broker/depository plan"
     brokerage_assumption: str = "zero-brokerage delivery plan; configure for the actual broker"
     sources: tuple[str, ...] = (
         "https://www.nseindia.com/static/invest/first-time-investor-sebi-turnover-fees-stt-other-levies",
@@ -49,6 +51,7 @@ class FeeBreakdown(BaseModel):
     sebi_turnover_fee: Decimal
     gst: Decimal
     stamp_duty: Decimal
+    dp_charge: Decimal = Decimal("0.00")
     total: Decimal
 
 
@@ -83,7 +86,9 @@ def calculate_cash_equity_fees(
     sebi = _paise(turnover * schedule.sebi_rate)
     gst = _paise((brokerage + exchange + sebi) * schedule.gst_rate)
     stamp = _paise(turnover * schedule.stamp_buy_rate) if side == OrderSide.BUY else Decimal("0.00")
-    components = (brokerage, stt, exchange, sebi, gst, stamp)
+    dp_charge = (schedule.dp_charge_per_sell
+                 if side == OrderSide.SELL else Decimal("0"))
+    components = (brokerage, stt, exchange, sebi, gst, stamp, dp_charge)
     multiplier = schedule.fee_multiplier
     total = _paise(sum(components, Decimal("0")) * multiplier)
     return FeeBreakdown(
@@ -92,6 +97,7 @@ def calculate_cash_equity_fees(
         exchange_transaction_charge=_paise(exchange * multiplier),
         sebi_turnover_fee=_paise(sebi * multiplier), gst=_paise(gst * multiplier),
         stamp_duty=_paise(stamp * multiplier), total=total,
+        dp_charge=_paise(dp_charge * multiplier),
     )
 
 
