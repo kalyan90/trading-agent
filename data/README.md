@@ -104,3 +104,9 @@ same-close, future, or stale next-open prices are skipped or deferred rather tha
 filled. Constituent membership evidence is required as of the decision; the stored
 2026-09-04 snapshot must not be projected backward. NIFTY 50 index data supplies
 only regime and benchmark context—not a tradable V4 instrument.
+
+`generate_v4_step3_input.py` separates the two evidence cutoffs: rankings and the
+regime use rows no later than `signal_date`, while execution prices use the first
+available stock open strictly after that date and no later than `as_of`. `SMA`
+means simple moving average; `RS` means relative strength; `12−1` means 252-session
+momentum with the latest 21 sessions skipped; `PIT` means point in time.

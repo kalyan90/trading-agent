@@ -8,5 +8,8 @@ dist/
 wheels/
 *.egg-info
 
+# Local prospective paper state and immutable evidence (back up separately)
+var/
+
 # Virtual environments
 .venv

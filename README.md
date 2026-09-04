@@ -16,7 +16,7 @@ A deterministic, chronology-safe research system for NSE index, futures, and cas
 | V3 Step 6 | Frozen retirement checkpoint | Dynamic cohorts confirm benchmark failure; retirement rule triggered |
 | V4 Step 1 | Frozen limited inconclusive checkpoint | Monthly 12−1 relative strength passes 4/5 pillars; not promotable or retired |
 | V4 Step 2 | Frozen promoted development baseline | Fixed NIFTY 200-SMA overlay passes all 5 promotion pillars |
-| V4 Step 3 | Active paper-readiness infrastructure | ₹1 lakh broker-neutral workflow; prospective observation not yet started |
+| V4 Step 3 | Active paper-readiness infrastructure | ₹1 lakh broker-neutral workflow with deterministic evidence generation; prospective observation not yet started |
 
 Frozen V1/V2 parameters and evidence must not be revised in response to later results. Reserved holdouts remain untouched until a version is explicitly ready for one-time evaluation.
 
@@ -136,11 +136,13 @@ Dataset preparation and V3 commands are in [`scripts/README.md`](scripts/README.
 | OHLCV | Open, High, Low, Close, and Volume |
 | OOS | Out-of-Sample |
 | P&L | Profit and Loss |
+| PIT | Point in Time |
 | RSI | Relative Strength Index |
 | RS | Relative Strength |
 | SEBI | Securities and Exchange Board of India |
 | SMA | Simple Moving Average |
 | STT | Securities Transaction Tax |
+| 12−1 | 252-session momentum excluding the latest 21 sessions |
 
 Metric definitions are in [`logs/README.md`](logs/README.md).
 

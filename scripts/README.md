@@ -120,11 +120,41 @@ Step 3 accepts explicit local JSON evidence and never defaults an evidence date 
 today. Dry-run is the default; `paper` uses only the deterministic local broker.
 There is no live adapter.
 
+After the next exchange session has opened, generate the decision and first-open
+evidence directly from validated local datasets:
+
+```bash
+uv run python scripts/generate_v4_step3_input.py \
+  --signal-date 2026-09-30 --as-of 2026-10-01 \
+  --data-dir data/stocks_step5_adjusted --index-dir data \
+  --universe data/universe/nifty_100_bank_constituents_2026-09-04.csv \
+  --output var/v4-step3/inputs/2026-09.json
+```
+
+The generator requires an exact NIFTY 50 close on the signal date, exactly the
+trailing 200 sessions for the regime calculation, a membership snapshot known by
+the signal date, and each stock's own first available open after the signal. It
+uses only rows through the signal for 252/21 momentum and liquidity. It emits all
+positive ranked names so the paper allocator can continue below an unaffordable
+stock. Metadata in the JSON records the evidence dates, indexes, and membership
+snapshot dates; the paper command ignores those additional audit fields.
+Existing output files are never overwritten; use one immutable file per signal
+month and back it up with the state and journal.
+
+| JSON field | Definition |
+|---|---|
+| `signal_date` | Exchange session whose close created the decision |
+| `as_of` | Latest date from which next-open evidence may be used |
+| `membership_snapshot_dates` | PIT constituent snapshots known by the signal close |
+| `regime_close` / `regime_sma200` | NIFTY 50 signal close and trailing 200-session SMA |
+| `candidates` | All positive 12−1 RS scores in deterministic rank order |
+| `prices` | Each available symbol's first open strictly after the signal |
+
 ```bash
 uv run python scripts/run_v4_step3_paper.py plan \
   --as-of 2026-10-01 --signal-date 2026-09-30 \
   --inception 2026-09-04 --capital 100000 --mode dry-run \
-  --input /path/to/month-plan.json --data-dir data/stocks_step5_adjusted \
+  --input var/v4-step3/inputs/2026-09.json --data-dir data/stocks_step5_adjusted \
   --state var/v4-step3/state.json --journal var/v4-step3/journal.jsonl
 
 uv run python scripts/run_v4_step3_paper.py status \
