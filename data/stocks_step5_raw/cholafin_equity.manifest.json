@@ -1,0 +1,12 @@
+{
+  "symbol": "CHOLAFIN",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "9c6c331107322994a9038c5778ef955c1b983771f8a50d3a3f5027f08069f936"
+}

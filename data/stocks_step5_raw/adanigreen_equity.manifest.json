@@ -1,0 +1,12 @@
+{
+  "symbol": "ADANIGREEN",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1584,
+  "sha256": "51251444c6e9b7f1a836ead04e9f68f04cac3c75691bf8acb308fae3d429baba"
+}

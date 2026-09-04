@@ -1,0 +1,14 @@
+{
+  "symbol": "HAL",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2023-09-28",
+      "raw_prior_close": 3837.7,
+      "nse_ex_date_reference": 3837.7,
+      "back_adjustment_factor": 0.5,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

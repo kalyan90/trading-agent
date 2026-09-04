@@ -1,0 +1,28 @@
+{
+  "symbol": "ADANIPOWER",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2020-03-12",
+      "raw_prior_close": 41.2,
+      "nse_ex_date_reference": 41.2,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2021-09-20",
+      "raw_prior_close": 148.3,
+      "nse_ex_date_reference": 100.45,
+      "back_adjustment_factor": 0.6773432231962239,
+      "method": "nse_ex_date_reference"
+    },
+    {
+      "date": "2025-09-22",
+      "raw_prior_close": 709.4,
+      "nse_ex_date_reference": 709.4,
+      "back_adjustment_factor": 0.25,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

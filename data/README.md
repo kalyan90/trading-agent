@@ -48,3 +48,12 @@ The pilot has one 0.5 factor for HDFCBANK and one for RELIANCE. Dividends are no
 - The 2026-09-04 constituent snapshot is not unbiased historical membership.
 
 Reproduction commands are in [`../scripts/README.md`](../scripts/README.md).
+## V3 Step 5 coverage and provenance
+
+The Step 5 downloader accepts NIFTY 50, NIFTY Next 50, and NIFTY BANK groups and
+uses their deduplicated symbol union. Raw bhavcopies, adjusted files, adjustment
+sidecars, and SHA-256 manifests remain separate. `stocks_step5_raw/` and
+`stocks_step5_adjusted/` contain 105 symbols acquired on 2026-09-04. Seven recent
+or renamed listings have fewer than the minimum 540 rows; no earlier history was
+fabricated. The constituent snapshot supports only retrospective, survivorship-
+biased diagnostics.

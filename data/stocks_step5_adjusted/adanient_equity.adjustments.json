@@ -1,0 +1,42 @@
+{
+  "symbol": "ADANIENT",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2020-08-25",
+      "raw_prior_close": 248.7,
+      "nse_ex_date_reference": 248.7,
+      "back_adjustment_factor": 1.25,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2023-02-01",
+      "raw_prior_close": 2973.9,
+      "nse_ex_date_reference": 2973.9,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2023-02-02",
+      "raw_prior_close": 2135.35,
+      "nse_ex_date_reference": 2135.35,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2023-02-08",
+      "raw_prior_close": 1802.95,
+      "nse_ex_date_reference": 1802.95,
+      "back_adjustment_factor": 1.25,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2024-11-21",
+      "raw_prior_close": 2821.5,
+      "nse_ex_date_reference": 2821.5,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

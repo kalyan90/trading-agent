@@ -1,0 +1,14 @@
+{
+  "symbol": "AUBANK",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2022-06-09",
+      "raw_prior_close": 1258.45,
+      "nse_ex_date_reference": 1258.45,
+      "back_adjustment_factor": 0.5,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

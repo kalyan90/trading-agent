@@ -11,7 +11,8 @@ A deterministic, chronology-safe research system for NSE index, futures, and cas
 | V3 Step 1 | Frozen checkpoint | Continuous capital captured little of the benchmark |
 | V3 Step 2 | Frozen checkpoint | Real futures execution had weak reward relative to risk |
 | V3 Step 3 | Frozen limited checkpoint | BANKNIFTY generalized weakly; paper foundations added |
-| V3 Step 4 | Active, unfrozen pilot | Adjusted 10-stock portfolio lost money and underperformed |
+| V3 Step 4 | Frozen negative checkpoint | Adjusted 10-stock portfolio lost money and underperformed |
+| V3 Step 5 | Frozen limited negative current-snapshot checkpoint | 105 symbols acquired; 94 pass history/liquidity gates |
 
 Frozen V1/V2 parameters and evidence must not be revised in response to later results. Reserved holdouts remain untouched until a version is explicitly ready for one-time evaluation.
 
@@ -40,6 +41,14 @@ V3 Step 4 uses ten liquid NIFTY 50 stocks, one shared ₹10,00,000 account, at m
 | Excess P&L | **−₹11,07,619.75** |
 
 This is negative development evidence and must not be optimized away. The 2026-09-04 membership snapshot is applied retrospectively, so survivorship bias remains. The reserved tail was not evaluated.
+
+V3 Step 5 replaces the flat fee proxy with component-level delivery charges and
+adds strict point-in-time membership controls. Official bhavcopies cover all 105
+unique symbols in the current three-index snapshot; 94 pass the declared history
+and liquidity gates. Historical membership snapshots remain unavailable, so Step 5
+is frozen only as a limited negative research/infrastructure checkpoint—not as
+profitable evidence, a survivorship-free comparison, deployment approval, or
+permission to use holdouts.
 
 ## Repository guide
 
@@ -97,7 +106,9 @@ Dataset preparation and V3 commands are in [`scripts/README.md`](scripts/README.
 | OOS | Out-of-Sample |
 | P&L | Profit and Loss |
 | RSI | Relative Strength Index |
+| SEBI | Securities and Exchange Board of India |
 | SMA | Simple Moving Average |
+| STT | Securities Transaction Tax |
 
 Metric definitions are in [`logs/README.md`](logs/README.md).
 

@@ -374,6 +374,7 @@ def create_trading_config(
         transaction_cost=execution.transaction_cost,
         slippage=execution.slippage,
         force_liquidation=execution.force_liquidation,
+        fee_schedule=execution.fee_schedule,
         sma_period=sma_period,
         strategy=strategy,
     )
@@ -389,6 +390,7 @@ def create_v2_trading_config(v2_config: V2Config) -> TradingConfig:
         transaction_cost=execution.transaction_cost,
         slippage=execution.slippage,
         force_liquidation=execution.force_liquidation,
+        fee_schedule=execution.fee_schedule,
         sma_period=v2_config.slow_sma_period,
         fast_sma_period=v2_config.fast_sma_period,
         slow_sma_period=v2_config.slow_sma_period,

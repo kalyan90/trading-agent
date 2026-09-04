@@ -1,0 +1,12 @@
+{
+  "symbol": "HINDZINC",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "75e6b8451507aa2113537a2bcf12dd6d852e919d4f9b43e6f7f0324f461b1212"
+}

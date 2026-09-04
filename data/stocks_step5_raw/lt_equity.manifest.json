@@ -1,0 +1,12 @@
+{
+  "symbol": "LT",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "195981ff209b40ef6438f4103b54c0a0e37b62c887920dc46fed794352ce9bf3"
+}

@@ -8,6 +8,8 @@ from pydantic import (
     Field,
 )
 
+from trading_agent.core.fees import CashEquityFeeSchedule
+
 
 class StrategyType(str, Enum):
     SMA_BASIC = "sma_basic"
@@ -36,6 +38,7 @@ class ExecutionConfig(BaseModel):
     slippage: float = Field(ge=0)
 
     force_liquidation: bool = False
+    fee_schedule: CashEquityFeeSchedule | None = None
 
 
 class TradingConfig(BaseModel):
@@ -55,6 +58,7 @@ class TradingConfig(BaseModel):
     slippage: float = Field(ge=0)
 
     force_liquidation: bool = False
+    fee_schedule: CashEquityFeeSchedule | None = None
 
     sma_period: int = Field(gt=0)
 

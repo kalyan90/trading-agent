@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from trading_agent.core.config import ExecutionConfig, V2Config
 from trading_agent.core.equity import EquityInstrument, EquityPortfolioConfig
 from trading_agent.core.market import MarketData
+from trading_agent.core.universe import UniverseMember
 from trading_agent.research.equity_portfolio import (
     evaluate_equity_portfolio, run_robustness_scenarios,
 )
@@ -61,3 +62,14 @@ def test_robustness_scenarios_are_declared_not_optimized():
     assert set(results) == {"base", "double_slippage", "double_cost", "combined_stress"}
     assert results["combined_stress"].transaction_costs >= results["base"].transaction_costs
 
+
+def test_future_current_snapshot_cannot_be_claimed_point_in_time():
+    members = [UniverseMember(
+        as_of=datetime(2026, 1, 1).date(), index_name="NIFTY 50", symbol="AAA",
+    )]
+    with __import__("pytest").raises(ValueError, match="first snapshot"):
+        evaluate_equity_portfolio(
+            {"AAA": history("AAA")}, STRATEGY,
+            PORTFOLIO.model_copy(update={"max_positions": 1}),
+            universe_members=members, point_in_time_membership=True,
+        )

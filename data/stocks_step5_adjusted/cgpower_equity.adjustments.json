@@ -1,0 +1,14 @@
+{
+  "symbol": "CGPOWER",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2022-01-04",
+      "raw_prior_close": 89.0,
+      "nse_ex_date_reference": 196.1,
+      "back_adjustment_factor": 2.203370786516854,
+      "method": "nse_ex_date_reference"
+    }
+  ]
+}

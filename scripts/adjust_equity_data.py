@@ -69,6 +69,8 @@ def main():
         raw_manifest = DatasetManifest.model_validate_json(
             source_path.with_suffix(".manifest.json").read_text()
         )
+        if raw_manifest.sha256 != file_sha256(source_path):
+            raise ValueError(f"{source_path}: raw checksum does not match manifest")
         manifest = raw_manifest.model_copy(update={
             "downloaded_at": datetime.now(UTC).isoformat(),
             "adjustment_status": "back_adjusted_corporate_action_factors",

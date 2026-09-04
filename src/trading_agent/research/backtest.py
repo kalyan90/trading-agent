@@ -30,6 +30,7 @@ from trading_agent.core.trade import (
     BacktestResult,
     Trade,
 )
+from trading_agent.core.fees import OrderSide, calculate_cash_equity_fees
 
 
 # =====================================================
@@ -83,6 +84,15 @@ def calculate_profit_drawdown_ratio(
         pnl
         / max_drawdown
     )
+
+
+def calculate_execution_fee(config, price: float, quantity: int, side: OrderSide) -> float:
+    """Use component-level fees when configured, otherwise the legacy half-cost."""
+    if config.fee_schedule is None:
+        return config.transaction_cost / 2
+    return float(calculate_cash_equity_fees(
+        price, quantity, side, config.fee_schedule,
+    ).total)
 
 
 # =====================================================
@@ -153,10 +163,7 @@ def calculate_buy_and_hold_benchmark(
             entry_price
             * quantity
         )
-        - (
-            config.transaction_cost
-            / 2
-        )
+        - calculate_execution_fee(config, entry_price, quantity, OrderSide.BUY)
     )
 
     equity_history = []
@@ -204,10 +211,7 @@ def calculate_buy_and_hold_benchmark(
                 exit_price
                 * quantity
             )
-            - (
-                config.transaction_cost
-                / 2
-            )
+            - calculate_execution_fee(config, exit_price, quantity, OrderSide.SELL)
         )
 
         equity_history.append(
@@ -285,6 +289,7 @@ def run_backtest(
     pending_action = None
     pending_atr = None
     entry_atr = None
+    entry_fee = 0.0
 
     total_profit = 0
 
@@ -387,8 +392,7 @@ def run_backtest(
             portfolio.buy(
                 execution_price,
                 quantity,
-                config.transaction_cost
-                / 2,
+                calculate_execution_fee(config, execution_price, quantity, OrderSide.BUY),
             )
             entries += 1
 
@@ -400,6 +404,9 @@ def run_backtest(
                 market.date
             )
             entry_atr = pending_atr
+            entry_fee = calculate_execution_fee(
+                config, execution_price, quantity, OrderSide.BUY,
+            )
 
             if verbose:
                 print(
@@ -442,10 +449,10 @@ def run_backtest(
                 * quantity
             )
 
-            net_profit = (
-                gross_profit
-                - config.transaction_cost
+            exit_fee = calculate_execution_fee(
+                config, execution_price, quantity, OrderSide.SELL,
             )
+            net_profit = gross_profit - entry_fee - exit_fee
 
             trade = Trade(
                 entry_date=entry_date,
@@ -468,8 +475,7 @@ def run_backtest(
             portfolio.sell(
                 execution_price,
                 quantity,
-                config.transaction_cost
-                / 2,
+                exit_fee,
             )
             exits += 1
 
@@ -490,6 +496,7 @@ def run_backtest(
             entry_price = 0
             entry_date = None
             entry_atr = None
+            entry_fee = 0.0
 
         pending_action = None
         pending_atr = None
@@ -659,10 +666,10 @@ def run_backtest(
             * quantity
         )
 
-        net_profit = (
-            gross_profit
-            - config.transaction_cost
+        exit_fee = calculate_execution_fee(
+            config, execution_price, quantity, OrderSide.SELL,
         )
+        net_profit = gross_profit - entry_fee - exit_fee
 
         trade = Trade(
             entry_date=entry_date,
@@ -685,8 +692,7 @@ def run_backtest(
         portfolio.sell(
             execution_price,
             quantity,
-            config.transaction_cost
-            / 2,
+            exit_fee,
         )
         exits += 1
 

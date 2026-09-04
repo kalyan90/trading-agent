@@ -1,0 +1,21 @@
+{
+  "symbol": "RECLTD",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2022-08-17",
+      "raw_prior_close": 137.4,
+      "nse_ex_date_reference": 137.4,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2024-06-04",
+      "raw_prior_close": 604.5,
+      "nse_ex_date_reference": 604.5,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

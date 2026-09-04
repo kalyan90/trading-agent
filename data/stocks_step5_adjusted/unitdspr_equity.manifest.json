@@ -1,0 +1,12 @@
+{
+  "symbol": "UNITDSPR",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:18.542542+00:00",
+  "series": "EQ",
+  "adjustment_status": "back_adjusted_corporate_action_factors",
+  "first_date": "2024-06-07",
+  "last_date": "2026-09-03",
+  "observations": 555,
+  "sha256": "29d5d78105f49430bb285c750c8fb3efac7faaca1d58cbfecf659eabf3216b27"
+}

@@ -1,0 +1,12 @@
+{
+  "symbol": "WIPRO",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:18.578442+00:00",
+  "series": "EQ",
+  "adjustment_status": "back_adjusted_corporate_action_factors",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "ecd92e84fbea6c46e14b40c8c95de877bfd733cb25f18696a756c042b798d560"
+}

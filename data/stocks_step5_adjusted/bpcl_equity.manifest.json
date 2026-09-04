@@ -1,0 +1,12 @@
+{
+  "symbol": "BPCL",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:17.651170+00:00",
+  "series": "EQ",
+  "adjustment_status": "back_adjusted_corporate_action_factors",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "5ca64524e526cca13fc949eae1456e1f4a21ee20b64bf8ec35e74176f11c6b0f"
+}

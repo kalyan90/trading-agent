@@ -1,0 +1,12 @@
+{
+  "symbol": "ZYDUSLIFE",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2022-03-07",
+  "last_date": "2026-09-03",
+  "observations": 1109,
+  "sha256": "b2a76161d875a1eead2c839c05d594b963128b9003f7dede13e5b8389219134d"
+}

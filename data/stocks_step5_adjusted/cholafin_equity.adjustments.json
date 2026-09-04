@@ -1,0 +1,14 @@
+{
+  "symbol": "CHOLAFIN",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2020-03-23",
+      "raw_prior_close": 193.25,
+      "nse_ex_date_reference": 193.25,
+      "back_adjustment_factor": 0.6666666666666666,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

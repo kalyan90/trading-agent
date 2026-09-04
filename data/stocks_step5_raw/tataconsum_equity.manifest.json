@@ -1,0 +1,12 @@
+{
+  "symbol": "TATACONSUM",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-02-27",
+  "last_date": "2026-09-03",
+  "observations": 1609,
+  "sha256": "83da9fb6b1cd6492e60977f10c448a4d8db0938bdf78cd79e681863162f9e91f"
+}

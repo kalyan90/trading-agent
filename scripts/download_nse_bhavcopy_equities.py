@@ -1,4 +1,4 @@
-"""Build yearly pilot equity histories from official NSE daily bhavcopies."""
+"""Build raw equity histories for declared NSE index snapshots from bhavcopies."""
 
 import argparse
 import csv
@@ -46,8 +46,17 @@ def main():
     parser.add_argument("--workers", type=int, default=4)
     parser.add_argument("--pilot", action="store_true")
     parser.add_argument("--symbols", nargs="+")
+    parser.add_argument(
+        "--indexes", nargs="+",
+        choices=("NIFTY 50", "NIFTY NEXT 50", "NIFTY BANK"),
+        help="select snapshot groups; defaults to their deduplicated union",
+    )
     args = parser.parse_args()
-    universe = {member.symbol for member in load_universe_snapshots(args.universe)}
+    members = load_universe_snapshots(args.universe)
+    universe = {
+        member.symbol for member in members
+        if not args.indexes or member.index_name in set(args.indexes)
+    }
     selected = set(PILOT_SYMBOLS if args.pilot else (args.symbols or universe))
     unknown = selected - universe
     if unknown:

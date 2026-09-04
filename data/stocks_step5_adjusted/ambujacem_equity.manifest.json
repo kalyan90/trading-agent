@@ -1,0 +1,12 @@
+{
+  "symbol": "AMBUJACEM",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:17.487885+00:00",
+  "series": "EQ",
+  "adjustment_status": "back_adjusted_corporate_action_factors",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "10e6fd872526893b05462fb5b1be050f167dc53e88e304a57109fd974e4180be"
+}

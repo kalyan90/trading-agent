@@ -1,0 +1,12 @@
+{
+  "symbol": "ABB",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-06",
+  "last_date": "2026-09-03",
+  "observations": 1646,
+  "sha256": "43fd9ec2f669472ddb2b28878f9b8057f801e0df857495f3919a5b863c4314f4"
+}

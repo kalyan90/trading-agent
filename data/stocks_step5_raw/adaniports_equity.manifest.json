@@ -1,0 +1,12 @@
+{
+  "symbol": "ADANIPORTS",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "efd2c5137e13e69f4b572717615a5d086bab00abff03a1bf4a558bf78a6d6e12"
+}

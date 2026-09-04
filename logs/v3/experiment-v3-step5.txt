@@ -1,0 +1,48 @@
+V3 Step 5 frozen limited negative current-snapshot checkpoint
+Run date: 2026-09-04
+Signal: unchanged Trend-Momentum 20/50 SMA, RSI 14, MACD 12/26/9, ATR 14
+Execution: INR 10,00,000 shared, integer shares, next open, max 5 positions
+Source: official NSE EQ bhavcopies, requested 2020-01-01..2026-09-03
+Reserved holdout: 2025-09-01 onward (250 common sessions; NOT EVALUATED)
+Membership: 2026-09-04 current snapshot projected backward; survivorship bias
+
+Coverage and quality
+105 unique symbols across 114 memberships downloaded; raw and adjusted files,
+checksums, manifests, and adjustment sidecars preserved separately. All files pass
+date/OHLC/checksum validation. YESBANK retains two >35% adjusted moves as warnings.
+Short-history exclusions (<540 rows): ENRIN, ETERNAL, HYUNDAI, LTM, TATACAP, TMCV,
+TMPV. Candidates before liquidity: NIFTY 50 48, Next 50 45, BANK 14, combined 98.
+Post-liquidity result symbols: NIFTY 50 48, Next 50 41, BANK 14, combined 94.
+
+Fee schedule (retrospective modeling assumption): effective 2026-03-01 NSE delivery
+cash. Verified rates: STT 0.1% both sides; NSE 0.0030699% both sides; SEBI 0.0001%
+both sides; GST 18% of brokerage + NSE + SEBI; stamp 0.015% buy only. STT rounds
+nearest rupee half-up; other components and total round to paise. Assumed zero
+delivery brokerage; configurable. DP charges excluded as broker-specific.
+
+name,symbols,pnl,return_pct,max_dd,sharpe,trades,fees,benchmark,excess
+NIFTY 50,48,-137520.32,-13.75,183286.32,-1.722,57,25802.95,18364.36,-155884.68
+NIFTY NEXT 50,41,-13156.64,-1.32,15652.06,-3.811,4,1762.86,-53215.00,40058.36
+NIFTY BANK,14,104438.49,10.44,156454.08,0.339,143,63714.75,1560247.20,-1455808.71
+COMBINED base,94,-12978.48,-1.30,41874.93,-1.078,13,5746.04,-38670.91,25692.43
+COMBINED double slippage,94,-10345.19,-1.03,39035.04,-0.855,12,5305.19,-38786.62,28441.43
+COMBINED double costs,94,-27016.70,-2.70,43856.24,-2.583,11,9626.50,-39727.89,12711.19
+COMBINED stress,94,-27356.50,-2.74,44065.46,-2.620,11,9626.40,-39842.01,12485.51
+
+Combined yearly P&L: 2025 -12978.48. This sparse breakdown arises because the
+combined common calendar is constrained by the shortest included current-symbol
+history. Group common calendars differ, so group headline metrics are not direct
+same-period rankings. Overlap is deduplicated; combined largest absolute independent-
+symbol contribution share is 4.69%.
+
+Validation: 79 pytest tests passed; paper restart idempotency and risk rejection
+passed, reconciliation mismatch detected, live_adapter_enabled=False.
+
+Conclusion: suitable to freeze only as a limited negative current-snapshot research
+and infrastructure checkpoint. It is not validated profitable evidence, a
+survivorship-free comparison, deployment approval, or permission to use holdouts.
+The strategy loses under base and stress cases; the positive BANK result severely
+underperforms its benchmark. Membership is retrospective, group calendars differ,
+the combined calendar is mostly 2025, seven short-history and four liquidity
+exclusions apply, DP fees are excluded, and the 2026 fee schedule is applied
+retrospectively. No holdout was consumed.

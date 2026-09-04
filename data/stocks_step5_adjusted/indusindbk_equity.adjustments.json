@@ -1,0 +1,42 @@
+{
+  "symbol": "INDUSINDBK",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2020-03-18",
+      "raw_prior_close": 604.15,
+      "nse_ex_date_reference": 604.15,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2020-03-23",
+      "raw_prior_close": 440.35,
+      "nse_ex_date_reference": 440.35,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2020-03-26",
+      "raw_prior_close": 301.3,
+      "nse_ex_date_reference": 301.3,
+      "back_adjustment_factor": 1.5,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2020-04-07",
+      "raw_prior_close": 313.2,
+      "nse_ex_date_reference": 313.2,
+      "back_adjustment_factor": 1.25,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2025-03-11",
+      "raw_prior_close": 900.5,
+      "nse_ex_date_reference": 900.5,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

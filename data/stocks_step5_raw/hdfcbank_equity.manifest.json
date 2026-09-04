@@ -1,0 +1,12 @@
+{
+  "symbol": "HDFCBANK",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "b0cee44a66d1e009346097cf96cb4072dcf2d372b30b3ef4d3fb731f9ed0516b"
+}

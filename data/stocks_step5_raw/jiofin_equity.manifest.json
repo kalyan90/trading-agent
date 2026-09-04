@@ -1,0 +1,12 @@
+{
+  "symbol": "JIOFIN",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2023-09-04",
+  "last_date": "2026-09-03",
+  "observations": 739,
+  "sha256": "b6c59952ef59593bafcf7d688c3ccf8b4db7a426bd697567c2b958da2be6ccad"
+}

@@ -1,0 +1,12 @@
+{
+  "symbol": "CUMMINSIND",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "17137f79a224785b80425187e3cacc88c3b5035130dff6133b18c89363d21ea7"
+}

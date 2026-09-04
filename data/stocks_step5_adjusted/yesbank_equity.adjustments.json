@@ -1,0 +1,35 @@
+{
+  "symbol": "YESBANK",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2020-03-05",
+      "raw_prior_close": 29.3,
+      "nse_ex_date_reference": 29.3,
+      "back_adjustment_factor": 1.25,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2020-03-06",
+      "raw_prior_close": 36.8,
+      "nse_ex_date_reference": 36.8,
+      "back_adjustment_factor": 0.4,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2020-03-09",
+      "raw_prior_close": 16.15,
+      "nse_ex_date_reference": 16.15,
+      "back_adjustment_factor": 1.25,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2020-03-16",
+      "raw_prior_close": 25.55,
+      "nse_ex_date_reference": 25.55,
+      "back_adjustment_factor": 1.5,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

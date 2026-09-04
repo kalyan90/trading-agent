@@ -1,0 +1,12 @@
+{
+  "symbol": "CGPOWER",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-02-13",
+  "last_date": "2026-09-03",
+  "observations": 1471,
+  "sha256": "94d53107c81a51fcc94d348d7cef1cda6140cfc25670b507373ee91ffc61184d"
+}

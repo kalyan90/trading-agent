@@ -1,0 +1,12 @@
+{
+  "symbol": "SHRIRAMFIN",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:18.359116+00:00",
+  "series": "EQ",
+  "adjustment_status": "back_adjusted_corporate_action_factors",
+  "first_date": "2022-12-20",
+  "last_date": "2026-09-03",
+  "observations": 914,
+  "sha256": "a6c7ede405c962b36cebe545b338658fb69cda3451548d6c280e4827a34283a4"
+}

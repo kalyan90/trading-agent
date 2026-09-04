@@ -1,0 +1,12 @@
+{
+  "symbol": "LTM",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2026-02-27",
+  "last_date": "2026-09-03",
+  "observations": 127,
+  "sha256": "077b845e17fb34f674ae03d4c3f0c79785ef42334e5f751e6725dd565f82820b"
+}

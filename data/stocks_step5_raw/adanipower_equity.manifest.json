@@ -1,0 +1,12 @@
+{
+  "symbol": "ADANIPOWER",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1445,
+  "sha256": "9d61ffbcea436c40cf76b099cc433c94777ca0f2c4b69f2172820311f49e8b18"
+}

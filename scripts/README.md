@@ -59,3 +59,17 @@ This validates risk rejection, persisted idempotency after restart, and position
 ## Log policy
 
 New experiments require new version-specific logs. Do not overwrite frozen evidence after changing strategy, data, accounting, or evaluation behavior.
+## V3 Step 5
+
+Download and evaluate a deduplicated raw universe (network required):
+
+```bash
+uv run python scripts/download_nse_bhavcopy_equities.py --universe data/universe/nifty_100_bank_constituents_2026-09-04.csv --indexes "NIFTY 50" "NIFTY NEXT 50" "NIFTY BANK" --start 2020-01-01 --end 2026-09-03 --output-dir data/stocks_step5_raw
+uv run python scripts/validate_equity_data.py --data-dir data/stocks_step5_raw
+uv run python scripts/adjust_equity_data.py --input-dir data/stocks_step5_raw --output-dir data/stocks_step5_adjusted
+uv run python scripts/run_v3_step5.py --data-dir data/stocks_step5_adjusted
+```
+
+The downloader checks requested exchange dates, EQ series, group membership, and
+deduplicates overlaps. Adjustment refuses a raw file whose manifest checksum does
+not match. `run_v3_step5.py` never evaluates the 250-session tail.

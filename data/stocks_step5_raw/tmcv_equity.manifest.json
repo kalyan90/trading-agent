@@ -1,0 +1,12 @@
+{
+  "symbol": "TMCV",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2025-11-26",
+  "last_date": "2026-09-03",
+  "observations": 191,
+  "sha256": "6d6119f96c929cca950d3371893912cf20208841e32a0801d59549599e24641c"
+}

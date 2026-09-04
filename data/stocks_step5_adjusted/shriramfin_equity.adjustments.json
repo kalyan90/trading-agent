@@ -1,0 +1,14 @@
+{
+  "symbol": "SHRIRAMFIN",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2025-01-10",
+      "raw_prior_close": 2809.85,
+      "nse_ex_date_reference": 2809.85,
+      "back_adjustment_factor": 0.2,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "symbol": "BAJFINANCE",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2020-03-23",
+      "raw_prior_close": 2951.9,
+      "nse_ex_date_reference": 2951.9,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2025-06-16",
+      "raw_prior_close": 9331.0,
+      "nse_ex_date_reference": 9331.0,
+      "back_adjustment_factor": 0.1,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

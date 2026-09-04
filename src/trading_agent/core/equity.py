@@ -2,6 +2,8 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from trading_agent.core.fees import CashEquityFeeSchedule, V3_STEP5_FEE_SCHEDULE
+
 
 class EquityInstrument(BaseModel):
     model_config = ConfigDict(frozen=True)
@@ -21,7 +23,10 @@ class EquityPortfolioConfig(BaseModel):
     transaction_cost: float = Field(default=20.0, ge=0)
     slippage: float = Field(default=0.05, ge=0)
     reserved_holdout_sessions: int = Field(default=250, gt=0)
+    fee_schedule: CashEquityFeeSchedule | None = None
 
 
 V3_STEP4_PORTFOLIO_CONFIG = EquityPortfolioConfig()
-
+V3_STEP5_PORTFOLIO_CONFIG = EquityPortfolioConfig(
+    transaction_cost=0, fee_schedule=V3_STEP5_FEE_SCHEDULE,
+)

@@ -105,3 +105,7 @@ See `v3/experiment-v3-step4-equity-pilot.txt` and `v3/experiment-v3-step4-paper-
 ## Interpretation rule
 
 Positive development is not proof of a deployable edge. Negative development is not permission to mine parameters until it becomes positive. New strategy logic, gates, costs, membership histories, or portfolio policies require a new version and separate log.
+`logs/v3/experiment-v3-step5.txt` is a frozen limited negative current-snapshot
+checkpoint. It does not
+replace either Step 4 log; its comparisons are survivorship-biased and its reserved
+tail is untouched.

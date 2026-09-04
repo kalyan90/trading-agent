@@ -1,0 +1,12 @@
+{
+  "symbol": "MOTHERSON",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2022-06-09",
+  "last_date": "2026-09-03",
+  "observations": 1045,
+  "sha256": "a8e5490ab8e7859e76be7db08f69e56816a33ee9916ca2a1bfb2ff078c999e37"
+}

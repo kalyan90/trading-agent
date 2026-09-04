@@ -1,0 +1,14 @@
+{
+  "symbol": "TRENT",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2026-06-04",
+      "raw_prior_close": 4257.6,
+      "nse_ex_date_reference": 4257.6,
+      "back_adjustment_factor": 0.6666666666666666,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

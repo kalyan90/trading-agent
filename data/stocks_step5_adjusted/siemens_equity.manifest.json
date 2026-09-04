@@ -1,0 +1,12 @@
+{
+  "symbol": "SIEMENS",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:18.371386+00:00",
+  "series": "EQ",
+  "adjustment_status": "back_adjusted_corporate_action_factors",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "9c18df988457eca2eebbf34860d0fda331e1fc71d7973c31588a8c43c5249676"
+}

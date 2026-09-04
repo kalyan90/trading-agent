@@ -1,0 +1,21 @@
+{
+  "symbol": "POWERGRID",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2021-07-29",
+      "raw_prior_close": 228.1,
+      "nse_ex_date_reference": 228.1,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2023-09-12",
+      "raw_prior_close": 264.5,
+      "nse_ex_date_reference": 264.5,
+      "back_adjustment_factor": 0.75,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

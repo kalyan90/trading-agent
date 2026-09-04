@@ -11,6 +11,8 @@ from pydantic import BaseModel, ConfigDict
 
 from trading_agent.core.config import ExecutionConfig, V2Config
 from trading_agent.core.equity import EquityInstrument, EquityPortfolioConfig
+from trading_agent.core.fees import OrderSide, calculate_cash_equity_fees
+from trading_agent.core.universe import UniverseMember, active_symbols, membership_status
 from trading_agent.research.backtest import run_backtest
 from trading_agent.research.experiment import create_v2_trading_config
 from trading_agent.research.performance import calculate_max_drawdown
@@ -42,6 +44,7 @@ class EquityPortfolioResult(BaseModel):
     excess_pnl: float
     yearly_pnl: dict[int, float]
     survivorship_bias_warning: bool
+    membership_status: str = "retrospective_current_snapshot"
 
 
 def _aligned_rows(data_by_symbol):
@@ -72,6 +75,8 @@ def evaluate_equity_portfolio(
     instruments: dict[str, EquityInstrument] | None = None,
     *,
     point_in_time_membership: bool = False,
+    universe_members: list[UniverseMember] | None = None,
+    indexes: set[str] | None = None,
 ) -> EquityPortfolioResult:
     """Evaluate unchanged signals with shared capital and a pristine tail reserve.
 
@@ -92,6 +97,31 @@ def evaluate_equity_portfolio(
     symbols = tuple(sorted(aligned))
     specs = instruments or {symbol: EquityInstrument(symbol=symbol) for symbol in symbols}
 
+    if universe_members is not None:
+        status = membership_status(universe_members, dates[0], dates[-1])
+        if status == "retrospective_current_snapshot" and point_in_time_membership:
+            raise ValueError(
+                "point-in-time membership requested but the first snapshot is later "
+                "than the evaluation start"
+            )
+    else:
+        status = ("point_in_time" if point_in_time_membership
+                  else "retrospective_current_snapshot")
+
+    def members_on(day):
+        if universe_members is None:
+            return set(symbols)
+        return active_symbols(universe_members, day, indexes)
+
+    def fee(price, quantity, side):
+        if quantity <= 0:
+            return 0.0
+        if portfolio_config.fee_schedule is None:
+            return portfolio_config.transaction_cost / 2
+        return float(calculate_cash_equity_fees(
+            price, quantity, side, portfolio_config.fee_schedule,
+        ).total)
+
     eligible = []
     for symbol in symbols:
         volumes = [row.volume for row in aligned[symbol]]
@@ -107,6 +137,7 @@ def evaluate_equity_portfolio(
         transaction_cost=portfolio_config.transaction_cost,
         slippage=portfolio_config.slippage,
         force_liquidation=False,
+        fee_schedule=portfolio_config.fee_schedule,
     )
     trading_by_symbol = {
         symbol: create_v2_trading_config(strategy_config.model_copy(update={
@@ -149,18 +180,25 @@ def evaluate_equity_portfolio(
         state = positions.pop(symbol)
         price = row.open - portfolio_config.slippage
         quantity = state["quantity"]
-        cash += price * quantity - portfolio_config.transaction_cost / 2
+        fill_fee = fee(price, quantity, OrderSide.SELL)
+        cash += price * quantity - fill_fee
         profit = ((price - state["entry_price"]) * quantity
-                  - portfolio_config.transaction_cost)
+                  - state["entry_fee"] - fill_fee)
         completed += 1
         wins += int(profit > 0)
         turnover += price * quantity
-        costs += portfolio_config.transaction_cost / 2
+        costs += fill_fee
 
     final_index = max(max(items) for items in decisions.values()) + strategy_config.test_size
     for index in range(strategy_config.train_size, final_index):
         # The gate uses only candles ending before this session's open.
         for symbol in symbols:
+            if symbol not in members_on(dates[index]):
+                pending.pop(symbol, None)
+                if symbol in positions:
+                    sell(symbol, aligned[symbol][index])
+                allowed[symbol] = False
+                continue
             if index in decisions[symbol]:
                 allowed[symbol] = decisions[symbol][index]
                 if not allowed[symbol]:
@@ -179,17 +217,23 @@ def evaluate_equity_portfolio(
                 continue
             row = aligned[symbol][index]
             price = row.open + portfolio_config.slippage
-            quantity = int(min(target_value, cash - portfolio_config.transaction_cost / 2) / price)
+            quantity = int(min(target_value, cash) / price)
             quantity -= quantity % specs[symbol].quantity_step
+            while quantity > 0 and price * quantity + fee(
+                price, quantity, OrderSide.BUY,
+            ) > cash:
+                quantity -= specs[symbol].quantity_step
             if len(positions) >= portfolio_config.max_positions or quantity <= 0:
                 rejected += 1
                 continue
-            cash -= price * quantity + portfolio_config.transaction_cost / 2
+            fill_fee = fee(price, quantity, OrderSide.BUY)
+            cash -= price * quantity + fill_fee
             positions[symbol] = {
                 "quantity": quantity, "entry_price": price, "entry_atr": order["atr"],
+                "entry_fee": fill_fee,
             }
             turnover += price * quantity
-            costs += portfolio_config.transaction_cost / 2
+            costs += fill_fee
 
         for symbol in symbols:
             if not allowed[symbol]:
@@ -237,9 +281,13 @@ def evaluate_equity_portfolio(
     first_index = strategy_config.train_size
     for symbol in symbols:
         price = aligned[symbol][first_index].open + portfolio_config.slippage
-        quantity = int((allocation - portfolio_config.transaction_cost / 2) / price)
+        quantity = int(allocation / price)
+        while quantity > 0 and quantity * price + fee(
+            price, quantity, OrderSide.BUY,
+        ) > allocation:
+            quantity -= 1
         benchmark_quantities[symbol] = quantity
-        benchmark_cash -= quantity * price + portfolio_config.transaction_cost / 2
+        benchmark_cash -= quantity * price + fee(price, quantity, OrderSide.BUY)
     benchmark_equity = benchmark_cash + sum(
         benchmark_quantities[symbol] * aligned[symbol][final_index - 1].close
         for symbol in symbols
@@ -259,7 +307,8 @@ def evaluate_equity_portfolio(
         rejected_orders=rejected, accepted_symbol_windows=accepted_windows,
         total_symbol_windows=total_windows, benchmark_pnl=benchmark_pnl,
         excess_pnl=pnl - benchmark_pnl, yearly_pnl=yearly,
-        survivorship_bias_warning=not point_in_time_membership,
+        survivorship_bias_warning=status != "point_in_time",
+        membership_status=status,
     )
 
 
@@ -276,6 +325,16 @@ def run_robustness_scenarios(data_by_symbol, strategy_config, portfolio_config, 
             "transaction_cost": portfolio_config.transaction_cost * 2,
         }),
     }
+    if portfolio_config.fee_schedule is not None:
+        stressed = portfolio_config.fee_schedule.model_copy(update={
+            "fee_multiplier": portfolio_config.fee_schedule.fee_multiplier * 2,
+        })
+        scenarios["double_cost"] = portfolio_config.model_copy(update={
+            "fee_schedule": stressed,
+        })
+        scenarios["combined_stress"] = portfolio_config.model_copy(update={
+            "slippage": portfolio_config.slippage * 2, "fee_schedule": stressed,
+        })
     return {
         name: evaluate_equity_portfolio(
             data_by_symbol, strategy_config, scenario, **kwargs,

@@ -1,0 +1,12 @@
+{
+  "symbol": "SUNPHARMA",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "803e32ebb0f6b5e3e9451f88545898a0c752ceba234ae18d837795546ce2be77"
+}

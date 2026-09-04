@@ -1,0 +1,12 @@
+{
+  "symbol": "ETERNAL",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2025-04-09",
+  "last_date": "2026-09-03",
+  "observations": 347,
+  "sha256": "95b3495298c63471b7a6d93bd11bc91c23a9dde8171d439e25d10ec40252663b"
+}

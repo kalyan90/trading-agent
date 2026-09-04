@@ -1,0 +1,12 @@
+{
+  "symbol": "ASIANPAINT",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "8fb79e4cd352be0f09f5f5e9ac4e0d527d0aa1dbe8b99c136e5530369e833f9e"
+}

@@ -1,0 +1,12 @@
+{
+  "symbol": "MAZDOCK",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-10-12",
+  "last_date": "2026-09-03",
+  "observations": 1455,
+  "sha256": "068b54c55c58cd6aa9af60afc0b0c28aee9df9bd5aa5f6aa1567921fb19bd5db"
+}

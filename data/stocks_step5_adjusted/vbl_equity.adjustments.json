@@ -1,0 +1,35 @@
+{
+  "symbol": "VBL",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2021-06-10",
+      "raw_prior_close": 1150.55,
+      "nse_ex_date_reference": 1150.55,
+      "back_adjustment_factor": 0.6666666666666666,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2022-06-06",
+      "raw_prior_close": 1100.45,
+      "nse_ex_date_reference": 1100.45,
+      "back_adjustment_factor": 0.6666666666666666,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2023-06-15",
+      "raw_prior_close": 1615.0,
+      "nse_ex_date_reference": 1615.0,
+      "back_adjustment_factor": 0.5,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    },
+    {
+      "date": "2024-09-12",
+      "raw_prior_close": 1569.15,
+      "nse_ex_date_reference": 1569.15,
+      "back_adjustment_factor": 0.4,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

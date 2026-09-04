@@ -1,0 +1,14 @@
+{
+  "symbol": "JINDALSTEL",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2020-04-07",
+      "raw_prior_close": 63.15,
+      "nse_ex_date_reference": 63.15,
+      "back_adjustment_factor": 1.25,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

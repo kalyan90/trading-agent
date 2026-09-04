@@ -1,0 +1,16 @@
+{
+  "created_on": "2026-09-04",
+  "membership_snapshot": "nifty_100_bank_constituents_2026-09-04.csv",
+  "snapshot_status": "current_snapshot_not_historical",
+  "requested_groups": ["NIFTY 50", "NIFTY NEXT 50", "NIFTY BANK"],
+  "snapshot_memberships": {"NIFTY 50": 50, "NIFTY NEXT 50": 50, "NIFTY BANK": 14},
+  "unique_snapshot_symbols": 105,
+  "available_adjusted_symbols": 105,
+  "minimum_history_eligible_symbols": 98,
+  "combined_liquidity_eligible_symbols": 94,
+  "available_by_group_before_liquidity": {"NIFTY 50": 48, "NIFTY NEXT 50": 45, "NIFTY BANK": 14},
+  "excluded_short_history": ["ENRIN", "ETERNAL", "HYUNDAI", "LTM", "TATACAP", "TMCV", "TMPV"],
+  "raw_data_source": "NSE official security bhavcopy archive",
+  "availability_note": "All current-snapshot symbols were acquired; recent/renamed listings retain only the official rows available under their current symbol.",
+  "reserved_holdout": "250 common sessions from 2025-09-01 onward; not evaluated"
+}

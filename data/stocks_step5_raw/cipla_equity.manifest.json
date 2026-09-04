@@ -1,0 +1,12 @@
+{
+  "symbol": "CIPLA",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2020-01-01",
+  "last_date": "2026-09-03",
+  "observations": 1649,
+  "sha256": "81ee787d23e3ca45730feb9ad3e52b1e4df167e5df732c70350ff1e1b4884eaf"
+}

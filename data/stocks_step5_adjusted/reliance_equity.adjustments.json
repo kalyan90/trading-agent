@@ -1,0 +1,14 @@
+{
+  "symbol": "RELIANCE",
+  "threshold": 0.2,
+  "method": "Back-adjust prior OHLC and inverse-adjust volume using the NSE ex-date reference where available; otherwise snap large-cap discontinuities to a documented standard split/bonus factor.",
+  "events": [
+    {
+      "date": "2024-10-28",
+      "raw_prior_close": 2655.7,
+      "nse_ex_date_reference": 2655.7,
+      "back_adjustment_factor": 0.5,
+      "method": "standard_factor_inferred_from_close_discontinuity"
+    }
+  ]
+}

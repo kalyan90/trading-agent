@@ -1,0 +1,12 @@
+{
+  "symbol": "TATACAP",
+  "source": "NSE official security bhavcopy archive",
+  "source_url": "https://archives.nseindia.com/products/content/sec_bhavdata_full_{day}.csv",
+  "downloaded_at": "2026-09-04T09:25:04.931651+00:00",
+  "series": "EQ",
+  "adjustment_status": "raw_unadjusted",
+  "first_date": "2025-10-13",
+  "last_date": "2026-09-03",
+  "observations": 221,
+  "sha256": "976c0a9ad17a28c4bde3e663d66e18736f90e448d8dd04952d2a33f7b7a1cffd"
+}
